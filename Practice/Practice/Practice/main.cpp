@@ -8,11 +8,5 @@ int main()
 	//주석처리: ctrl k c 
 	//주석풀기 ctrl k u
 
-	int a = 5;
-	int b = 2;
-	int a = int a + 8;
-	
-	std::cout << a - b;
-
 	
 }
