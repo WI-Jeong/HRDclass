@@ -9,4 +9,18 @@ int main()
 	//주석풀기 ctrl k u
 
 	
+#pragma region int a and b
+	int a = 5;
+	int b;
+#pragma endregion 
+
+
+
+	std::cin >> b;
+	std::cout << a+b;
+
+
+
+
+	
 }
