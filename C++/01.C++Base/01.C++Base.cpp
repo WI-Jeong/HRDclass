@@ -71,7 +71,20 @@ int main()
         //namespace:여러 단체, 기업에 코드를 작성.
         //이름이 중복될 가능성이 크기 때문에 추가적인 구분을 위해 namespace통해 추가로 구분해줌.
         //std라는 namespace를 사용했고, std안에 구현되어 있는 cout을 사용했다.
-        std::cout << "Hello World!\n";
+
+
+
+        //변수
+        //타입 변수의 이름
+        int A = 5;
+        int B{100};
+        int C{ 77 };
+
+        std::cin >> A;
+        std::cin >> B;
+
+        //std::cout << "Hello World!\n";
+        std::cout << "당신이 지정한 숫자 B는:" << B<<" A는:"<<A;
     }
     
 #pragma endregion
