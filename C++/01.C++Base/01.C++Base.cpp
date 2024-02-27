@@ -170,10 +170,30 @@ double(8바이트)
 
         //}
 
+        //{
+
+        //    int I{ (int)3.14f };
+        //    std::cout << I;
+        //}
+
         {
 
-            int I{ (int)3.14f };
+            char C = 255;
+            char C0 = 'A';
+            //A마우스 가져다대면 65가 나옴. 
+            //각 문자마다 숫자랑 1:1 대응이 되도록 약속이 되어있는데 그걸 ASCII 코드를 통해 볼 수 있다.
+            //즉, ASCII 코드 표에 대응되는 수치로 변환해서 저장.
+
+            int I = 'a';
+            //소문자 a 마우스 가져다대면 97로 나옴. 이것도 아스키코드에 볼 수 있음.
+
+            std::cout << C;
+            std::cout << std::endl;
+            std::cout << C0;
+            std::cout << std::endl;
             std::cout << I;
+
+
         }
 
 
