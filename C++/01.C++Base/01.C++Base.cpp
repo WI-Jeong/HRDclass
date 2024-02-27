@@ -223,16 +223,125 @@
 
 int main()
 {
-	int A = 0;
-	int B{ 0 };
+	//int A = 0;
+	//int B{ 0 };
 
-	std::cout << A + B;
+	//std::cout << A + B;
 
-	int C = 3;
-	int D{ 50 };
+	//int C = 3;
+	//int D{ 50 };
 
-	std::cout << D - C;
+	//std::cout << D - C;
+
+
+	//유니코드
+
+
+	//2바이트
+	//wchar_t W{ L'가' };
+
+	//wchar_t W2{ L'A' };
+
+	//wchar_t W3{ L'典' };
+
+	//bool b0 = true; //1
+	//bool b1 = false; //0
+	//bool b2 = 0;  //false
+	//bool b3 = 1; //true
+	//bool b5 = 100; //true
+
+
+
+	//부동 소수점 오차
+	//{
+	//	double Value = 0;
+
+	//	if (Value==0)
+	//	{
+	//		std::cout << "Value가 0입니다.\n";
+	//	}
+	//	
+	//	Value = Value + 0.1; //0.1
+	//	Value = Value + 0.1; //0.2
+	//	Value = Value + 0.1; //0.3
+
+	//	if (Value == 0.3)
+	//	{
+	//		std::cout << "Value가 0.3입니다.\n";
+	//	}
+
+	//	std::cout << Value << std::endl;
+
+
+
+	//}
+
+	//0초기화(Zero initailizaion)
+	{
+		//초기화란 변수를 선언함과 동시에 값을 지정하는 것을 의미
+
+		int AA;
+		AA = 10; //초기화가 아님. 값을 대입
+
+		int BB = 0; //선언과 동시에 값을 지정(초기화)
+
+		//초기화 방식 3개
+
+	}
+
+	//형변환(Cast): 서로 다른 타입으로 변환
+	//C++에는 int, float 등 다양한 타입들이 있기 때문에 타입간 변환이 필요한 상황이 발생한다.
+	{
+		float F{ 3.14f };
+		int Int = F;  
+		//묵시적 casting (특별히 언급하지 않았는데 자동으로 casting) "경고"
+
+		int Int2 = (int)F; 
+		//명시적 casting. C스타일 cast.
+
+		int Int3 = int(F); 
+		//명시적 casting. C스타일 cast.
+
+		int Int4 = static_cast<int>(F); 
+		//C++ 버전의 명시적 cast
+
+
+
+		//2바이트 정수 타입
+		short Short{ 10 };
+
+		//4바이트 정수
+		int Int5 = Short; 
+		//->묵시적 casting
+		//int(4)가 short(2)보다 더 크고, 둘 다 정수 타입이기 때문에 경고가 발생하지 않는다.
+
+		std::cout << F;
+
+
+		signed int Var{ -1 };
+		unsigned int Var2{ (unsigned int)-2 };
+
+
+		
+		signed short Sar{ -1 };
+
+			
+		unsigned short Sar1{ (unsigned short)-1 };
+		Sar1 = Sar1 + 1;
+
+		int I = 'A';
+
+
+
+
 
 
 	
+	}
+
+	
 }
+
+
+//프로젝트 속성->C/C++->코드생성->기본 런타임 검사->기본값으로 변경하기.
+
