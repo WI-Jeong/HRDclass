@@ -76,41 +76,105 @@ int main()
 
         //변수
         //타입 변수의 이름
-        int A = 5;
-        int B{100};
-        int B8{ 0144 };
-        int B16{ 0x64 };
-        int B2{ 0b01100100 };
+        //int A = 5;
+        //int B{100};
+        //int B8{ 0144 };
+        //int B16{ 0x64 };
+        //int B2{ 0b01100100 };
 
-        int C{ 77 };
-        
-        float F{ 3.14f };
+        //int C{ 77 };
+        //
+        //float F{ 3.14f };
 
-        double D{ 3.14 };
+        //double D{ 3.14 };
 
-        char C{ 'a' };
-
-
+        //char C{ 'a' };
 
 
 
-        //std::cin >> A;
-        //std::cin >> B;
 
-        //std::cout << "Hello World!\n";
-        std::cout << "당신이 지정한 숫자 B는:" << B<<" A는:"<<A;
+
+        ////std::cin >> A;
+        ////std::cin >> B;
+
+        ////std::cout << "Hello World!\n";
+        //std::cout << "당신이 지정한 숫자 B는:" << B<<" A는:"<<A;
     }
     
 #pragma endregion
 
 
-
-
-    
 #pragma region 03.변수(Variable)**
     {
+        /*
+        자료형(byte)
+
+1byte=8bit
+1바이트는 2진수로 0000 0000 ~ 1111 1111까지
+즉, 10진수로 0~255까지 값을 표현할 수 있다.
+1024byte == 1KB
+1024KB == 1MB
+1024NB == 1GB
+1024GB == 1TB
+왜 1000단위가 아니라 1024인가? → 기본단위가 8bit라 계산하다보니.. 1000으로 자른것도 있긴함.
+1000KiB == 1MiB
+1000MiB ==1GiB
+비트: 2진수 (0,1)로
+
+정수형
+**char(1byte)**
+short(2바이트)
+**int(4바이트)**
+long(4바이트)
+long long(8바이트)
+int64 (8바이트)
+여기서 꼭 외워야할 것→char, int
+
+실수형
+float(4바이트)
+double(8바이트)
 
 
+        */
+
+        //{
+        //    int Var{ 0 }; //초기화 연산자로 변수를 선언과 동시에 초기화 할 수 있다.
+        //    Var = 10; //대입연산자를 사용해서 값 변경 가능.
+        //}
+        //{
+
+        //    signed int Var{ -1 }; //signed는 생략해도 자동으로 signed
+        //    Var = Var + 1;
+
+        //    unsigned int Var2{ (unsigned int) - 1};
+
+        //    Var2 = Var2 + 1;
+
+
+        //}
+
+        //{
+        //    //2바이트 정수형
+        //    //-32,768 ~ 32,767까지 표현 가능
+        //    //가장 큰 값인 32768에 1을 더해주면 -32,768로 값이 바뀜.
+        //    short S1{ 32767 };
+        //    S1 = S1 + 1;
+        //    S1 = S1 - 1;
+
+
+        //}
+
+        //{
+        //    long L1{ 14L };
+
+
+        //}
+
+        {
+
+            int I{ (int)3.14f };
+            std::cout << I;
+        }
 
 
     }
