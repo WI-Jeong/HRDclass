@@ -157,7 +157,74 @@ int main()
 
 #pragma endregion
 
+#pragma region 05. 형변환
 
+
+//int a = 123.0;
+
+//float a = 1.f;
+//double d = a;
+
+//int i = 30000;
+//char c = i;
+
+//int i = 2;
+//char c = i;
+
+//double d = 0.1234;
+//float f = d;
+//
+//std::cout << static_cast<int>(f) << std::endl;
+
+//float F{ 3.14F };
+//int I{ (int)3.14F };
+
+//float F{ 3.14f };
+//int Int = F;
+
+float F{ 3.14f };
+int Int2 = (int)F;
+//명시적 casting. C스타일 cast.
+
+//std::cout << Int2;
+
+int Int3 = int(F);
+//명시적 casting. C스타일 cast.
+//std::cout << Int3;
+
+int Int4 = static_cast<int>(F);
+//C++ 버전의 명시적 cast
+//std::cout << Int4;
+
+
+
+//2바이트 정수 타입
+short Short{ 10 };
+
+//4바이트 정수
+int Int5 = Short;
+//->묵시적 casting
+//int(4)가 short(2)보다 더 크고, 
+//둘 다 정수 타입이기 때문에 경고가 발생하지 않는다.
+//std::cout << Int5;
+
+
+#pragma endregion
+
+#pragma region 06. 
+
+
+#pragma endregion
+
+#pragma region 07. 
+
+
+#pragma endregion
+
+#pragma region 08. 
+
+
+#pragma endregion
 	
 
 
