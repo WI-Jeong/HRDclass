@@ -332,14 +332,134 @@ int main()
 		int I = 'A';
 
 
+		long long LL1{ 14LL };
+		unsigned int I1{ 4294967295 };
+		unsigned int I2{ (unsigned int)4294967297 };
+		long long LL2{ 4294967296 };
+			
+	}
 
 
+	//대입 연산자
+	{
+		int i;
+		i = 0;  // i = 0
+
+		int k;
+		k = i;  // k = 0
+
+	}
+
+	//[단항] 표현식의 참/거짓 ->bool
+	{
+		bool B1{ true };	// 참
+		bool B2{ 1 };		//참
+		bool B3{ false };	//거짓
+		bool B4{ 0 };		//거짓
+
+		bool B5{ !true };	//true의 not: 거짓
+		bool B6{ !false };	//false의 not: 참
+
+		bool B7{ true };	//참
+		bool B8{ !B7 };		//거짓
+	}
+
+	//[이항] 사칙연산
+	{
+		int a{ 1 + 2 };		// 3
+		int b{ a + 3 };		// 6
+
+		int c{ 1 - 2 };		//-1
+		unsigned int C2{ unsigned int(1-2) };		//4294967295
+
+		int d{ c * 3 };		// -3
+
+		int e{ 10 / 3 };	// 3
+
+		float f{ 10 / 3 };	// 3
+		//이건 int(10) / int(3)을 계산하고 나온 3을 float f에 대입하겠다 라는 뜻.
+
+		float f2{ 10.f / 3.f };	// 3.333...
 
 
-	
+	}
+
+	{
+
+		int m{ 10 % 3 };	// 1
+		int m2{ 5 % 2 };	// 1
+		int m3{ 6 % 2 };	// 0
+
 	}
 
 	
+	{
+		//
+		int i{ 0 };
+
+		
+		int k{ i++ };
+		// k = 0
+		//k가 0이되고 나서 i가 ++되어 1이된다.
+		//k = 0, i = 1
+		
+		//식 내부에 후행 연산자 사용하면 실수 여지가 많기 때문에 식 내부에 후행 연산자 사용 하지 않을 것을 추천
+
+
+
+	}
+	
+	{
+		int i{ 0 };
+		int k{ --i };
+		//k=-1, i=-1
+
+
+	}
+
+	//사칙연산 축약표현
+	{
+		int i{ 1 };
+		int k{ 2 };
+
+		i += k;	//i=3
+		i += 2;	//i=5
+
+		i -= 3;	//i=2
+
+
+		i *= 2;	//i=2*2=4
+		i /= 2;	//i=2
+		i %= 2;	//i=0
+
+		int n = 4;
+		n /= 3; // n=1
+
+		int m = 5;
+		m %= 2;	//m=
+
+
+	}
+
+	{
+		char g = 2;
+		char g2 = 15;
+		char g3 = g & g2;	//g3=2
+
+		char r = 2;
+		char r2 = 15;
+		char r3 = r | r2;	//r3=15
+
+		char rg = 2;
+		char rg2 = 15;
+		char rg3 = rg ^rg2;	//rg3=13
+
+
+
+
+
+	}
+
 }
 
 
