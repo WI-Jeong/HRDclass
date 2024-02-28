@@ -276,189 +276,227 @@ int main()
 
 	//}
 
-	//0초기화(Zero initailizaion)
+	////0초기화(Zero initailizaion)
+	//{
+	//	//초기화란 변수를 선언함과 동시에 값을 지정하는 것을 의미
+
+	//	int AA;
+	//	AA = 10; //초기화가 아님. 값을 대입
+
+	//	int BB = 0; //선언과 동시에 값을 지정(초기화)
+
+	//	//초기화 방식 3개
+
+	//}
+
+	////형변환(Cast): 서로 다른 타입으로 변환
+	////C++에는 int, float 등 다양한 타입들이 있기 때문에 타입간 변환이 필요한 상황이 발생한다.
+	//{
+	//	float F{ 3.14f };
+	//	int Int = F;  
+	//	//묵시적 casting (특별히 언급하지 않았는데 자동으로 casting) "경고"
+
+	//	int Int2 = (int)F; 
+	//	//명시적 casting. C스타일 cast.
+
+	//	int Int3 = int(F); 
+	//	//명시적 casting. C스타일 cast.
+
+	//	int Int4 = static_cast<int>(F); 
+	//	//C++ 버전의 명시적 cast
+
+
+
+	//	//2바이트 정수 타입
+	//	short Short{ 10 };
+
+	//	//4바이트 정수
+	//	int Int5 = Short; 
+	//	//->묵시적 casting
+	//	//int(4)가 short(2)보다 더 크고, 둘 다 정수 타입이기 때문에 경고가 발생하지 않는다.
+
+	//	std::cout << F;
+
+
+	//	signed int Var{ -1 };
+	//	unsigned int Var2{ (unsigned int)-2 };
+
+
+	//	
+	//	signed short Sar{ -1 };
+
+	//		
+	//	unsigned short Sar1{ (unsigned short)-1 };
+	//	Sar1 = Sar1 + 1;
+
+	//	int I = 'A';
+
+
+	//	long long LL1{ 14LL };
+	//	unsigned int I1{ 4294967295 };
+	//	unsigned int I2{ (unsigned int)4294967297 };
+	//	long long LL2{ 4294967296 };
+	//		
+	//}
+
+
+	////대입 연산자
+	//{
+	//	int i;
+	//	i = 0;  // i = 0
+
+	//	int k;
+	//	k = i;  // k = 0
+
+	//}
+
+	////[단항] 표현식의 참/거짓 ->bool
+	//{
+	//	bool B1{ true };	// 참
+	//	bool B2{ 1 };		//참
+	//	bool B3{ false };	//거짓
+	//	bool B4{ 0 };		//거짓
+
+	//	bool B5{ !true };	//true의 not: 거짓
+	//	bool B6{ !false };	//false의 not: 참
+
+	//	bool B7{ true };	//참
+	//	bool B8{ !B7 };		//거짓
+	//}
+
+	////[이항] 사칙연산
+	//{
+	//	int a{ 1 + 2 };		// 3
+	//	int b{ a + 3 };		// 6
+
+	//	int c{ 1 - 2 };		//-1
+	//	unsigned int C2{ unsigned int(1-2) };		//4294967295
+
+	//	int d{ c * 3 };		// -3
+
+	//	int e{ 10 / 3 };	// 3
+
+	//	float f{ 10 / 3 };	// 3
+	//	//이건 int(10) / int(3)을 계산하고 나온 3을 float f에 대입하겠다 라는 뜻.
+
+	//	float f2{ 10.f / 3.f };	// 3.333...
+
+
+	//}
+
+	//{
+
+	//	int m{ 10 % 3 };	// 1
+	//	int m2{ 5 % 2 };	// 1
+	//	int m3{ 6 % 2 };	// 0
+
+	//}
+
+	//
+	//{
+	//	//
+	//	int i{ 0 };
+
+	//	
+	//	int k{ i++ };
+	//	// k = 0
+	//	//k가 0이되고 나서 i가 ++되어 1이된다.
+	//	//k = 0, i = 1
+	//	
+	//	//식 내부에 후행 연산자 사용하면 실수 여지가 많기 때문에 식 내부에 후행 연산자 사용 하지 않을 것을 추천
+
+
+
+	//}
+	//
+	//{
+	//	int i{ 0 };
+	//	int k{ --i };
+	//	//k=-1, i=-1
+
+
+	//}
+
+	////사칙연산 축약표현
+	//{
+	//	int i{ 1 };
+	//	int k{ 2 };
+
+	//	i += k;	//i=3
+	//	i += 2;	//i=5
+
+	//	i -= 3;	//i=2
+
+
+	//	i *= 2;	//i=2*2=4
+	//	i /= 2;	//i=2
+	//	i %= 2;	//i=0
+
+	//	int n = 4;
+	//	n /= 3; // n=1
+
+	//	int m = 5;
+	//	m %= 2;	//m=
+
+
+	//}
+
+	//{
+	//	char g = 2;
+	//	char g2 = 15;
+	//	char g3 = g & g2;	//g3=2
+
+	//	char r = 2;
+	//	char r2 = 15;
+	//	char r3 = r | r2;	//r3=15
+
+	//	char rg = 2;
+	//	char rg2 = 15;
+	//	char rg3 = rg ^rg2;	//rg3=13
+
+	//}
+
+	//Practice
 	{
-		//초기화란 변수를 선언함과 동시에 값을 지정하는 것을 의미
-
-		int AA;
-		AA = 10; //초기화가 아님. 값을 대입
-
-		int BB = 0; //선언과 동시에 값을 지정(초기화)
-
-		//초기화 방식 3개
-
-	}
-
-	//형변환(Cast): 서로 다른 타입으로 변환
-	//C++에는 int, float 등 다양한 타입들이 있기 때문에 타입간 변환이 필요한 상황이 발생한다.
-	{
-		float F{ 3.14f };
-		int Int = F;  
-		//묵시적 casting (특별히 언급하지 않았는데 자동으로 casting) "경고"
-
-		int Int2 = (int)F; 
-		//명시적 casting. C스타일 cast.
-
-		int Int3 = int(F); 
-		//명시적 casting. C스타일 cast.
-
-		int Int4 = static_cast<int>(F); 
-		//C++ 버전의 명시적 cast
 
 
 
-		//2바이트 정수 타입
-		short Short{ 10 };
+		const int iattack = 0x0000001;
+		const int iarmor = 0x0000002;
+		const int ihp = 0x0000004;
+		const int imp = 0x0000008;
+		const int icritical = 0x00000010;
 
-		//4바이트 정수
-		int Int5 = Short; 
-		//->묵시적 casting
-		//int(4)가 short(2)보다 더 크고, 둘 다 정수 타입이기 때문에 경고가 발생하지 않는다.
-
-		std::cout << F;
-
-
-		signed int Var{ -1 };
-		unsigned int Var2{ (unsigned int)-2 };
-
-
-		
-		signed short Sar{ -1 };
-
-			
-		unsigned short Sar1{ (unsigned short)-1 };
-		Sar1 = Sar1 + 1;
-
-		int I = 'A';
-
-
-		long long LL1{ 14LL };
-		unsigned int I1{ 4294967295 };
-		unsigned int I2{ (unsigned int)4294967297 };
-		long long LL2{ 4294967296 };
-			
-	}
-
-
-	//대입 연산자
-	{
-		int i;
-		i = 0;  // i = 0
-
-		int k;
-		k = i;  // k = 0
-
-	}
-
-	//[단항] 표현식의 참/거짓 ->bool
-	{
-		bool B1{ true };	// 참
-		bool B2{ 1 };		//참
-		bool B3{ false };	//거짓
-		bool B4{ 0 };		//거짓
-
-		bool B5{ !true };	//true의 not: 거짓
-		bool B6{ !false };	//false의 not: 참
-
-		bool B7{ true };	//참
-		bool B8{ !B7 };		//거짓
-	}
-
-	//[이항] 사칙연산
-	{
-		int a{ 1 + 2 };		// 3
-		int b{ a + 3 };		// 6
-
-		int c{ 1 - 2 };		//-1
-		unsigned int C2{ unsigned int(1-2) };		//4294967295
-
-		int d{ c * 3 };		// -3
-
-		int e{ 10 / 3 };	// 3
-
-		float f{ 10 / 3 };	// 3
-		//이건 int(10) / int(3)을 계산하고 나온 3을 float f에 대입하겠다 라는 뜻.
-
-		float f2{ 10.f / 3.f };	// 3.333...
-
-
-	}
-
-	{
-
-		int m{ 10 % 3 };	// 1
-		int m2{ 5 % 2 };	// 1
-		int m3{ 6 % 2 };	// 0
-
-	}
+		int ibuf = iattack | ihp | icritical; //10101
 
 	
-	{
-		//
-		int i{ 0 };
 
-		
-		int k{ i++ };
-		// k = 0
-		//k가 0이되고 나서 i가 ++되어 1이된다.
-		//k = 0, i = 1
-		
-		//식 내부에 후행 연산자 사용하면 실수 여지가 많기 때문에 식 내부에 후행 연산자 사용 하지 않을 것을 추천
+
+		std::cout << "Attack=" << (ibuf & iattack) << std::endl;
+		std::cout << "Armor=" << (ibuf & iarmor) << std::endl;
+		std::cout << "Hp=" << (ibuf & ihp) << std::endl;
+		std::cout << "Mp=" << (ibuf & imp) << std::endl;
+		std::cout << "Critical=" << (ibuf & icritical) << std::endl;
+
+		ibuf ^= ihp;
 
 
 
-	}
-	
-	{
-		int i{ 0 };
-		int k{ --i };
-		//k=-1, i=-1
 
 
-	}
-
-	//사칙연산 축약표현
-	{
-		int i{ 1 };
-		int k{ 2 };
-
-		i += k;	//i=3
-		i += 2;	//i=5
-
-		i -= 3;	//i=2
 
 
-		i *= 2;	//i=2*2=4
-		i /= 2;	//i=2
-		i %= 2;	//i=0
-
-		int n = 4;
-		n /= 3; // n=1
-
-		int m = 5;
-		m %= 2;	//m=
-
-
-	}
-
-	{
-		char g = 2;
-		char g2 = 15;
-		char g3 = g & g2;	//g3=2
-
-		char r = 2;
-		char r2 = 15;
-		char r3 = r | r2;	//r3=15
-
-		char rg = 2;
-		char rg2 = 15;
-		char rg3 = rg ^rg2;	//rg3=13
 
 
 
 
 
 	}
+
+
+
+
+
 
 }
 
