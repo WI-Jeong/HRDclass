@@ -45,49 +45,60 @@ int main()
 
 #pragma region 03. 열거체
 
-	enum ETier : unsigned char
-	{
-		None,
-		Iron,
-		Bronze,
-		Silver,
-		Gold
-	};
+	//enum ETier : unsigned char
+	//{
+	//	None,
+	//	Iron,
+	//	Bronze,
+	//	Silver,
+	//	Gold
+	//};
 
 
-	ETier MyTier=ETier::Gold;
+	//ETier MyTier=ETier::Gold;
 
-	if (MyTier == ETier::Gold)
-	{
-		std::cout << "Gold\n";
-	}
-
-
-	ETier MyTier2=ETier::Bronze;
-
-	if (MyTier2 == ETier::Bronze)
-	{
-		std::cout << "Bronze\n";
-	}
-
-	ETier MyTier3 = (ETier)2;
-	std::cout << "MyTier3= " << (int) MyTier3;
+	//if (MyTier == ETier::Gold)
+	//{
+	//	std::cout << "Gold\n";
+	//}
 
 
+	//ETier MyTier2=ETier::Bronze;
+
+	//if (MyTier2 == ETier::Bronze)
+	//{
+	//	std::cout << "Bronze\n";
+	//}
+
+	//ETier MyTier3 = (ETier)2;
+	//std::cout << "MyTier3= " << (int) MyTier3;
 
 
 
-	enum NUM
-	{
-		num0 = 10,
-		num1,
-		num2,
-		num3
-	};
 
-	//NUM number;
 
-	//std::cout << typeid(number).name() << std::endl;
+	//enum NUM
+	//{
+	//	num0 = 10,
+	//	num1,
+	//	num2,
+	//	num3
+	//};
+
+	////NUM number;
+
+	////std::cout << typeid(number).name() << std::endl;
+
+
+	//Enum과 Enum class
+	//enum Color
+	//{
+	//	RED = 1,
+	//	GREEN = 2,
+	//	BLUE = 3
+
+	//};
+
 
 
 

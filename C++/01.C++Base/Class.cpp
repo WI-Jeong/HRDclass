@@ -82,15 +82,124 @@ int main()
 	}
 #pragma endregion
 
+#pragma region 06.조건문(if / switch)***
+	{
+		// if
+		{
+			//int Value = 0;
+			//std::cin >> Value;
 
+			//// if 조건이 true if내부로 실행
+			//// if 조건이 false else 실행
+			//// else는 없을 수 있다
+			//// 조건문을 사용하면 어떤 값이 참 또는 거짓인지에 따라 원하는 코드를 실행하는 문법
+			//if (Value == 100)
+			//{
+			//	std::cout << "Value가 100입니다\n";
+			//}
+			//else
+			//{
+			//	std::cout << std::format("Value: {} 입니다\n", Value);
+			//}
 
+			// if(<초기자>;<조건문>)
+			// if 조건이 true이면 if 내부로 실행
+			// if 조건이 false이고, else if 조건이 만족하면, else if가 실행이 됩니다.
+			// 전부 만족하지 않는 경우 else 가 실행 됩니다.
+			if (int i = 10; i < 10)
+			{
+				std::cout << "1\n";
+			}
+			else if (i == 13)
+			{
+				std::cout << "2\n";
+			}
+			else if (i == 12)
+			{
+				std::cout << "3\n";
+			}
+			else if (i == 10)
+			{
+				std::cout << "4\n";
+			}
+			else
+			{
+				//i = 10000;
+				std::cout << "5\n";
+			}
+		}
 
+		// switch
+		{
+			enum class ETier : unsigned char
+			{
+				None,
+				Iron,
+				Bronze,
+				Silver,
+				Gold,
+			};
 
+			struct FPlayer
+			{
+				int HP = 100;
+				int MP{ 10 };
+				ETier Tier = ETier::None;
+			};
+			FPlayer Player;
+			Player.Tier = ETier::Gold;
+			std::cout << "[Player Info]\n";
+			std::cout << std::format("HP: {}, MP: {}\n", Player.HP, Player.MP);
+			//std::cout << std::format("Tier: {}\n", (int)Player.Tier);
+			switch (Player.Tier)
+			{
+			case ETier::None:
+				std::cout << "Tier: None\n";
+				break;
+			case ETier::Iron:
+				std::cout << "Tier: Iron\n";
+				break;
+			case ETier::Bronze:
+				std::cout << "Tier: Bronze\n";
+				break;
+			case ETier::Silver:
+				std::cout << "Tier: Silver\n";
+				break;
+			case ETier::Gold:
+				std::cout << "Tier: Gold\n";
+				break;
+			default:
+				std::cout << "default\n";
+				break;
+			}
 
-
-
-
-
+			if (Player.Tier == ETier::None)
+			{
+				std::cout << "Tier: None\n";
+			}
+			else if (Player.Tier == ETier::Iron)
+			{
+				std::cout << "Tier: Iron\n";
+			}
+			else if (Player.Tier == ETier::Bronze)
+			{
+				std::cout << "Tier: Bronze\n";
+			}
+			else if (Player.Tier == ETier::Silver)
+			{
+				std::cout << "Tier: Silver\n";
+			}
+			else if (Player.Tier == ETier::Gold)
+			{
+				std::cout << "Tier: Gold\n";
+			}
+			else
+			{
+				std::cout << "defaultn";
+			}
+		}
+	}
+#pragma endregion
 
 
 }
