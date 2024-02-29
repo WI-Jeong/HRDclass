@@ -685,165 +685,183 @@ int main()
 #pragma region switch
 
 
-	// switch
-	{
-		enum class ETier : unsigned char
-		{
-			None,
-			Iron,
-			Bronze,
-			Silver,
-			Gold,
-		};
+	//// switch
+	//{
+	//	enum class ETier : unsigned char
+	//	{
+	//		None,
+	//		Iron,
+	//		Bronze,
+	//		Silver,
+	//		Gold,
+	//	};
 
-		struct FPlayer
-		{
-			int HP = 100;
-			int MP{ 10 };
-			ETier Tier = ETier::None;
-		};
-		FPlayer Player;
-
-
-		//Player.Tier = ETier::Gold;
-
-		//std::cout << "[Player Info]\n";
-		//std::cout << std::format("HP: {}, MP: {}\n", Player.HP, Player.MP);
-		//std::cout << std::format("Tier: {}\n", (int)Player.Tier);
-		//switch (Player.Tier)
-		//{
-		//case ETier::None:
-		//	std::cout << "Tier: None\n";
-		//	break;
-		//case ETier::Iron:
-		//	std::cout << "Tier: Iron\n";
-		//	break;
-		//case ETier::Bronze:
-		//	std::cout << "Tier: Bronze\n";
-		//	break;
-		//case ETier::Silver:
-		//	std::cout << "Tier: Silver\n";
-		//	break;
-		//case ETier::Gold:
-		//	std::cout << "Tier: Gold\n";
-		//	break;
-		//default:
-		//	std::cout << "default\n";
-		//	break;
-		//}
-
-		//if (Player.Tier == ETier::None)
-		//{
-		//	std::cout << "Tier: None\n";
-		//}
-		//else if (Player.Tier == ETier::Iron)
-		//{
-		//	std::cout << "Tier: Iron\n";
-		//}
-		//else if (Player.Tier == ETier::Bronze)
-		//{
-		//	std::cout << "Tier: Bronze\n";
-		//}
-		//else if (Player.Tier == ETier::Silver)
-		//{
-		//	std::cout << "Tier: Silver\n";
-		//}
-		//else if (Player.Tier == ETier::Gold)
-		//{
-		//	std::cout << "Tier: Gold\n";
-		//}
-		//else
-		//{
-		//	std::cout << "defaultn";
-		//}
+	//	struct FPlayer
+	//	{
+	//		int HP = 100;
+	//		int MP{ 10 };
+	//		ETier Tier = ETier::None;
+	//	};
+	//	FPlayer Player;
 
 
-		//Player.Tier = ETier::Iron;
+	//	//Player.Tier = ETier::Gold;
 
-		//switch ((ETier)1)
-		//{
-		//case ETier::Iron:	
-		//	std::cout << "분발하세요.";
-		//	break;
-		//case ETier::Bronze:	
-		//case ETier::Silver:
-		//	std::cout << "티어=브실\n";
-		//	break;
-		//case ETier::Gold:
-		//	std::cout << "[Gold]";
-		//	break;
-		//default:
-		//	break;
-		//}
+	//	//std::cout << "[Player Info]\n";
+	//	//std::cout << std::format("HP: {}, MP: {}\n", Player.HP, Player.MP);
+	//	//std::cout << std::format("Tier: {}\n", (int)Player.Tier);
+	//	//switch (Player.Tier)
+	//	//{
+	//	//case ETier::None:
+	//	//	std::cout << "Tier: None\n";
+	//	//	break;
+	//	//case ETier::Iron:
+	//	//	std::cout << "Tier: Iron\n";
+	//	//	break;
+	//	//case ETier::Bronze:
+	//	//	std::cout << "Tier: Bronze\n";
+	//	//	break;
+	//	//case ETier::Silver:
+	//	//	std::cout << "Tier: Silver\n";
+	//	//	break;
+	//	//case ETier::Gold:
+	//	//	std::cout << "Tier: Gold\n";
+	//	//	break;
+	//	//default:
+	//	//	std::cout << "default\n";
+	//	//	break;
+	//	//}
+
+	//	//if (Player.Tier == ETier::None)
+	//	//{
+	//	//	std::cout << "Tier: None\n";
+	//	//}
+	//	//else if (Player.Tier == ETier::Iron)
+	//	//{
+	//	//	std::cout << "Tier: Iron\n";
+	//	//}
+	//	//else if (Player.Tier == ETier::Bronze)
+	//	//{
+	//	//	std::cout << "Tier: Bronze\n";
+	//	//}
+	//	//else if (Player.Tier == ETier::Silver)
+	//	//{
+	//	//	std::cout << "Tier: Silver\n";
+	//	//}
+	//	//else if (Player.Tier == ETier::Gold)
+	//	//{
+	//	//	std::cout << "Tier: Gold\n";
+	//	//}
+	//	//else
+	//	//{
+	//	//	std::cout << "defaultn";
+	//	//}
 
 
+	//	//Player.Tier = ETier::Iron;
 
-		/*
-		{
-			Player.Tier = ETier::Silver;
-
-			//플레이어 티어가 iron 또는 bronze인가요?
-			if (Player.Tier == ETier::Iron || Player.Tier == ETier::Bronze)
-			{
-				std::cout << "아브딱" << std::endl;
-			}
-
-			else if (Player.Tier == ETier::Silver)
-			{
-				std::cout << "실딱" << std::endl;
-			}
-
-			else
-			{
-				std::cout << "캬" << std::endl;
-			}
-		
-		}
-		
-		*/
+	//	//switch ((ETier)1)
+	//	//{
+	//	//case ETier::Iron:	
+	//	//	std::cout << "분발하세요.";
+	//	//	break;
+	//	//case ETier::Bronze:	
+	//	//case ETier::Silver:
+	//	//	std::cout << "티어=브실\n";
+	//	//	break;
+	//	//case ETier::Gold:
+	//	//	std::cout << "[Gold]";
+	//	//	break;
+	//	//default:
+	//	//	break;
+	//	//}
 
 
 
-		/*
-		
- 		{
-			Player.Tier = ETier::Silver;
+	//	/*
+	//	{
+	//		Player.Tier = ETier::Silver;
 
-			//플레이어 티어가 iron 또는 bronze인가요?
-			if (Player.Tier == ETier::Iron || Player.Tier == ETier::Bronze|| Player.Tier == ETier::Silver)
-			{
-				{
-					if (Player.Tier == ETier::Iron)
-					{
-						std::cout << "분발하세요.";
-					}
+	//		//플레이어 티어가 iron 또는 bronze인가요?
+	//		if (Player.Tier == ETier::Iron || Player.Tier == ETier::Bronze)
+	//		{
+	//			std::cout << "아브딱" << std::endl;
+	//		}
 
-					std::cout << "아브실";
-				}
-			}
+	//		else if (Player.Tier == ETier::Silver)
+	//		{
+	//			std::cout << "실딱" << std::endl;
+	//		}
 
-		}
+	//		else
+	//		{
+	//			std::cout << "캬" << std::endl;
+	//		}
 
-		*/
+	//	}
 
-
-
-
+	//	*/
 
 
 
+	//	/*
+
+	//	{
+	//		Player.Tier = ETier::Silver;
+
+	//		//플레이어 티어가 iron 또는 bronze인가요?
+	//		if (Player.Tier == ETier::Iron || Player.Tier == ETier::Bronze|| Player.Tier == ETier::Silver)
+	//		{
+	//			{
+	//				if (Player.Tier == ETier::Iron)
+	//				{
+	//					std::cout << "분발하세요.";
+	//				}
+
+	//				std::cout << "아브실";
+	//			}
+	//		}
+
+	//	}
+
+	//	*/
+
+
+	//	/*
+	//		
+	//	{
+
+	//		int a = 10;
+	//		int b = 20;
+
+	//		//if (a == 10 && b == 10)
+	//		//{
+	//		//	std::cout << "a&&b";
+	//		//}
+
+	//		//else
+	//		//{
+	//		//	std::cout << "not a && b";
+	//		//}
+
+	//		a = 10;
+	//		b = 20;
+	//		int c = 100;
+
+	//		if (a == 10 && (b ==50||c == 100))
+	//		{
+
+	//		}
+
+	//	}
 
 
 
+	//	*/
 
 
 
-
-
-
-
-
-	}
+	//}
 
 
 #pragma endregion
@@ -851,6 +869,15 @@ int main()
 
 
 #pragma region xxxx
+
+
+
+
+
+
+}
+
+
 
 
 #pragma endregion
