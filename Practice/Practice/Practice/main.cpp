@@ -61,14 +61,75 @@ int main()
 	//float I(3);
 	//std::cout << I;
 
+#pragma endregion
 
 
+#pragma region 02.형변환
 
-
+	double d = 0.123456789;
+	float f = d;
 
 
 
 #pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma region xxxxx
+
+#pragma endregion
+
+#pragma region xxxxx
+
+#pragma endregion
+
+
+#pragma region xxxxx
+
+#pragma endregion
+
+
+#pragma region xxxxx
+
+#pragma endregion
+
+
+#pragma region xxxxx
+
+#pragma endregion
+
+
+#pragma region xxxxx
+
+#pragma endregion
+
+#pragma region xxxxx
+
+#pragma endregion
+
 
 
 	
