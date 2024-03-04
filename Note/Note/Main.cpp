@@ -61,25 +61,47 @@ int main()
 	*/
 
 	/*
-	배열
+	bit flag
 	
+
+	unsigned char Property1 = EPropertyFlags::EProperty1;
+	unsigned char Property3 = EPropertyFlags::EProperty3;
+
+	unsigned char Property = Property1 | Property3;
+	HasProperty(Property);
+
+	unsigned char Property10 = Property | EPropertyFlags::EProperty7;
+	HasProperty(Property10);
+
+	unsigned char Property20 = Property10 & ~EPropertyFlags::EProperty1;
+	HasProperty(Property20);
+
+
+
 	
 	*/	
 
+
+	enum EBuff
 	{
+		None,
+		Attack,
+		Armor,
+		HP,
+		MP,
+		Critical
+	};
 
-		std::array<int, 10> Array;
+	int buff = EBuff::Attack | EBuff::HP | EBuff::Critical;
 
-		//size_t Size = Array.size();
 
-		//std::cout << Size;
 
-		typedef unsigned __int64 HI;
-		HI Size = Array.size();
 
-		std::cout << Size;
 
-	}
+
+
+
+
 
 
 

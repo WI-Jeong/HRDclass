@@ -75,14 +75,6 @@ int main()
 
 #pragma region bit flag
 
-	int* Array = nullptr;
-	Array = new int[6] {0, 1, 2, 3, 4, 5};
-	Array[0] = 100;
-	for (int i = 0; i < 6; ++i)
-	{
-		Array[i] = i + 1;
-	}
-
 
 
 
