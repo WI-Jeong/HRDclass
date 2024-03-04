@@ -1,9 +1,12 @@
 #include <iostream>
 #include <format>
+#include<array>
 #include "Main.h"
 
 int main()
 {
+
+	/*
 	unsigned char Buff = EBuff::Attack | EBuff::HP;
 
 	if ((Buff & EBuff::Armor) == 0)
@@ -55,7 +58,28 @@ int main()
 
 	unsigned char Buff1 = Buff | EBuff::Critical;
 
-	//testtest
+	*/
+
+	/*
+	배열
+	
+	
+	*/	
+
+	{
+
+		std::array<int, 10> Array;
+
+		//size_t Size = Array.size();
+
+		//std::cout << Size;
+
+		typedef unsigned __int64 HI;
+		HI Size = Array.size();
+
+		std::cout << Size;
+
+	}
 
 
 
