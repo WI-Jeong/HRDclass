@@ -163,28 +163,46 @@ int main()
 	//	++i;
 	//} while (i < 5);//false일 때 탈출
 	////31<5->false
-	//
+	////
 
 
 
-	int sum = 0;
-	int i = 1;
+	//int sum = 0;
+	//int i = 1;
 
-	//do
+	////do
+	////{
+	////	sum += i;
+	////	++i;
+	////} while (i <= 10);
+
+	//////std::cout << "1부터 10까지 합은: " << sum << std::endl;
+
+
+	//while (i <= 10)
 	//{
 	//	sum += i;
-	//	++i;
-	//} while (i <= 10);
+	//	++i;	
+	//}
+	//std::cout << std::format("1부터 10까지 합은: {}\n", sum);
 
-	////std::cout << "1부터 10까지 합은: " << sum << std::endl;
+	//for (int i = 1; i < 100; ++i)
+	//{
+	//	if (i % 2 != 0)
+	//		continue;
+	//	std::cout << i << std::endl;
+	//}
+
+	//for (int i = 2; i < 100; i += 2)
+	//{
+	//	std::cout << i << std::endl;
+	//}
 
 
-	while (i <= 10)
-	{
-		sum += i;
-		++i;	
-	}
-	std::cout << std::format("1부터 10까지 합은: {}\n", sum);
+
+
+
+
 
 
 
