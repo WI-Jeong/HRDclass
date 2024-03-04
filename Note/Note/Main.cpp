@@ -101,10 +101,8 @@ int main()
 	int ArrayEleCount = Arraysize / ArrayElement;
 
 	std::cout << Arraysize << "&" << ArrayElement << "&" << ArrayEleCount;
-	
-	*/
 
-	std::array<int, 3> Array;
+		std::array<int, 3> Array;
 
 	size_t Size = Array.size();
 
@@ -112,79 +110,89 @@ int main()
 
 	size_t TotalSize = sizeof(Array);
 	std::cout << TotalSize;
-
-
-
-
+	
+	*/
 
 
 
 #pragma region 11.반복문(loop)**
-	//{
-	//	{
-	//		int i = 0;
-	//		while (i < 5)
-	//		{
-	//			std::cout << std::format("i값은: {}\n", i);
-	//			++i; // i = i + 1;
+	{
+		//{
+		//	int i = 0;
+		//	while (i < 5)
+		//	{
+		//		std::cout << std::format("i값은: {}\n", i);
+		//		++i; // i = i + 1;
 
-	//			if (i == 3)
-	//			{
-	//				std::cout << std::format("i가 3일때 탈출!\n");
-	//				break;
-	//			}
-	//		}
-	//	}
-	//	{
-	//		int i{ 30 };
-	//		do
-	//		{
-	//			std::cout << std::format("i값은: {}\n", i);
-	//			++i;
-	//		} while (i < 5);	// false일때 탈출
-	//		// 31 < 5 => false
-	//	}
-	//	{
-	//		int length = 5;
-	//		for (int i = 0; i < length; ++i)//, First())
-	//		{
-	//			std::cout << std::format("i값은: {}\n", i);
-	//		}
+		//		if (i == 3)
+		//		{
+		//			std::cout << std::format("i가 3일때 탈출!\n");
+		//			break;
+		//		}
+		//	}
+		//}
+		//{
+		//	int i{ 30 };
+		//	do
+		//	{
+		//		std::cout << std::format("i값은: {}\n", i);
+		//		++i;
+		//	} while (i < 5);	// false일때 탈출
+		//	// 31 < 5 => false
+		//}
+		//{
+		//	int length = 5;
+		//	for (int i = 0; i < length; ++i)//, First())
+		//	{
+		//		std::cout << std::format("i값은: {}\n", i);
+		//	}
 
-	//		const int Size = 6;
-	//		int Array[Size]{};
-	//		for (int i = 0; i < Size; ++i)
-	//		{
-	//			Array[i] = i;
-	//		}
+		//	const int Size = 6;
+		//	int Array[Size]{};
+		//	for (int i = 0; i < Size; ++i)
+		//	{
+		//		Array[i] = i;
+		//	}
 
-	//		// 범위기반 for(range based for)
-	//		for (int i : Array)
-	//		{
-	//			//i = 10000;
-	//			std::cout << std::format("i 값은: {}\n", i);
-	//		}
+		//	// 범위기반 for(range based for)
+		//	for (int i : Array)
+		//	{
+		//		//i = 10000;
+		//		std::cout << std::format("i 값은: {}\n", i);
+		//	}
 
-	//		std::array<int, Size> StdArray{};
-	//		for (size_t i = 0; i < Size; ++i)
-	//		{
-	//			StdArray[i] = i;
-	//		}
+		//	std::array<int, Size> StdArray{};
+		//	for (size_t i = 0; i < Size; ++i)
+		//	{
+		//		StdArray[i] = i;
+		//	}
 
-	//		for (int i : StdArray)
-	//		{
-	//			std::cout << std::format("i 값은: {}\n", i);
-	//		}
+		//	for (int i : StdArray)
+		//	{
+		//		std::cout << std::format("i 값은: {}\n", i);
+		//	}
 
-	//		// CTAD(class template argument deduction; 클래스 템플릿 인수 추론)
+		//	// CTAD(class template argument deduction; 클래스 템플릿 인수 추론)
 
-	//		// C++20
-	//		for (std::array Array2{ 1,2,3 }; int i : Array2)
-	//		{
-	//			std::cout << std::format("i 값은: {}\n", i);
-	//		}
-	//	}
-	//}
+		//	// C++20
+		//	for (std::array Array2{ 1,2,3 }; int i : Array2)
+		//	{
+		//		std::cout << std::format("i 값은: {}\n", i);
+		//	}
+		//}
+
+
+		{
+			//어소트락 인강 13 반복문
+
+
+		}
+
+
+
+
+
+	}
 #pragma endregion
 #pragma region 12.포인터와 동적 메모리(pointer***, dynamic memory) + 레퍼런스***(Reference; 참조)
 	//{
