@@ -126,21 +126,65 @@ int main()
 	//}
 
 
-	std::array<int, Size> StArray{};
-	for (size_t i = 0; i < Size; ++i)
-	{
-		StArray[i] = i;
-	}
+	//std::array<int, Size> StArray{};
+	//for (size_t i = 0; i < Size; ++i)
+	//{
+	//	StArray[i] = i;
+	//}
 
-	for (int i : StArray)
-	{
-		std::cout << std::format("i값은: {}\n", i);
-	}
+	//for (int i : StArray)
+	//{
+	//	std::cout << std::format("i값은: {}\n", i);
+	//}
 
-	for (std::array Array2{ 1,2,3 }; int i : Array2)
+	//for (std::array Array2{ 1,2,3 }; int i : Array2)
+	//{
+	//	std::cout << std::format("i값은: {}\n", i);
+	//}
+
+	//int number = 0;
+
+	//while (number<5)
+	//{
+	//	std::cout << std::format("number: {}\n", number);
+	//	++number;
+
+	//	if (number == 3)
+	//	{
+	//		std::cout << std::format("i가 3일 때 종료\n", number);
+	//		break;
+	//	}
+	//}
+
+	//int i = 30;
+	//do
+	//{
+	//	std::cout << std::format("i값은: {}\n", i);
+	//	++i;
+	//} while (i < 5);//false일 때 탈출
+	////31<5->false
+	//
+
+
+
+	int sum = 0;
+	int i = 1;
+
+	//do
+	//{
+	//	sum += i;
+	//	++i;
+	//} while (i <= 10);
+
+	////std::cout << "1부터 10까지 합은: " << sum << std::endl;
+
+
+	while (i <= 10)
 	{
-		std::cout << std::format("i값은: {}\n", i);
+		sum += i;
+		++i;	
 	}
+	std::cout << std::format("1부터 10까지 합은: {}\n", sum);
 
 
 
