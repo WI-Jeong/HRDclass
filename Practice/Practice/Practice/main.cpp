@@ -75,14 +75,15 @@ int main()
 
 #pragma region bit flag
 
-	/*
-	fuction,h에 이넘 하나 만들어줌.
-	enum EPropertyFlags:unsinged char
-	
-	*/
+	int* Array = nullptr;
+	Array = new int[6] {0, 1, 2, 3, 4, 5};
+	Array[0] = 100;
+	for (int i = 0; i < 6; ++i)
+	{
+		Array[i] = i + 1;
+	}
 
-	unsigned char Property = EPropertyFlags::EProperty1;
-	
+
 
 
 #pragma endregion

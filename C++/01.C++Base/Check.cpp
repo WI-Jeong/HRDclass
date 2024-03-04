@@ -199,12 +199,34 @@ int main()
 	//}
 
 
+	//{
 
+	//	//64비트 환경에서 포인터의 크기는 8byte(최대 2의 8승까지)
+	//	//32비트 환경에서 포인터의 크기는 4바이트.
+	//	//size_t Size = sizeof(int*); 로 확인 가능
 
+	//	//[Stack]										//[Heap]
+	//	//[0x???] Pointer(8바이트;64비트)=
+	//	//포인터 변수는 stack에 만들어지고 heap에 없음
+	//	//int*: 주소를 들고 있을 것이다.
+	//	//그 주소를 찾아가면 int가 있다.
+	//	int* Pointer{ nullptr }; 
+	//	//실제 값은 0이지만 프로그래머를 위해 0을 쓰는 것보다 nullptr을 넣어주면
+	//	//명확한 의미를 전달할 수 있다.
+	//	//nullptr이랑 NULL은 같은데 C++에서는 nullptr을 더 자주 씀
 
+	//	size_t Size = sizeof(int*);
 
+	//	size_t Size2 = sizeof(char*);
 
+	//	
+	//}
 
+	//{
+	//	//[Stack]											//[heap]
+	//	//[0xfff] Pointer(8byte;64bit) =nullptr
+	//	int* Pointer{ nullptr };	
 
+	//}
 
 }
