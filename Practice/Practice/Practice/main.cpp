@@ -66,39 +66,24 @@ int main()
 
 #pragma region 02.형변환
 
-	double d = 0.123456789;
-	float f = d;
+	//double d = 0.123456789;
+	//float f = d;
 
 
 
 #pragma endregion
 
+#pragma region bit flag
 
+	/*
+	fuction,h에 이넘 하나 만들어줌.
+	enum EPropertyFlags:unsinged char
+	
+	*/
 
+	unsigned char Property = EPropertyFlags::EProperty1;
+	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#pragma region xxxxx
 
 #pragma endregion
 
