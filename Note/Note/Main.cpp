@@ -277,107 +277,105 @@ int main()
 	//		int* Pointer{ nullptr };
 	//		int b = 10;
 
-	//		// [Stack]										// [Heap]
-	//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10
-	//		Pointer = new int{ 10 };
+//		// [Stack]										// [Heap]
+//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10
+//		Pointer = new int{ 10 };
 
-	//		// [Stack]										// [Heap]
-	//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10000
-	//		*Pointer = 10000;
-	//		std::cout << *Pointer << std::endl;
-	//		//Pointer = (int*)10000;	// 잠재적인 문제가 발생할 가능성이 아주 높다
-	//		//*Pointer = 500;
-	//		// 이렇게 동작할당을 하고 Memory를 해제하기 전에 다른 주소로 바꾸는 경우
-	//		// 할당한 메모리는 미아가 됩니다.
-	//		// 이를 메모리 누수(메모리 릭, memory leak)이라고 부릅니다.
+//		// [Stack]										// [Heap]
+//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10000
+//		*Pointer = 10000;
+//		std::cout << *Pointer << std::endl;
+//		//Pointer = (int*)10000;	// 잠재적인 문제가 발생할 가능성이 아주 높다
+//		//*Pointer = 500;
+//		// 이렇게 동작할당을 하고 Memory를 해제하기 전에 다른 주소로 바꾸는 경우
+//		// 할당한 메모리는 미아가 됩니다.
+//		// 이를 메모리 누수(메모리 릭, memory leak)이라고 부릅니다.
 
-	//		// memory 할당 해제
-	//		delete Pointer;
-	//	}
-	//	{
-	//		// [Stack]										// [Heap]
-	//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 5	
-	//		int* Pointer{ new int{5} };
-	//		// 동적할당을 하고 해당 스코프({})를 벗어나면 동적 할당한 메모리는 미아가 됩니다.
-	//		// 메모리 누수(메모리 릭, memory leak)
+//		// memory 할당 해제
+//		delete Pointer;
+//	}
+//	{
+//		// [Stack]										// [Heap]
+//		// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 5	
+//		int* Pointer{ new int{5} };
+//		// 동적할당을 하고 해당 스코프({})를 벗어나면 동적 할당한 메모리는 미아가 됩니다.
+//		// 메모리 누수(메모리 릭, memory leak)
 
-	//		// delete를 해줌으로서 메모리 누수를 막을 수 있다.
-	//		delete Pointer;
-	//	}
-	//	{
-	//		// C언어를 배우셨다면 malloc을 사용해서 메모리를 할당 했을텐데, C++에서도 사용할 수 있습니다.
-	//		// malloc과 new는 큰 차이가 있습니다.
-	//		// 아직 배우지 않았지만, new와 delete는 struct 또는 class에서 생성자 소멸자를 호출해주는 특징이 있습니다.
-	//		// 그러나 malloc은 순수하게 memory만 할당 해줍니다.
-	//		// int* 입장에서도 new는 초기값{}을 지정할 수 있었지만, malloc은 지정 불가!
-	//		int* Pointer = (int*)malloc(sizeof(int));
-	//		*Pointer = 1000;
-	//		free(Pointer);
-	//	}
-	//	{
-	//		// 메모리 할당이 실패할 수도 있습니다.
-	//		// 컴퓨터에 메모리가 부족한 경우 동적 할당은 실패할 수 있습니다.
-	//		// nullptr
-	//		/*while (true)
-	//		{
-	//			new int;
-	//		}*/
-	//	}
-	//	{
-	//		// [Stack]										// [Heap]
-	//		// [0xfff] Array(8Byte; 64bit) = 0x100			0x100 [int][int][int][int][int][int]
-	//		// 
-	//		// 배열 동적 할당
-	//		int* Array = nullptr;
-	//		Array = new int[6] {0, 1, 2, 3, 4, 5};
-	//		Array[0] = 100;
-	//		for (int i = 0; i < 6; ++i)
-	//		{
-	//			Array[i] = i + 1;
+//		// delete를 해줌으로서 메모리 누수를 막을 수 있다.
+//		delete Pointer;
+//	}
+//	{
+//		// C언어를 배우셨다면 malloc을 사용해서 메모리를 할당 했을텐데, C++에서도 사용할 수 있습니다.
+//		// malloc과 new는 큰 차이가 있습니다.
+//		// 아직 배우지 않았지만, new와 delete는 struct 또는 class에서 생성자 소멸자를 호출해주는 특징이 있습니다.
+//		// 그러나 malloc은 순수하게 memory만 할당 해줍니다.
+//		// int* 입장에서도 new는 초기값{}을 지정할 수 있었지만, malloc은 지정 불가!
+//		int* Pointer = (int*)malloc(sizeof(int));
+//		*Pointer = 1000;
+//		free(Pointer);
+//	}
+//	{
+//		// 메모리 할당이 실패할 수도 있습니다.
+//		// 컴퓨터에 메모리가 부족한 경우 동적 할당은 실패할 수 있습니다.
+//		// nullptr
+//		/*while (true)
+//		{
+//			new int;
+//		}*/
+//	}
+//	{
+//		// [Stack]										// [Heap]
+//		// [0xfff] Array(8Byte; 64bit) = 0x100			0x100 [int][int][int][int][int][int]
+//		// 
+//		// 배열 동적 할당
+//		int* Array = nullptr;
+//		Array = new int[6] {0, 1, 2, 3, 4, 5};
+//		Array[0] = 100;
+//		for (int i = 0; i < 6; ++i)
+//		{
+//			Array[i] = i + 1;
 
-	//			// Array + n
-	//			// Array(Heap에 있는 주소) + n
-	//			// Array + 1 = Array주소에 + 4byte(int)의 주소
+//			// Array + n
+//			// Array(Heap에 있는 주소) + n
+//			// Array + 1 = Array주소에 + 4byte(int)의 주소
 
-	//			// Array(int*)	Array + 1    Array + 2    Array + 3 ...
-	//			// [00 00 00 01][00 00 00 02][00 00 00 03][00 00 00 04]
+//			// Array(int*)	Array + 1    Array + 2    Array + 3 ...
+//			// [00 00 00 01][00 00 00 02][00 00 00 03][00 00 00 04]
 
-	//			*(Array + i) = i + 2;
-	//		}
-	//		delete[] Array;
-	//	}
-	//	{
-	//		// [Stack]										// [Heap]
-	//		// [0xfff] Array(8Byte; 64bit) = 0x100			0x100 [int][int][int][int][int][int]
-	//		// 
-	//		// 배열 동적 할당
-	//		char* Array = nullptr;
-	//		Array = new char[6] {0, 1, 2, 3, 4, 5};
-	//		Array[0] = 100;
-	//		for (int i = 0; i < 6; ++i)
-	//		{
-	//			Array[i] = i + 1;
+//			*(Array + i) = i + 2;
+//		}
+//		delete[] Array;
+//	}
+//	{
+//		// [Stack]										// [Heap]
+//		// [0xfff] Array(8Byte; 64bit) = 0x100			0x100 [int][int][int][int][int][int]
+//		// 
+//		// 배열 동적 할당
+//		char* Array = nullptr;
+//		Array = new char[6] {0, 1, 2, 3, 4, 5};
+//		Array[0] = 100;
+//		for (int i = 0; i < 6; ++i)
+//		{
+//			Array[i] = i + 1;
 
-	//			// Array + n
-	//			// Array(Heap에 있는 주소) + n
-	//			// Array + 1 = Array주소에 + 4byte(int)의 주소
+//			// Array + n
+//			// Array(Heap에 있는 주소) + n
+//			// Array + 1 = Array주소에 + 4byte(int)의 주소
 
-	//			// Array(char*)	Array + 1    Array + 2    Array + 3 ...
-	//			// [01]         [02]         [03]         [04]
-	//			//int* Test = (int* )Array;
-	//			// i offset 만큼 떨어진 위치의 값을 바꾸기겠다
-	//			*(Array + i) = i + 2;
-	//			// 리틀엔디안 빅엔디안 (컴퓨터 내부에서 비트를 처리하는 방식)
-	//			//*(Test + 1) = 5;
-	//		}
-	//		delete[] Array;
-	//	}
-	//}
+//			// Array(char*)	Array + 1    Array + 2    Array + 3 ...
+//			// [01]         [02]         [03]         [04]
+//			//int* Test = (int* )Array;
+//			// i offset 만큼 떨어진 위치의 값을 바꾸기겠다
+//			*(Array + i) = i + 2;
+//			// 리틀엔디안 빅엔디안 (컴퓨터 내부에서 비트를 처리하는 방식)
+//			//*(Test + 1) = 5;
+//		}
+//		delete[] Array;
+//	}
+//}
 #pragma endregion
 
-
-
-
+}
 
 
 
