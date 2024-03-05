@@ -104,10 +104,39 @@ int main()
 	std::cout << "ArrayPointer= " << ArrayPointer << std::endl;
 	std::cout << "ArrayPointer2= " << ArrayPointer2 << std::endl;
 	std::cout << "Array[0]의 주소= " << &Array[0] << std::endl;
-	std::cout << "&Array= " << &Array << std::endl;
-	
+	std::cout << "&Array= " << &Array << std::endl;	
 	
 	*/
+
+	/*
+	포인터의 연산
+	
+	int Array[3] = {1,2,3};
+	int* IArrayPointer = Array;
+
+	std::cout << "Array[0]= " << Array[0] << std::endl;
+	std::cout << "Array[1]= " << Array[1] << std::endl;
+	std::cout << "Array[2]= " << Array[2] << std::endl;
+
+	std::cout << "Array[0]Address= " << &Array[0] << std::endl;
+	std::cout << "Array[1]Address= " << &Array[1] << std::endl;
+	std::cout << "Array[2]Address= " << &Array[2] << std::endl;
+
+
+	std::cout << "IArrayPointer+0= " << IArrayPointer + 0 << std::endl;
+	std::cout << "IArrayPointer + 1 = " << IArrayPointer + 1 << std::endl;
+	std::cout << "IArrayPointer+2= " << IArrayPointer + 2 << std::endl;
+	
+	*/
+
+
+
+
+
+
+
+
+
 
 
 
