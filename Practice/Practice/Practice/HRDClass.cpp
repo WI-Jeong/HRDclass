@@ -978,6 +978,14 @@ int main()
 			// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10
 			Pointer = new int{ 10 };
 
+			//{
+			//	__int64* Pointer2{ nullptr };
+			//	int c = 100;
+			//	int b = 10;
+			//	Pointer2 = (__int64*)&c;
+			//  *Pointer2 = 10000;
+			//}
+
 			// [Stack]										// [Heap]
 			// [0xfff] Pointer(8Byte; 64bit) = 0x100		0x100 int[4byte] = 10000
 			*Pointer = 10000;
@@ -1028,6 +1036,15 @@ int main()
 			int* Array = nullptr;
 			Array = new int[6] {0, 1, 2, 3, 4, 5};
 			Array[0] = 100;
+			Array[1] = 1000;
+			*Array = 10;
+			// Array가 들고있던 주소로부터 1칸을 이동하는데, 1칸이 지금 타입이 int*
+			// 여서 4byte만큼 건너뛴 위치의 값을 20으로 int(4byte)만큼 바꾼다
+			*(Array + 1) = 20;
+
+			// Array가 들고있던 주소로부터 1칸을 이동하는데, 1칸이 지금 타입이 __int64*
+			// 여서 8byte만큼 건너뛴 위치의 값을 10으로 __int64(8byte)만큼 바꾼다
+			//*((__int64*)Array + 1) = 10;
 			for (int i = 0; i < 6; ++i)
 			{
 				Array[i] = i + 1;
@@ -1042,6 +1059,9 @@ int main()
 				*(Array + i) = i + 2;
 			}
 			delete[] Array;
+
+			// 2차원이상 배열도 동적할당으로 구현이 가능합니다.
+			// 저는 실무에서 쓴 기억이 없습니다.
 		}
 		{
 			// [Stack]										// [Heap]
@@ -1068,6 +1088,170 @@ int main()
 				//*(Test + 1) = 5;
 			}
 			delete[] Array;
+		}
+		{
+			int a = 10;
+			int* Pointer = nullptr;
+			Pointer = &a;
+			*Pointer = 100;
+		}
+		{
+			struct FStruct
+			{
+				// 생성자: 인스턴스가 만들어질때 호출되는 함수 
+				// (예외적으로 리턴타입이 없습니다)
+				// 선언하지 않으면 자동으로 만들어준다
+				// thiscall: 자기자신의 주소를 파라미터로 던져준다
+				FStruct(/*FStruct* This*/) // this pointer가 숨겨져 있다
+				{
+					std::cout << std::format("V: {}, V2: {}\n", Value, this->Value2);
+					//int* V0 = (int*)this;
+					//*V0 = 100; // Value의 주소와 동일
+					//
+					////int* V2 = V0 + 1;
+					//int* V2 = ((int*)this) + 1;
+					//*V2 = 100000;
+				}
+
+				// 소멸자: 인스턴스가 소멸되는 시점에 호출되는 함수 
+				// 생략가능
+				~FStruct()
+				{
+					std::cout << std::format("~FStruct V: {}, V2: {}\n", Value, this->Value2);
+				}
+
+				void Print()
+				{
+					std::cout << std::format("V: {}, V2: {}\n", this->Value, this->Value2);
+				}
+				int Value = 10;
+				int Value2 = 100;
+			};
+
+			int V0 = 20;
+			// int[Value = 10]
+			// int[Value2 = 100]
+			{
+				FStruct Struct;
+				//FStruct Struct2;
+
+				Struct.Value = 1000;
+			}
+			//Struct.Print();
+			//Struct2.Print();
+			int V1 = 200;
+
+			FStruct* Pointer = nullptr;
+			Pointer = new FStruct;
+			Pointer->Value = 1000;
+			(*Pointer).Value2 = 10000;
+
+			int* Pointer1 = (int*)Pointer;
+			*Pointer1 = 444;
+			int* Pointer2 = Pointer1 + 1;
+			*Pointer2 = 555;
+
+			delete Pointer;
+
+			{
+				// malloc은 요청한 size만큼 메모리 블록만 할당.
+				// new는 요청한 size만큼 메모리 블록할당 후 초기화(struct같은 경우 생성자 까지 호출)
+				FStruct* Struct2 = (FStruct*)malloc(sizeof(FStruct));
+
+				free(Struct2);
+			}
+
+			// 저수준의 동적할당은 사용빈도가 줄었다고 했지만,
+			// 포인터는 사용하지 않은날이 없는 수준
+
+			// 포인터를 사용하는 이유?
+			{
+				// int Value 초기화							FParam Value 초기화 (생성자)
+				int Value = 0;								// FParam Value = FParam();
+				// Function call, 인자 복사
+				// int a = Value (a 초기화)					// FParam a = Value (a 초기화; 복사 생성자)
+				// Function ret, 레지스터(eax, a값을 backup)// ret 할때 임시 변수에 복사 발생! (복사생성자 호출)
+					// return 할때 eax = a;						// return 할때 비슷하게 레지스터에 = a;
+				// Value = eax; (대입)						// Value = 레지스터; (대입 연산자 호출)
+				Value = Function(Value);
+
+				//FParam Param{10};
+				FParam Param = FParam(10);
+				Param.Value[3] = 999;
+
+				// Value[0]에는 10이 들어있길 원하고
+				// Value[3]에는 999가 들어있길 원한다
+				//FParam InParam = FParam(Param);
+				//FParam Param = FParam(10);
+				Param = Function(Param);
+
+				int Value2 = 10; // 초기화
+				Value2 = 100; // 대입
+			}
+			{
+				int a = 10;
+				int* Pointer = &a;
+				*Pointer = 100;
+
+				FParam Param = FParam();
+				Param.Value[0] = 444;
+				FParam* InParam = &Param;
+				InParam->Value[0] = 222;
+				(*InParam).Value[0] = 333;
+				Function(&Param);
+			}
+			{
+				// 레퍼런스, 참조
+
+				// 포인터와 레퍼런스의 차이
+
+				int a = 5;
+				int* InParamPointer = &a;
+				*InParamPointer = 100;
+
+				// Pointer는 가리키던 대상을 바꿀 수 있다.
+				int bb = 1000;
+				InParamPointer = &bb;
+				*InParamPointer = 222;
+
+				// const가 *보다 오른쪽에 있으면 마치 Reference처럼
+				// 가리키고 있는 주소를 바꿀 수 없다
+				int* const InPointerLikeReference = &a;
+				//InPointerLikeReference = &bb;
+				const int Con = 100;
+				//Con = 1000;
+
+				// const가 * 보다 왼쪽에 있으면 가리키던 대상의 값을
+				// 수정할 수 없다
+				const int* InPointerValueIsConst = &a;
+				//*InPointerValueIsConst = 2222;
+				// 주소는 바꿀 수 있다.
+				InPointerValueIsConst = &bb;
+
+				// 주소도 바꿀 수 없고, 가리키던 주소에 있는 값도 바꿀 수 없다
+				const int* const InPointerValueIsConstAndLikeReference = &a;
+				// int const* const InPointerValueIsConstAndLikeReference = &a;
+				//InPointerValueIsConstAndLikeReference = &bb;
+				//*InPointerValueIsConstAndLikeReference = 100000;
+
+				// Reference에 const를 붙히면 가리키던 값을 변경할 수 없다
+				const int& ConstReference = a;
+				//ConstReference = 10000;
+
+				// 레퍼런스는 초기화에서만 다르게 동작. 
+				// InParam이 곧 a가 된다
+				// 초기화 할때 한번 정해둔 주소를 나중에 바꿀수 없는 문법이다
+				int& InParamReference = a;
+				int b = 10;
+				InParamReference = 1000; // 한번 바인딩된 주소가 변경되지 않고, 값만 바뀐다
+				InParamReference = b;	 // 한번 바인딩된 주소가 변경되지 않고, 값만 바뀐다
+
+				FunctionCallByPointer(&a);
+				FunctionCallByReference(a);
+
+				FParam Param = FParam(1000);
+				FunctionCallByReference(Param);
+			}
 		}
 	}
 #pragma endregion
