@@ -73,7 +73,28 @@ int main()
 
 #pragma endregion
 
-#pragma region bit flag
+#pragma region 포인터
+
+	/*
+	포인터
+
+	int i = 100;
+	int* Pointer = &i;
+
+	std::cout << "i= " << i << std::endl;
+	std::cout << "i address= " << &i << std::endl;
+	std::cout << "Pointer= " << Pointer << std::endl;
+	std::cout << "Pointer address= " << &Pointer << std::endl;
+
+	*Pointer = 777;
+	std::cout << "i= " << i << std::endl;
+	std::cout << "i address= " << &i << std::endl;
+	std::cout << "Pointer= " << Pointer << std::endl;
+	std::cout << "Pointer address= " << &Pointer << std::endl;
+
+	*/
+
+	//포인터와 배열
 
 
 
