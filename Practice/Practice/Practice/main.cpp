@@ -158,15 +158,39 @@ delete[] DynamicArray;
 
 	*/
 
+/*
+포인터
+int i = 100;
+float f = 3.f;
+
+int* Point = &i;
+int* Point2 = (int*) &f;
+
+i = *Point2;
+
+std::cout << i;
+
+int* Point = nullptr;
+int i = 0;
+
+Point = &i;
+
+Point += 1;
 
 
 
 
 
+int iArr[10] = {};
+iArr + 1; //4를 더한 주소(int배열이니까)
 
+//배열의 이름이 배열 시작 주소가 됨.
+//포인터 변수 앞에 * 붙이면 주소값으로 접근하는거.
 
+*(iArr + 1) = 10;
+//2번째 원소에 10을 넣어라.
 
-
+*/
 
 
 
