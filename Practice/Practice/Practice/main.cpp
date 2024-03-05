@@ -129,6 +129,37 @@ int main()
 	
 	*/
 
+	/*
+	동적할당
+
+	struct Player
+{
+	char Name[32];
+	char Test1;
+	char Test2;
+	int Option1;
+	char Test3;
+	int Option21;
+	int Option3;
+
+};
+
+Player* player = new Player;
+
+std::cout << " sizeof(Player): " << sizeof(Player) << std::endl;
+
+(*player).Option1 = 1020;
+
+delete player;
+
+int* DynamicArray = new int[100];
+
+delete[] DynamicArray;
+
+	*/
+
+
+
 
 
 
