@@ -94,7 +94,20 @@ int main()
 
 	*/
 
-	//포인터와 배열
+	/*
+	포인터와 배열
+	int Array[100] = {};
+	int* ArrayPointer = Array;
+	int* ArrayPointer2 = (int*) & Array;
+
+	std::cout << "Array= " << Array << std::endl;
+	std::cout << "ArrayPointer= " << ArrayPointer << std::endl;
+	std::cout << "ArrayPointer2= " << ArrayPointer2 << std::endl;
+	std::cout << "Array[0]의 주소= " << &Array[0] << std::endl;
+	std::cout << "&Array= " << &Array << std::endl;
+	
+	
+	*/
 
 
 
