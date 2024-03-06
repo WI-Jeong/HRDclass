@@ -192,7 +192,10 @@ iArr + 1; //4를 더한 주소(int배열이니까)
 
 */
 
-//문제1
+/*
+포인터 문제
+
+문제1
 short sArr[10] = { 1,2,3,4,5,6,7,8,9,10 };
 int* pI = (int*)sArr;
 int iData = *((short*)(pI + 2));
@@ -201,29 +204,14 @@ printf("1번 문제 정답: %d\n", iData);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//문제2
+문제2
 char cArr[2] = { 1,1 };
 short* pS = (short*)cArr;
 iData = *pS;
 
 printf("2번 문제 정답: %d\n", iData);
 
-
-
+*/
 
 
 #pragma endregion
