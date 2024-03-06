@@ -16,10 +16,22 @@ int main()
 	std::cout << std::format("A: {}, B: {}\n", A, B);
 
 
+	//문제1-1
+	Swap(A,B);
+
+	std::cout << std::format("A: {}, B: {}\n", A, B);
+
+
 	//문제2
 	std::array Numbers{ 1,2,3,4,5,6,7,8,9,10 };
 	std::vector<int> Odds, Evens;
 	SeperateOddsAndEvens(Numbers, Odds, Evens);
+
+	//문제2-2
+	Odds.clear();
+	Evens.clear();
+	SeperateOddsAndEvens(Numbers, Odds, Evens);
+
 
 
 
