@@ -1,6 +1,8 @@
 // #pragma once: 한번만 이 파일이 포함되게 해주세요
 #pragma once
 #include <iostream>
+#include <array>
+#include <vector>
 
 void /*__cdecl*/ FunctionName();
 // 이름이 같고, 파라미터가 다른 함수를
@@ -41,38 +43,6 @@ enum EPropertyFlags : unsigned char // 1Byte
 	EProperty7 = 0x40,		// 0100 0000	1 << 6				   64
 	EProperty8 = 0x80,		// 1000 0000	1 << 7				  128
 };
-
-void HasFlag(unsigned char InProperty);
-
-
-
-
-
-
-
-
-
-
-
-
-
-//클로킹
-//쉴드가 있는가?
-enum EPropertyFlags :unsigned char
-{
-				//  16진수				2진수				왼쪽쉬피트연산					10진수
-	ENone		=   0x00,		   //0b 0000 0000					0							0
-	EProperty1  =   0x01,		   //0b 0000 0001					1<<0						1 
-	EProperty2  =	0x02,		   //0b 0000 0010					1<<1						2
-	EProperty3  =	0x04,		   //0b 0000 0100					1<<2						4
-	EProperty4  =	0x08,		   //0b 0000 1000					1<<3						8
-	EProperty5  =	0x10,		   //0b 0001 0000					1<<4						16
-	EProperty6  =	0x20,		   //0b 0010 0000					1<<5						32
-	EProperty7  =	0x40,		   //0b 0100 0000					1<<6						64
-	EProperty8  =	0x80,		   //0b 1000 0000					1<<7						128
-
-};
-
 
 void HasFlag(unsigned char inProperty)
 
@@ -199,3 +169,67 @@ void FunctionCallByPointer(int* InParam);
 // CallByReference
 void FunctionCallByReference(int& InParam);
 void FunctionCallByReference(FParam& InParam);
+
+void FunctionWithPointer(int* InPointer);
+
+//#define(메크로 선언)		메크로이름 (파라미터)	대채할 구문	\: 메크로는 한줄에 내용이 다 와야하는데 다음 라인도 메크로에 포함하겠다는 키워드
+//#define						SAFE_DELETE(Var)		delete Var; \
+//Var = nullptr;
+
+#define SAFE_DELETE(Var) delete Var; Var = nullptr;
+#define HI std::cout <<"Hi\n";
+#define Wow int
+#define Hmm(a, b) a < b
+
+void Swap(int& InOutFirst, int& InOutSecond);
+void Swap(int* InOutFirst, int* InOutSecond); // Swap함수를 오버로딩
+
+void SeperateOddsAndEvens(const std::array<int, 10>* InNumbers,
+	std::vector<int>* OutOdds,
+	std::vector<int>* OutEvens);
+void SeperateOddsAndEvens(const std::array<int, 10>& InNumbers,
+	std::vector<int>& OutOdds,
+	std::vector<int>& OutEvens);
+
+struct FOddsAndEvens
+{
+	FOddsAndEvens(std::vector<int>& InOdds, std::vector<int>& InEvens)
+		//: a(100) // 아래에서 a = 10처럼 생성자 내부에서 : 이후에 변수(값) 으로 초기화
+		// 를 할 수 있다.
+		// 아래에 a = 10 해둔 것 보다 우선순위가 더 높다
+
+		: Odds(std::move(InOdds)), Evens(std::move(InEvens))
+	{
+		std::cout << __FUNCTION__ << std::endl;
+	}
+
+	FOddsAndEvens(const FOddsAndEvens& InOhter)
+		: Odds(std::move(InOhter.Odds)), Evens(std::move(InOhter.Evens))
+	{
+		std::cout << __FUNCTION__ << std::endl;
+	}
+
+	// 이동 생성자
+	/*FOddsAndEvens(const FOddsAndEvens&& InOhter)
+		: Odds(InOhter.Odds), Evens(InOhter.Evens)
+	{
+		std::cout << __FUNCTION__ << std::endl;
+	}*/
+
+	FOddsAndEvens& operator = (const FOddsAndEvens& InParam)
+	{
+		std::cout << __FUNCTION__ << std::endl;
+		Odds = InParam.Odds;
+		Evens = InParam.Evens;
+		return *this;
+	}
+
+	//int a = 10;
+	std::vector<int> Odds;
+	std::vector<int> Evens;
+};
+FOddsAndEvens SeperateOddsAndEvens(const std::array<int, 10>& InNumbers);
+
+void Test(int aa);
+void TestReference(int& aa);
+void TestPointer(int* aa);

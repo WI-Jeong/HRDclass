@@ -1218,6 +1218,7 @@ int main()
 				// 가리키고 있는 주소를 바꿀 수 없다
 				int* const InPointerLikeReference = &a;
 				//InPointerLikeReference = &bb;
+				*InPointerLikeReference = 100000;
 				const int Con = 100;
 				//Con = 1000;
 
@@ -1252,6 +1253,202 @@ int main()
 				FParam Param = FParam(1000);
 				FunctionCallByReference(Param);
 			}
+			{
+				int* A = nullptr;
+				FunctionWithPointer(A);
+
+				if (A == nullptr)
+				{
+					A = new int{ 5 };
+					FunctionWithPointer(A);
+
+					int* B = A;
+
+					//delete A;	// B에 들어있는 주소는 유효한 주소가 아님
+					//A = nullptr;
+					SAFE_DELETE(A);
+					HI; // 이렇게 쓰지 마세요
+					Wow aaa; // 이렇게 쓰지 마세요
+					if (Hmm(10, 20)) // 이렇게 쓰지 마세요
+					{
+
+					}
+
+					FunctionWithPointer(B);
+					// 댕글링 포인터: 이미 delete된 메모리 주소를 들고 있는 상황
+					// 이때 해당 memory에 write 하는 경우 프로그램이 죽을수도 있고 잘
+					// 동작 할 수 도 있다. 하지만 잠재적인 위험이 아주 높다.
+					// 가끔직 잘 돌다가 죽는 버그를 원인을 찾았더니 댕글링 포인터인 경우들이
+					// 종종 발견된다
+				}
+				if (A == nullptr)
+				{
+					A = new int{ 5 };
+					int& B = *A;
+					int* C = A;
+					B = 1000;
+					*C = 2000;
+					SAFE_DELETE(A);
+					B = 500;
+					*C = 5000;
+				}
+			}
+		}
+		{
+			int A = 10;
+			int B = 100;
+			Swap(A, B);
+			// A: 100
+			// B: 10
+
+			//int* InOutFirst = &A;
+			//int* InOutSecond = &B;
+
+			//const int Temp = *InOutFirst;
+			//InOutFirst = InOutSecond; // InOutFirst = &B;
+			// -> *InOutFirst = *InOutSecond;
+			//*InOutSecond = Temp;
+
+			Swap(&A, &B);
+
+			// A:100, B:10
+			std::cout << std::format("A: {}, B: {}\n", A, B);
+		}
+		{
+			std::array Numbers{ 1,2,3,4,5,6,7,8,9,10 };
+			std::vector<int> Odds, Evens;
+			// Pointer 버전의 함수
+			SeperateOddsAndEvens(&Numbers, &Odds, &Evens);
+			// Clear 함수로 내부에 할당된 Memory를 날린다
+			// 해당 변수를 다시 사용하려고 날렸음
+			Odds.clear();
+			Evens.clear();
+			// Reference 버전의 함수
+			SeperateOddsAndEvens(Numbers, Odds, Evens);
+
+			FOddsAndEvens Result = SeperateOddsAndEvens(Numbers);
+			Result.Evens;
+			Result.Odds;
+
+			// 함수 인자에 레퍼런스(&) 또는 포인터(*) 없는건
+			// 안에서 그녀석을 바꾸면 밖에 영향을 미치지 않습니다.
+			int a = 10;
+			Test(a);
+
+			// 안에서 aa를 바꾸면 밖의 a가 바뀐다
+			TestReference(a);
+
+			TestPointer(&a);
+		}
+		{
+			// 메모리 누수를 탐지요청
+			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+			//_crtBreakAlloc = 373;
+
+			int* Pointer = new int{ 10 };
+			// 만능은 아니다.. 싱글 스레드 환경에서는 잘 되는데,
+			// 멀티 스레드 환경에서는 추적이 힘들 수 있습니다.
+			double* Hello = new double{ 0 };
+		}
+
+		// 스마트 포인터
+		std::shared_ptr<int> Shared;
+		{
+			// 레퍼런스 카운트 기반
+			// 참조 횟수를 내부에 보관하고 있다가
+			// 참조 횟수가 0이되면 메모리를 delete한다
+			std::shared_ptr<int> A = std::make_shared<int>(10);
+			Shared = A;
+
+			*A = 1000;
+		}
+		std::cout << std::format("Shared: {}\n", *Shared);
+
+		struct FStruct
+		{
+			FStruct()
+			{
+				std::cout << __FUNCTION__ << std::endl;
+			}
+			FStruct(int a)
+			{
+				std::cout << __FUNCTION__ << std::endl;
+			}
+			FStruct(int a, int b)
+			{
+				std::cout << __FUNCTION__ << std::endl;
+			}
+			~FStruct()
+			{
+				std::cout << __FUNCTION__ << std::endl;
+			}
+
+			int Value = 0;
+		};
+		std::shared_ptr<FStruct> SharedStruct;
+		// 강한 참조 횟수에 영향을 끼치지 않는다
+		std::weak_ptr<FStruct> WeakStruct;
+		{
+			std::shared_ptr<FStruct> A = std::make_shared<FStruct>(10, 20);
+			SharedStruct = A;
+			WeakStruct = A;
+
+			A->Value = 10;
+			SharedStruct->Value = 100;
+
+			WeakStruct.lock()->Value = 1000;
+
+			std::cout << std::format("Value: {}\n", SharedStruct->Value);
+
+			A = nullptr;
+			//WeakStruct.reset();
+			//A.reset();
+		}
+		FStruct* Pointer = SharedStruct.get();
+		SharedStruct = nullptr;
+
+		/*if (SharedStruct)
+		{
+			std::cout << std::format("SharedStruct\n");
+		}*/
+		// SharedStruct = nullptr;
+		//SharedStruct.reset();	// 이 인스턴스의 reference를 깔 수 있다.
+
+		if (Pointer)
+		{
+			// 그냥 pointer는 생존 여부를 알 수 없다
+			std::cout << "생존?? 정말?\n";
+		}
+		else
+		{
+			std::cout << "소멸?? 정말??\n";
+		}
+
+		if (WeakStruct.expired())
+		{
+			std::cout << "소멸됨!\n";
+		}
+		else
+		{
+			std::cout << "생존!\n";
+		}
+
+		std::unique_ptr<FStruct> Unique5;
+		{
+			// 단 하나만 존재
+			std::unique_ptr<FStruct> Unique = std::make_unique<FStruct>();
+			/*std::shared_ptr<FStruct> Shared2 = Unique;
+			std::weak_ptr<FStruct> Weak2 = Unique;
+			std::unique_ptr<FStruct> Unique2 = Unique;*/
+			Unique->Value;
+			std::cout << std::format("Value: {}\n", Unique->Value);
+			Unique5 = std::move(Unique);
+
+			if (Unique)
+			{
+				std::cout << std::format("Value: {}\n", Unique->Value);
+			}
+			std::cout << std::format("Value: {}\n", Unique5->Value);
 		}
 	}
 #pragma endregion

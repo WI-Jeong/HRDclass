@@ -87,8 +87,6 @@ int Function(int a)
 	return a;
 }
 
-// 1. FParam InParam = FParam(Param); // 복사!
-// 2. return -> Param = InParam; // 복사!
 FParam Function(FParam InParam)
 {
 	for (int i = 0; i < 1000; ++i)
@@ -122,4 +120,140 @@ void FunctionCallByReference(FParam& InParam)
 	{
 		InParam.Value[i] = i;
 	}
+}
+
+#include <cassert>
+void FunctionWithPointer(int* InPointer)
+{
+	// debug 모드일때 동작하는 assert는
+	// 프로그래머의 명백한 실수를 탐지하기 위해 사용
+	//_ASSERT(InPointer != nullptr);
+	//if (InPointer == nullptr)
+	if (!InPointer)
+	{
+		_ASSERT(false);
+		return;
+	}
+
+	*InPointer += 100;
+}
+
+// In: 밖에서 값을 채워서 준다
+// Out: 값이 함수 내부에서 바뀌어서 나온다
+void Swap(int& InOutFirst, int& InOutSecond)
+{
+	// Temp = A(10)
+	const int Temp = InOutFirst;
+
+	// A(10) = B(100)
+	// A = 100
+	InOutFirst = InOutSecond;
+
+	// B(100) = Temp(10)
+	// B = 10
+	InOutSecond = Temp;
+
+	// InOutFirst(A): 100
+	// InOutSecond(B): 10
+}
+
+void Swap(int* InOutFirst, int* InOutSecond)
+{
+	// Temp = A(100)
+	const int Temp = *InOutFirst;
+
+	// A(100) = B(10)
+	// A = 10
+	*InOutFirst = *InOutSecond;
+
+	// B(10) = Temp(100)
+	*InOutSecond = Temp;
+
+	// InOutFirst(A): 10
+	// InOutSecond(B): 100
+}
+
+void SeperateOddsAndEvens(const std::array<int, 10>* InNumbers, std::vector<int>* OutOdds, std::vector<int>* OutEvens)
+{
+	for (int Value : *InNumbers)
+	{
+		std::cout << Value << std::endl;
+
+		// 홀수 판정
+		// 1 / 2 : 몫:0 나머지:1 => 1은 홀수
+		// 2 / 2 : 몫:1 나머지:0 => 2는 짝수
+		// 3 / 2 : 몫:1 나머지:1 => 3은 홀수
+		// 4 / 2 : 몫:2 나머지:0 => 4는 짝수
+		if (Value % 2 == 1)
+		{
+			OutOdds->push_back(Value);
+		}
+		else
+		{
+			OutEvens->push_back(Value);
+		}
+	}
+}
+
+void SeperateOddsAndEvens(const std::array<int, 10>& InNumbers, std::vector<int>& OutOdds, std::vector<int>& OutEvens)
+{
+	for (int Value : InNumbers)
+	{
+		std::cout << Value << std::endl;
+
+		// 홀수 판정
+		// 1 / 2 : 몫:0 나머지:1 => 1은 홀수
+		// 2 / 2 : 몫:1 나머지:0 => 2는 짝수
+		// 3 / 2 : 몫:1 나머지:1 => 3은 홀수
+		// 4 / 2 : 몫:2 나머지:0 => 4는 짝수
+		if (Value % 2 == 1)
+		{
+			OutOdds.push_back(Value);
+		}
+		else
+		{
+			OutEvens.push_back(Value);
+		}
+	}
+}
+
+FOddsAndEvens SeperateOddsAndEvens(const std::array<int, 10>& InNumbers)
+{
+	std::vector<int> Odds, Evens;
+	for (int Value : InNumbers)
+	{
+		std::cout << Value << std::endl;
+
+		// 홀수 판정
+		// 1 / 2 : 몫:0 나머지:1 => 1은 홀수
+		// 2 / 2 : 몫:1 나머지:0 => 2는 짝수
+		// 3 / 2 : 몫:1 나머지:1 => 3은 홀수
+		// 4 / 2 : 몫:2 나머지:0 => 4는 짝수
+		if (Value % 2 == 1)
+		{
+			Odds.push_back(Value);
+		}
+		else
+		{
+			Evens.push_back(Value);
+		}
+	}
+
+	// RVO(Return Value Optimaization): 리턴값 최적화
+	return FOddsAndEvens(Odds, Evens);
+}
+
+void Test(int aa)
+{
+	aa = 100;
+}
+
+void TestReference(int& aa)
+{
+	aa = 100;
+}
+
+void TestPointer(int* aa)
+{
+	*aa = 1000;
 }

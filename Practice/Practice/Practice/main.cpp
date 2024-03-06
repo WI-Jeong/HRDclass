@@ -213,6 +213,33 @@ printf("2번 문제 정답: %d\n", iData);
 
 */
 
+/*
+int* PInt = nullptr;
+char* PChar = nullptr;
+short* PShort = nullptr;
+
+std::cout << "Size of Pint= " << sizeof(PInt) << std::endl;
+std::cout << "Size of PChar= " << sizeof(PChar) << std::endl;
+std::cout << "Size of PShort= " << sizeof(PShort) << std::endl;
+
+short sArr[10] = { 1,2,3,4,5,6,7,8,9,10 };
+int* pI = (int*)sArr;
+int iData = *((short*)(pI + 2));
+
+printf("1번 문제 정답: %d\n", iData);
+
+char cArr[2] = { 1,1 };
+short* pS = (short*)cArr;
+int iData = 0;
+iData = *pS;
+
+printf("2번 문제 정답: %d\n", iData);
+
+*/
+
+
+
+
 
 #pragma endregion
 
