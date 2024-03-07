@@ -29,11 +29,11 @@
 
 
 #include <iostream>
+#include<string>
+#include<format>
 
 int main()
 {
-
-
 #pragma region 01.변수
 
 	//short s = 0;
@@ -56,20 +56,15 @@ int main()
 	//c += 1;
 	//std::cout << "unsigned char변수 c1의 값은: " <<(int) c1 << std::endl;
 
-
-
 	//float I(3);
 	//std::cout << I;
 
 #pragma endregion
 
-
 #pragma region 02.형변환
 
 	//double d = 0.123456789;
 	//float f = d;
-
-
 
 #pragma endregion
 
@@ -177,10 +172,6 @@ Point = &i;
 
 Point += 1;
 
-
-
-
-
 int iArr[10] = {};
 iArr + 1; //4를 더한 주소(int배열이니까)
 
@@ -239,11 +230,28 @@ printf("2번 문제 정답: %d\n", iData);
 
 
 
-
-
 #pragma endregion
 
-#pragma region xxxxx
+#pragma region 문자열
+
+//std::cout << "Hello World!";
+
+//const char* Text = "Hello World!";
+//const char* Text2 = "Hello World!";
+//const char* Text3 = "Hello World!";
+
+//std::string STRING = "Hello World!";
+
+//char c = 1;
+//c = '1';
+
+//wchar_t wc = L'a';
+
+
+wchar_t A[10] = L"abcdef";
+short arrShort[10] = { 97,98,99,100,101,102 };
+
+
 
 #pragma endregion
 

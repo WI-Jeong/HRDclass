@@ -229,7 +229,11 @@ struct FOddsAndEvens
 	std::vector<int> Evens;
 };
 FOddsAndEvens SeperateOddsAndEvens(const std::array<int, 10>& InNumbers);
+FOddsAndEvens SeperateOddsAndEvens2(const std::array<int, 10>& InNumbers);
 
 void Test(int aa);
 void TestReference(int& aa);
 void TestPointer(int* aa);
+
+int Sum(std::initializer_list<int> InValues);
+int Sum2(std::vector<int> InValues);

@@ -1,6 +1,10 @@
 #include <iostream>
 #include <format>
 #include "ClassFuncion.h"
+#include <array>  // 고정 사이즈 배열
+#include <vector> // 가변 사이즈 배열
+#include <string>
+#include <Windows.h>
 
 int main()
 {
@@ -1327,6 +1331,7 @@ int main()
 			SeperateOddsAndEvens(Numbers, Odds, Evens);
 
 			FOddsAndEvens Result = SeperateOddsAndEvens(Numbers);
+			FOddsAndEvens Result2 = SeperateOddsAndEvens2(Numbers);
 			Result.Evens;
 			Result.Odds;
 
@@ -1337,13 +1342,12 @@ int main()
 
 			// 안에서 aa를 바꾸면 밖의 a가 바뀐다
 			TestReference(a);
-
 			TestPointer(&a);
 		}
 		{
 			// 메모리 누수를 탐지요청
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-			//_crtBreakAlloc = 373;
+			//_crtBreakAlloc = 404;
 
 			int* Pointer = new int{ 10 };
 			// 만능은 아니다.. 싱글 스레드 환경에서는 잘 되는데,
@@ -1452,5 +1456,236 @@ int main()
 		}
 	}
 #pragma endregion
+#pragma region 13.초기자 리스트(initializer list)
+	{
+		int Result = Sum({ 10, 20, 30 });
+		int Result2 = Sum(std::initializer_list<int>{ 1, 2 });
+		int Result3 = Sum({ 1,2,3,4,5,6,7,8,9,10 });
+		int Result4 = Sum2(std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+		int Result5 = Sum2({ 1,2,3,4,5,6,7,8,9,10 });
+	}
+#pragma endregion
+#pragma region 14.구조적 바인딩(structured binding)
+	{
+		// 기본 생성자가 없는경우 사용 가능한 문법
+		struct FStruct
+		{
+			//FStruct() {}
+			int a = 0;
+			int b{ 10 };
+			int c = 20;
+		};
 
+		FStruct Instance{ .b = 50, .c = 100 };
+		FStruct Instance2{ .a = 10, .c = 50 };
+		//FStruct Instance3{ .c = 50, .b = 100 };
+	}
+#pragma endregion
+#pragma region 15.타입 앨리어스(type alias)
+	{
+		typedef int Hello;
+		int a = 5;
+		Hello b = 10;
+
+		typedef int* IntPtr;
+		IntPtr aa = nullptr;
+		aa = &a;
+
+		// 타입 앨리어스
+		using Hello2 = int;
+		Hello2 cc = 100;
+
+		using V = std::vector<int>;
+		V vvv = V{ 0,1,2,3,4 };
+		vvv.push_back(100);
+		std::vector<int> vvv2 = std::vector<int>{ 5,4,3,2 };
+	}
+#pragma endregion
+#pragma region 16.문자열(string)**
+	{
+		const char* Text = "Hello World!";
+		const char* Text2 = "Hello World!";
+		const char* Text3 = "Hello World!";
+		const char* Text4 = "Hello World@";
+		const char Textt[13] = "Hello World!";
+		// 배열에 13으로 선언했는데, 글자는 총 12자 이다.
+		// 문자열의 끝인 \0이 끝에 생략되어 있다. 그래서 총 13
+
+		std::cout << "Hello World!" << std::endl;
+
+		std::string String = std::string("Hello World!");
+		const std::string String2 = Text;
+		//String2[0] = 'A';
+		String += " Wow!";
+
+		std::cout << String << std::endl;
+		String[0] = 'W';
+		std::cout << String << std::endl;
+
+		String = "Oh my name is...!";
+		std::cout << String << std::endl;
+	}
+	{
+		std::string String = "Hello";
+		if (String == "Hello")
+		{
+			std::cout << "동일합니다!\n";
+		}
+		else
+		{
+			std::cout << "동일하지 않습니다!\n";
+		}
+
+		std::string String2 = "Hell";
+		if (String != String2)
+		{
+			std::cout << "동일하지 않습니다!\n";
+		}
+		else
+		{
+			std::cout << "동일합니다!\n";
+		}
+	}
+	{
+		int Value = 5000;
+		float Float = 3.14f;
+		std::string ValueToString = "정수: ";
+		//ValueToString += 10;
+		ValueToString += std::to_string(Value) + ", " + std::to_string(Float);
+
+		// UTF-8 인코딩 방식을 사용해서 다국어 표현중
+		std::string ValueToStringFormat = std::format("정수: {}, Float: {}\n", Value, Float);
+		std::cout << ValueToStringFormat;
+	}
+	{
+		std::string MultipleLanguage = "Hello 한글 こんにちは 哈罗 صباح الخير\n";
+		std::cout << MultipleLanguage;
+		MultipleLanguage[6] = '갈';
+		std::cout << MultipleLanguage;
+
+		setlocale(LC_ALL, "");
+		//std::wstring MultipleLanguageWstring = L"Hello 한글 こんにちは 哈罗 صباح الخير\n";
+		std::wstring MultipleLanguageWstring = TEXT("Hello 한글 こんにちは 哈罗 صباح الخير\n");
+		//MultipleLanguageWstring[6] = L'갈';
+		MultipleLanguageWstring[6] = TEXT('갈');
+		std::wcout << MultipleLanguageWstring;
+	}
+#pragma endregion
+#pragma region 17.Class(클래스)*****
+	{
+		// 구조체: 함수랑 변수를 묶어서 관리
+		struct FStruct
+		{
+			// 기본 접근 지정자 : public
+		// public:
+			// 생성자: 인스턴스가 만들어질때 생성자가 호출
+			//		- 지역변수(Stack): FStruct Instance; 와 같은 상황
+			//		- 동적할당(Heap) : new를 호출하는 경우
+			//		- 전역변수는(Data영역): 프로그램이 시작될 때
+			FStruct()
+			{
+			}
+			// 소멸자: 인스턴스의 수명이 끝날때
+			//		- 지역변수(Stack): 스코프{}를 빠져나가는 경우
+			//		- 동적할당(Heap) : delete를 호출하는 경우
+			//		- 전역변수(Data영역): 프로그램이 종료되기 전
+			~FStruct()
+			{
+			}
+
+			int a = 0;
+			//private:
+			int b = 10;
+		};
+
+		// Code area(memory) (맴버 함수, Method)
+		// 생성자() 코드
+		// 소멸자() 코드
+
+		// memory (this)
+		// [int a = 0]
+		// [int b = 10]
+
+		// 맴버 함수가 호출될때 해당 인스턴스의 시작 주소가 this라는 이름으로 전달 된다
+		FStruct StructureInstance;
+		StructureInstance.a = 100;
+		//StructureInstance.b = 1000;
+
+		class FClass
+		{
+			// 접근 지정자
+			// public 외부에서 접근 가능(호출)
+			// class의 경우 기본 접근 지정자가: private
+
+		public:
+			FClass()
+			{
+				a = 100;
+				// 맴버 함수 내부에서는 private에 접근 가능
+				b = 1000;
+				SetB(10000);
+			}
+
+			~FClass()
+			{
+
+			}
+
+			void SetB(const int InB)
+			{
+				b = InB;
+			}
+
+			int GetB() const
+			{
+				// 함수 선언 뒤에 const를 붙히면
+				// this pointer가 const this* 로 된다
+				// 즉 맴버 변수를 수정할 수 없고,
+				// const키워드가 붙은 맴버 함수만 호출 가능하다
+				this;
+				//SetB(1000); // SetB 함수는 const가 붙어있지 않아서
+				//				const 함수 내부에서는 호출할 수 없다
+				// 
+				//a = 100;
+				int c = 10;
+				c = 100000;
+				return b;
+			}
+
+
+			void SetA(const int InA) { a = InA; }
+			[[nodiscard]] int GetA() const { return a; }
+
+			int a = 0;
+
+		private:
+			int b = 10;
+		};
+		// Code area(memory) (맴버 함수, Method)
+		// 생성자() 코드
+		// 소멸자() 코드
+
+		// memory (this)
+		// [int a = 0]
+		// [int b = 10]
+		FClass ClassInstance;
+		ClassInstance.a = 200;
+		ClassInstance.SetA(200000);
+		ClassInstance.GetA();
+		//ClassInstance.b = 1000;
+		ClassInstance.SetB(2000);
+		int B = ClassInstance.GetB();
+	}
+#pragma endregion
 }
+
+// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
+// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+
+// 시작을 위한 팁: 
+//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
+//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
+//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
+//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
+//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
+//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
