@@ -248,8 +248,8 @@ printf("2번 문제 정답: %d\n", iData);
 //wchar_t wc = L'a';
 
 
-wchar_t A[10] = L"abcdef";
-short arrShort[10] = { 97,98,99,100,101,102 };
+//wchar_t A[10] = L"abcdef";
+//short arrShort[10] = { 97,98,99,100,101,102 };
 
 
 

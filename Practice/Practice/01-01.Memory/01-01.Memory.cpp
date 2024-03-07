@@ -3,18 +3,89 @@
 
 #include <iostream>
 
+int GA = 10;
+
 int main()
 {
-    std::cout << "Hello World!\n";
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(72);
+
+	// Stack memory
+	{
+
+		int i1{ 1 };
+		int i2{ 2 };
+		int i3{ 3 };
+		// Stack						// Heap
+		// [4byte]i1{1}
+		// [4byte]i2{2}
+		// [4byte]i3{3}
+
+		i1 = 10;
+		// Stack						// Heap
+		// [4byte]i1{10}
+		// [4byte]i2{2}
+		// [4byte]i3{3}
+	}
+
+	// Pointer, 동적 할당
+	{
+		// 64bit 기준
+		int* Pointer{ nullptr };
+		// Stack						// Heap
+		// [8byte]Pointer{nullptr(0)}
+
+		Pointer = new int{ 444 };
+		// Stack							// Heap
+		// [8byte]Pointer{0xHeapAddress} ---> [4byte]*Pointer{444}
+
+		*Pointer = 555;
+		// Stack							// Heap
+		// [8byte]Pointer{0xHeapAddress} ---> [4byte]*Pointer{555}
+
+
+		delete Pointer;
+		// Stack							// Heap
+		// Debug 모드에서는 delete 하는 경우 친절하게 삭제한 영역이라는 의미로
+		// 0x0000000000008123로 바꿔준다
+		// [8byte]Pointer{0x0000000000008123} ---> x
+
+
+		Pointer = nullptr;
+		// Stack							// Heap
+		// [8byte]Pointer{nullptr(0)}
+	}
+
+	// Pointer, 지역 변수
+	{
+		int A = 0;
+		int* Pointer = &A;
+		// Stack									// Heap
+		// [4byte]A{0}
+		// [4byte]padding memory
+		// [8byte]Pointer{A StackMemoryAddress}
+
+		A = 100;
+		// Stack									// Heap
+		// [4byte]A{0 -> 100}
+		// [4byte]padding memory
+		// [8byte]Pointer{A StackMemoryAddress}
+		*Pointer = 1000;
+		// Stack									// Heap
+		// [4byte]A{100 -> 1000}
+		// [4byte]padding memory
+		// [8byte]Pointer{A StackMemoryAddress}
+	}
+
+	// Pointer, 전역 변수
+	{
+		int* Pointer = &GA;
+		// Stack									// Data
+		// [8byte]Pointer{GA DataMemoryAddress}		[4byte]GA{10}
+		*Pointer = 1000;
+		// Stack									// Data
+		// [8byte]Pointer{GA DataMemoryAddress}		[4byte]GA{10->1000}
+	}
+
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
-
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
