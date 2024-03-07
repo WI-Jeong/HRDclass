@@ -31,6 +31,23 @@
 #include <iostream>
 #include<string>
 #include<format>
+#include<wchar.h>
+
+unsigned int GetLength(const  wchar_t* _pStr)
+{
+	int i = 0;
+	while (true)
+	{
+		wchar_t c = _pStr[i];
+
+		if ('\0' == 0)
+		{
+			break;
+		}
+		++i;
+	}
+	return i;
+}
 
 int main()
 {
@@ -250,6 +267,20 @@ printf("2번 문제 정답: %d\n", iData);
 
 //wchar_t A[10] = L"abcdef";
 //short arrShort[10] = { 97,98,99,100,101,102 };
+
+/*
+wchar_t szName[10] = L"Raimond";
+
+int iLen = wcslen(szName);
+
+std::cout << iLen;
+
+*/
+
+
+
+
+
 
 
 

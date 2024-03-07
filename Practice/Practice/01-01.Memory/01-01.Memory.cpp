@@ -2,6 +2,9 @@
 //
 
 #include <iostream>
+#include<string>
+#include<format>
+#include<wchar.h>
 
 int GA = 10;
 
@@ -86,6 +89,7 @@ int main()
 		// Stack									// Data
 		// [8byte]Pointer{GA DataMemoryAddress}		[4byte]GA{10->1000}
 	}
+
 
 }
 

@@ -2,6 +2,35 @@
 #include <format>
 #include<array>
 #include "Main.h"
+#include<wchar.h>
+
+unsigned int GetLength(const  wchar_t* _pStr)
+{
+	int i = 0;
+	while (true)
+	{
+		wchar_t c = _pStr[i];
+
+		if ('\0' == c)
+		//if (c = '\0')
+		{
+			break;
+		}
+		++i;
+	}
+	return i;
+}
+//
+//unsigned int GetLength(const  wchar_t* _pStr)
+//{
+//	int i = 0;
+//
+//	while (_pStr[i] != '\0')
+//	{
+//		++i;
+//	}
+//	return i;
+//}
 
 int main()
 {
@@ -375,7 +404,14 @@ int main()
 //}
 #pragma endregion
 
-int 
+wchar_t szName[10] = L"Raimond";
+
+int iLen = wcslen(szName);
+int iLen2 = GetLength(szName);
+
+std::cout << iLen << "&" << iLen2;
+
+return 0;
 
 }
 
@@ -386,4 +422,3 @@ int
 
 
 	
-}
