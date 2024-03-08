@@ -21,6 +21,7 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(72);
 
+	/*
 	// Stack memory
 	{
 
@@ -97,15 +98,8 @@ int main()
 		// Stack									// Data
 		// [8byte]Pointer{GA DataMemoryAddress}		[4byte]GA{10->1000}
 	}
+	*/
 
-	{
-		
-
-
-	
-
-
-	}
 
 
 }
