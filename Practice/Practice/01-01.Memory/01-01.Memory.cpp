@@ -5,6 +5,14 @@
 #include<string>
 #include<format>
 #include<wchar.h>
+#include"Function/Function.h"
+
+// 프로젝트 속성 -> C/C++ -> 일반 -> 추가 포함 디렉터리
+// -> $(ProjectDir)Function
+//#include "Function/Function.h"
+//#include "Function.h"
+//#include <Function.h>
+
 
 int GA = 10;
 
@@ -88,6 +96,15 @@ int main()
 		*Pointer = 1000;
 		// Stack									// Data
 		// [8byte]Pointer{GA DataMemoryAddress}		[4byte]GA{10->1000}
+	}
+
+	{
+		
+
+
+	
+
+
 	}
 
 
