@@ -1,7 +1,7 @@
 #include <iostream>
 #include <format>
 #include <string>
-#include <windows.h>
+#include <Windows.h>
 
 int main()
 {
@@ -205,5 +205,53 @@ int main()
 		}
 	}
 #pragma endregion
+#pragma region StringView
+	// C++17에 추가된 읽기 전용 String class
+	{
+		std::wstring String{ TEXT("Hello") };
+		// 복사가 발생
+		std::wstring String2 = String;
+		String2[0] = TEXT('A');
 
+		// 이렇게 하면 string이 복사되지 않는다
+		std::wstring& StringReference = String;
+		std::wstring* const StringPointer = &String;
+		StringReference[0] = L'W';
+
+		std::wstring_view WStringView = TEXT("Hello");
+		//WStringView[0] = TEXT('A');
+		//const wchar_t* Test = WStringView.data();
+
+		WStringView = String;
+
+		auto Function1 = [](std::wstring InString)
+			{
+				InString[0] = L'B';
+				std::wcout << InString << std::endl;
+			};
+
+		auto Function2 = [](std::wstring_view InStringView)
+			{
+				std::wcout << InStringView << std::endl;
+			};
+
+		auto FunctionWrong = []() -> std::string
+			{
+				return "HelloWorld";
+			};
+
+		auto Function3 = [](const std::wstring& InString)
+			{
+				std::wcout << InString << std::endl;
+			};
+
+		Function1(String);
+		Function2(WStringView);
+
+		//std::string_view NewSV = FunctionWrong();
+
+		// wstring instance가 생성이 된다!
+		Function3(TEXT("HelloWorld!"));
+	}
+#pragma endregion
 }
