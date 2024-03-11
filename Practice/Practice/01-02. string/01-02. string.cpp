@@ -9,72 +9,47 @@
 int main()
 {
 #pragma region C스타일의 문자열
-	{
-		char String1[6]{ "Hello" }; // \0: 문자열의 끝
-		char String11[6]{ "Wello" }; // \0: 문자열의 끝
-		// Stack
-		// char[0]{'H'}
-		// char[1]{'e'}
-		// char[2]{'l'}
-		// char[3]{'l'}
-		// char[4]{'o'}
-		// char[5]{'\0'}
 
+	/*
+		{
+		char String1[6]{ "Hello" }; // \0: 문자열의 끝
 		std::cout << String1 << std::endl;
 		String1[0] = 'W';	// Wello
 		String1[2] = 'a';	// Wealo
-		//String1[9] = 'B';	// 버퍼 오버플로우(Buffer overflow)
-
 		char* Pointer = String1;
-		// Stack
-		// char[0]{'W'}
-		// char[1]{'e'}
-		// char[2]{'a'}
-		// char[3]{'l'}
-		// char[4]{'o'}
-		// char[5]{'\0'}
-		// [8byte] Pointer {0xString1StackAddress}
 		*(Pointer + 1) = 'A';	// "WAalo"
-		//*(Pointer + 9) = 'A';	// buffer overflow!
-
-		//String1 = String11; // 안된다!
-		// 장점
-		// - 간단하다
-		// - 가볍다. 메모리를 꼭 필요한 만큼만 사용한다
-		// - 저수준(low level)이다. 메모리 조작이 쉽다
-
-		// 단점
-		// - 편의 기능(복사, 사이즈확인 등등)을 관련 기능을 찾거나 구현하려면 별도의 노력이 든다
-		// - 찾기 힘든 메모리 관련 버그가 발생하기 쉽다
-		// - C++의 객체지향적인 특성을 활용하지 못한다
-
 		const char* String2 = "Hello";
-		// Stack									// Data
-		// [8byte]String2 {0xDataAreaAddress} ----> // char[0]{'H'}
-													// char[1]{'e'}
-													// char[2]{'l'}
-													// char[3]{'l'}
-													// char[4]{'o'}
-													// char[5]{'\0'}
 		const char* String3 = "Hello";
-		// Stack									// Data
-		// [8byte]String3 {0xDataAreaAddress} ----> // char[0]{'H'}
-													// char[1]{'e'}
-													// char[2]{'l'}
-													// char[3]{'l'}
-													// char[4]{'o'}
-													// char[5]{'\0'}
 	}
+		
+	*/
+
 #pragma endregion
 #pragma region C++ 문자열(String)
-	{
+
+	/*
+		{
 		std::string A = "Hello ";
 		std::string B = "World!";
 		std::string C = A + B; // Hello World!
 
 		A += B;	// Hello World!
-		A.append(B);	// Hello World!World!
+		//A.append(B);	// Hello World!World!
+
+
+		std::string A2 = "Hello ";
+		std::string B2 = "World!";
+		A2.append(B2);
+
+		std::cout << "A문구: " << A << std::endl;
+		std::cout << "A2문구: " << A2 << std::endl;
+
+
 	}
+
+
+	*/
+
 	{
 		const char* A{ "Hello" };	// Data에
 		const char B[]{ "Hello" };	// Stack memory에
