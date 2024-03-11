@@ -4,10 +4,46 @@
 #include <iostream>
 #include"Class.h"
 
+class MyClass
+{
+
+private:
+    int Myi;
+    float Myf;
+
+public:
+    void SetInt(int i)
+    {
+        Myi = i;
+    }
+
+    //생성자
+    MyClass()
+        :Myi(100)
+        ,Myf(0.f)
+    {
+    }
+
+    //소멸자
+    ~MyClass()
+    {
+    }
+
+};
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    MyClass c;
+
+    //SetInt(10);
+    //이건 안됨
+
+    //MyClass::SetInt(10);
+    //이것도 안됨.
+
+    c.SetInt(10);
+    //이렇게 객체로 호출해야함
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

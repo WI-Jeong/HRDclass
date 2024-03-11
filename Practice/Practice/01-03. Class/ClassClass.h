@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <Windows.h>
 
 // Class, Struct
@@ -102,6 +103,24 @@ public:
 		, Pointer(new int{ Value })
 	{
 		std::wcout << String << std::endl;
+	}
+
+	// 이동 생성자
+	FClass(FClass&& InOther) noexcept
+		// string에 구현되어 있는 이동 생성자에 의해서
+		// this->String이 생성됩니다.
+
+		// string은 특정 상황을 만족했을때 데이터를 stack 보관
+		// 이 상황일 경우 복사가 move를 한다고 하더라도 발생
+		// 이 경우에는 move가 의미가 없다
+		// 하지만 문자열이 긴 경우 Heap에 할당되는데
+		// 이럴때는 주소만 변경하면 되기 때문에 빠르다
+		: Value(InOther.Value)
+		, String(std::move(InOther.String))
+		, Pointer(InOther.Pointer)
+	{
+		InOther.Value = 0;
+		InOther.Pointer = nullptr;
 	}
 
 	~FClass()
