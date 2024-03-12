@@ -404,6 +404,7 @@ int main()
 //}
 #pragma endregion
 
+/*
 wchar_t szName[10] = L"Raimond";
 
 int iLen = wcslen(szName);
@@ -412,6 +413,9 @@ int iLen2 = GetLength(szName);
 std::cout << iLen << "&" << iLen2;
 
 return 0;
+*/
+
+
 
 }
 
