@@ -4,6 +4,35 @@
 #include "Main.h"
 #include<wchar.h>
 
+#pragma region 템플릿
+/*
+함수 템플릿
+
+int add(int x, int y)
+{
+	return x + y;
+}
+
+int add(double x, double y)
+{
+	return x + y;
+}
+
+template<typename T>
+T add(T x, T y) {
+	return x + y;
+}
+
+*/
+
+
+
+
+
+
+#pragma endregion
+
+
 unsigned int GetLength(const  wchar_t* _pStr)
 {
 	int i = 0;
@@ -414,6 +443,15 @@ std::cout << iLen << "&" << iLen2;
 
 return 0;
 */
+
+/*
+함수 템플릿
+int num1 = 10;
+int nub2 = 20;
+
+std::cout << add(num1, nub2) << std::endl;
+*/
+
 
 
 
