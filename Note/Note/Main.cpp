@@ -25,6 +25,27 @@ T add(T x, T y) {
 
 */
 
+/*
+클래스 템플릿
+template <class T>
+
+class CTest
+{
+private:
+	T num1;
+	T num2;
+
+public:
+	CTest(T num1, T num2) {
+		this->num1 = num1;
+		this->num2 = num2;
+	}
+
+	T GetAdd() {
+		return num1 + num2;
+	}
+};
+*/
 
 
 
@@ -451,6 +472,21 @@ int nub2 = 20;
 
 std::cout << add(num1, nub2) << std::endl;
 */
+
+/*
+클래스 템플릿
+
+CTest<int> test1(10, 20);
+std::cout << test1.GetAdd << std::endl;
+
+CTest<double> test2(10.5, 20.2)
+{
+	std::cout << test2.GetAdd() << std::endl;
+
+}
+*/
+}
+
 
 
 
