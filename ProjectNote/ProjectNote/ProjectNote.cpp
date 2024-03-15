@@ -1,8 +1,10 @@
-﻿// ProjectNote.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-
+﻿
 #include <iostream>
 #include <random>
+#include <format>
+#include <iomanip>
+
+
 
 enum RSP
 {
@@ -12,10 +14,42 @@ enum RSP
 	PAPER
 };
 
+enum class ECostumeType 
+{
+    Armor, 
+    Weapon,
+    Face
+};
+
+enum class EShopItemType
+{
+    Potion,
+    Armor,
+    Weapon,
+    Diamond
+};
+
+enum class ETier : unsigned char
+{
+    None,
+    Iron,
+    Bronze,
+    Silver,
+    Gold,
+};
+
+struct FPlayer
+{
+    int HP = 100;
+    int MP{ 10 };
+    ETier Tier = ETier::None;
+};
+
 
 int main()
 {
-    std::random_device rd;
+    /*
+        std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, 3); // Generate random numbers between 1 and 3
 
@@ -111,18 +145,213 @@ int main()
         }
 
         system("pause");
+
     }
 
-    return 0;
+    FPlayer Player;
+Player.HP = 300;
+Player.MP = 100;
+
+int Value = 0;
+
+std::cin >> Value;
+
+if (Value == 100)
+{
+    std::cout << "Value가 100입니다.\n";
 }
 
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
+else
+{
+    std::cout << std::format("Value: {}입니다.\n", Value);
+}
 
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
+if (int i = 10; i < 10)
+{
+    std::cout << "1\n";
+}
+
+else if (i == 13)
+{
+    std::cout << "2\n";
+}
+
+else if (i == 12)
+{
+    std::cout << "3\n";
+}
+
+else if (i == 10)
+{
+    std::cout << "4\n";
+}
+
+else
+{
+    std::cout << "5\n";
+}
+
+    FPlayer Player;
+    Player.Tier = ETier::Gold;
+    std::cout << "[Player Info]\n";
+    //std::cout << std::format("HP: {}, MP: {}\n", Player.HP, Player.MP);
+    //std::cout << std::format("Tier: {}\n", (int)Player.Tier);
+    switch (Player.Tier)
+    {
+    case ETier::None:
+        std::cout << "Tier: None\n";
+        break;
+    case ETier::Iron:
+        std::cout << "Tier: Iron\n";
+        break;
+    case ETier::Bronze:
+        std::cout << "Tier: Bronze\n";
+        break;
+    case ETier::Silver:
+        std::cout << "Tier: Silver\n";
+        break;
+    case ETier::Gold:
+        std::cout << "Tier: Gold\n";
+        break;
+    default:
+        std::cout << "default\n";
+        break;
+    }
+
+    std::random_device RD;
+std::mt19937 Gen(RD());
+std::uniform_int_distribution<int> Dist(0, 100);
+int RandomValue = Dist(Gen);
+
+int Upgrade = 0;
+float fpercent = Dist(Gen);
+
+std::cout << "Upgrade 기본 수치를 입력하세요: " << std::endl;
+std::cin >> Upgrade;
+std::cout << "Upgrade 기본수치: " << Upgrade << std::endl;
+std::cout << "Percent: " << fpercent << std::endl;
+
+if (Upgrade <= 3)
+std::cout << "강화 성공" << std::endl;
+
+
+else if (Upgrade >= 4 && Upgrade <= 6)
+{
+    if (fpercent < 40.f)
+        std::cout << "강화 성공" << std::endl;
+
+    else
+        std::cout << "강화 실패" << std::endl;
+
+}
+
+else if (Upgrade >= 7 && Upgrade <= 9)
+{
+    if (fpercent < 10.f)
+        std::cout << "강화 성공" << std::endl;
+
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+
+else if (Upgrade >= 10 && Upgrade <= 13)
+{
+    if (fpercent < 1.f)
+        std::cout << "강화 성공" << std::endl;
+
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+
+else if (Upgrade >= 14 && Upgrade <= 15)
+{
+    if (fpercent < 0.01f)
+        std::cout << "강화 성공" << std::endl;
+
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+    */
+
+/*
+강화 확률 :
+업그레이드가 0~3일 경우 강화 100 % 성공
+업그레이드가 4~6일 경우 강화 40 % 성공
+업그레이드가 7~9일 경우 강화 10 % 성공
+업그레이드가 10~13일 경우 강화 1 % 성공
+업그레이드가 14~15일 경우 강화 0.01 % 성공
+
+업그레이드 수치는 직접 입력하게 한다.
+*/
+
+/*
+std::random_device RD;
+std::mt19937 Gen(RD());
+std::uniform_int_distribution<> Dist(0.0f, 100.f);
+float FPercent = Dist(Gen);
+std::cout << FPercent;
+
+//std::cout << "업그레이드 수치를 입력하세요(0~15)" << std::endl;
+
+int Upgrade = 0;
+
+
+std::cin >> Upgrade;
+std::cout << std::format("업그레이드 수치: {}\n",Upgrade);
+
+*/
+
+
+
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_real_distribution<> dis(0.0, 1.0); // Generate random real numbers between 0 and 1
+
+int Upgrade = 0;
+std::cout << "Upgrade 기본 수치를 입력하세요: " << std::endl;
+std::cin >> Upgrade;
+std::cout << "Upgrade 기본수치: " << Upgrade << std::endl;
+
+double fpercent = dis(gen) * 100; // Generating random percent between 0 and 100
+
+std::cout << std::fixed << std::setprecision(2); // Set precision for floating point numbers
+std::cout << "Percent: " << fpercent << std::endl;
+
+if (Upgrade <= 3)
+std::cout << "강화 성공" << std::endl;
+else if (Upgrade >= 4 && Upgrade <= 6)
+{
+    if (fpercent < 40.0)
+        std::cout << "강화 성공" << std::endl;
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+else if (Upgrade >= 7 && Upgrade <= 9)
+{
+    if (fpercent < 10.0)
+        std::cout << "강화 성공" << std::endl;
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+else if (Upgrade >= 10 && Upgrade <= 13)
+{
+    if (fpercent < 1.0)
+        std::cout << "강화 성공" << std::endl;
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+else if (Upgrade >= 14 && Upgrade <= 15)
+{
+    if (fpercent < 0.01)
+        std::cout << "강화 성공" << std::endl;
+    else
+        std::cout << "강화 실패" << std::endl;
+}
+
+return 0;
+
+
+return 0;
+
+}
