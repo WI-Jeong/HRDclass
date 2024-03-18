@@ -30,8 +30,10 @@
 
 #include <iostream>
 #include<string>
-#include<format>
-#include<wchar.h>
+#include <format>
+#include <wchar.h>
+#include <fstream>
+
 
 unsigned int GetLength(const  wchar_t* _pStr)
 {
@@ -277,17 +279,79 @@ std::cout << iLen;
 
 */
 
-
-
-
-
-
-
-
 #pragma endregion
 
 
-#pragma region xxxxx
+#pragma region 파일입출력
+/*
+std::ifstream in("Test.txt");
+FILE* FileStream = nullptr;
+fopen_s(&FileStream, "Test.txt", "wt");
+
+std::string s;
+
+if (in.is_open())
+{
+	in >> s;
+	std::cout << "입력 받은 문자열: " << s << std::endl;
+}
+else
+{
+	std::cout << "파일을 찾을 수 없습니다." << std::endl;
+}
+
+*/
+
+//std::ofstream OutputStream = std::ofstream("TestBinary.txt", std::ios::out | std::ios::binary);
+//if (OutputStream.is_open())
+//{
+//	std::string String = "Hello Test File!\n";
+//	OutputStream.write(String.data(), String.size());
+//	//OutputStream << String /*<< std::endl*/;
+//
+//	int Int = 10;
+//	OutputStream.write(reinterpret_cast<char*>(&Int), sizeof(Int));
+//
+//	OutputStream.close(); // 파일 닫기
+//}
+//
+//	// file load
+//	std::ifstream InputStream("TestBinary.txt", std::ios::in | std::ios::binary);
+//	if (InputStream.is_open())
+//	{
+//		std::string String;
+//		String.resize(12);
+//		InputStream.read(String.data(), String.size());
+//		//InputStream >> String;
+//
+//		int Int = 0;
+//		InputStream.read(reinterpret_cast<char*>(&Int), sizeof(int));
+//
+//		InputStream.close();
+//	}
+
+
+//{
+//	ini::IniFile File;
+//	File["Section"]["Key"] = "Value";
+//	File["Section"]["Key2"] = 1000;
+//
+//	File["Graphics"]["Width"] = 1920;
+//	File["Graphics"]["Height"] = 1080;
+//
+//	File.save("IniFile.ini");
+//}
+//// load
+//{
+//	ini::IniFile File("IniFile.ini");
+//	std::string Value = File["Section"]["Key"].as<std::string>();
+//	int Value2 = File["Section"]["Key2"].as<int>();
+//
+//	int Width = File["Graphics"]["Width"].as<int>();
+//	int Height = File["Graphics"]["Height"].as<int>();
+//}
+
+
 
 #pragma endregion
 
