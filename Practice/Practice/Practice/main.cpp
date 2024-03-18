@@ -33,6 +33,11 @@
 #include <format>
 #include <wchar.h>
 #include <fstream>
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include <array>
+#include <vector>
 
 
 unsigned int GetLength(const  wchar_t* _pStr)
@@ -350,6 +355,71 @@ else
 //	int Width = File["Graphics"]["Width"].as<int>();
 //	int Height = File["Graphics"]["Height"].as<int>();
 //}
+
+/*
+Jason file IO
+
+struct FPlayer
+{
+	FPlayer() = default;
+	FPlayer(std::string_view InName, const unsigned int InLevel)
+		:Name(InName), Level(InLevel) {}
+
+	~FPlayer() = default;
+
+	void Save(rapidjson::Value& InOutValue, rapidjson::Document::AllocatorType& InAllocator)
+	{
+		InOutValue.AddMember("Name", rapidjson::StringRef(Name, data()), InAllocator);
+		InOutValue.AddMember("Level", Level, InAllocator);
+		InOutValue.AddMember("Exp", Exp, InAllocator);
+	}
+
+	void Load()
+	{
+
+	}
+
+private:
+	std::string Name;
+	unsigned int Level = 0;
+	int Exp = 0;
+
+};
+
+using uint = unsigned int;
+constexpr uint PlayerNumbers = 20;
+
+//write
+std::vector<FPlayer> Players;
+Players.reserve(PlayerNumbers);
+for (uint i = 0; i < PlayerNumbers; ++i)
+{
+	Players.emplace_back("Name" + std::to_string(i), i);
+}
+
+rapidjson::Document Doc(rapidjson::kObjectType);
+rapidjson::Document::AllocatorType& Allocator = Doc.GetAllocator();
+
+rapidjson::Value Array(rapidjson::kArrayType);
+for (FPlayer& It : Players)
+{
+	rapidjson::Value Player(rapidjson::kObjectType);
+	It.Save(Player, Allocator);
+
+	Array.PushBack(Player, Allocator);
+}
+
+Doc.AddMember("PlayerInfo", Array, Allocator);
+
+rapidjson::StringBuffer Buffer;
+rapidjson::Writer<rapidjson::StringBuffer> Writer(Buffer);
+Doc.Accept(Writer);
+std::string Json(Buffer.GetString(), Buffer.GetSize());
+
+std::ofstream File("TestJson.json");
+File << Json;
+*/
+
 
 
 
