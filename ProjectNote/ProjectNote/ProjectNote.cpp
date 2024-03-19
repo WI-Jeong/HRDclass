@@ -299,11 +299,6 @@ int Upgrade = 0;
 std::cin >> Upgrade;
 std::cout << std::format("업그레이드 수치: {}\n",Upgrade);
 
-*/
-
-
-
-
 std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_real_distribution<> dis(0.0, 1.0); // Generate random real numbers between 0 and 1
@@ -349,7 +344,78 @@ else if (Upgrade >= 14 && Upgrade <= 15)
         std::cout << "강화 실패" << std::endl;
 }
 
-return 0;
+*/
+
+/*
+플레이어는 가위, 바위, 보 셋중 하나를 선택한다.
+AI는 가위, 바위, 보 셋중 하나를 랜덤하게 얻어온다.
+플레이어와 AI 중 누가 이겼는지를 판단한다.
+
++
+가위바위보를 반복해서 하되 종료버튼을 추가하고, 그 외의 숫자들을 입력하면 다시 숫자를 선택하게 출력해라.
+플레이어와 AI가 각각 몇 번 이겼는지 통계도 함께 출력되게 해라. 만약 플레이어의 누적 승리가 5회가 되면 자동으로 종료되게 만들어라.
+*/
+
+/*
+
+
+*/
+
+while (true)
+{
+    system("cls");
+
+    std::cout << "다음 중 하나의 숫자를 고르시요\n1. 가위\n2. 바위\n3. 보\n0. 종료" << std::endl;
+
+    int Player;
+    std::cin >> Player;
+
+    std::random_device RD;
+    std::mt19937 Gen(RD());
+    std::uniform_int_distribution<> Dis(1, 3);
+
+    int AI = Dis(Gen);
+
+    if (Player == SCISSOR)
+    {
+        std::cout << std::format("플레이어: 가위", Player);
+    }
+    else if (Player == ROCK)
+    {
+        std::cout << std::format("플레이어: 바위", Player);
+    }
+    else if (Player == PAPER)
+    {
+        std::cout << std::format("플레이어: 보", Player);
+    }
+    else if (Player == Exit)
+    {
+        std::cout << "종료하시겠습니까?\n1. Yes\n2. No" << std::endl;
+        int Yes = 0;
+        std::cin >> Yes;
+        if (Yes == 1)
+        {
+            std::cout << "종료합니다." << std::endl;
+            break;
+        }
+        if (Yes == 2)
+        {
+            std::cout << "다시 시작합니다." << std::endl;
+            system("pause");
+            continue;
+        }
+    }
+
+    else
+    {
+        std::cout << "잘못입력했습니다. 다시 입력하세요." << std::endl;
+        system("Pause");
+        continue;
+    }
+
+}
+
+//std::cout << std::format("플레이어: {}, AI: {}", Player, AI);
 
 
 return 0;
