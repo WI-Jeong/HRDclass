@@ -2,18 +2,24 @@
 #include <format>
 #include <stdio.h>
 
+int FFactorial(int num)
+{
+	int Factorial = 1;
+
+	for (int j = 0; j < num - 1; ++j)
+	{
+		Factorial *= (j + 2);
+	}
+
+	return Factorial;
+}
+
 
 
 int main()
 {
-	//printf("abcdef %d \n", 10);
+	int Value = FFactorial(7);
 
-	for (int i = 0; i < 10; ++i)
-	{
-		printf("Output i : %d\n", i);
-	}
+	Value = FFactorial(10);
 
-
-	int a = 0;
-	scanf_s("%d",&a);
 }
