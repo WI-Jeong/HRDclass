@@ -1,31 +1,16 @@
 #include <iostream>
-#define HUNGRY 0x01
-#define THIRSTY 0x02
-#define TIRED 0x04
-#define FIRE 0x08
+#include <format>
 
-#define COLD 0x10
-#define POISON 0x20
-//#define POISON 0x40
-//#define POISON 0x80
-//
-//#define POISON 0x100
-//#define POISON 0x200
-//#define POISON 0x400
-//#define POISON 0x800
 
 int main()
 {
-	unsigned int iStatus = 0;
-	iStatus |= HUNGRY;
-	iStatus |= THIRSTY;
-
-	if (iStatus & THIRSTY)
+	int a = 0;
 	{
-
+		int a = 10;
+		a = 30;
+		std::cout << std::format("내부a의 값은: {}\n", a);
 	}
 
-	iStatus &= ~THIRSTY;
-
+	std::cout << std::format("외부a의 값은: {}", a);
 
 }
