@@ -1,18 +1,19 @@
 #include <iostream>
 #include <format>
+#include <stdio.h>
 
 
 
 int main()
 {
-	for (int i = 0; i < 4; ++i)
-	{
-		if (i % 3 == 1)
-		{
-			continue;
-		}
+	//printf("abcdef %d \n", 10);
 
-		printf("출력테스트\n");
+	for (int i = 0; i < 10; ++i)
+	{
+		printf("Output i : %d\n", i);
 	}
 
+
+	int a = 0;
+	scanf_s("%d",&a);
 }
