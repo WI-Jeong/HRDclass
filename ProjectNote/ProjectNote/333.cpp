@@ -12,18 +12,27 @@ int FFactorial(int num)
 	return Factorial;
 }
 
+
+
 int Factorial_Re(int number)
 {
-	return number * Factorial_Re(number - 1);
+	if (1 == number)
+	{
+		return 1;
+	}
 
+	return number * Factorial_Re(number - 1);
 }
 
 
 int main()
 {
+
 	int Value = FFactorial(7);
 
 	Value = FFactorial(10);
+
+	Value = Factorial_Re(5);
 
 }
 
