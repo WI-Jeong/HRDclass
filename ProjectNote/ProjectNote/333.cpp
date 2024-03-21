@@ -1,5 +1,8 @@
 #include <iostream>
 
+
+
+
 int FFactorial(int num)
 {
 	int Factorial = 1;
@@ -40,7 +43,7 @@ int Fibonacci(int number)
 	{
 		Value = Prev1 + Prev2;
 		Prev1 = Prev2;
-		Prev2 = Value;	
+		Prev2 = Value;
 	}
 }
 
@@ -55,6 +58,16 @@ int Fibonnacci_Re(int number)
 	return Fibonnacci_Re(number - 1) + Fibonnacci_Re(number - 2);
 }
 
+int A = 0;
+
+void Test()
+{
+	int B = 0;
+	++B;
+	++A;
+}
+
+
 int main()
 {
 
@@ -68,9 +81,11 @@ int main()
 
 	Value = Fibonacci_Re(7);
 
+	Test();
+	Test();
+	Test();
+
 }
 
 
-/*
 
-*/
