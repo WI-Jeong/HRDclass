@@ -1,3 +1,0 @@
-[submodule "vcpkg"]
-	path = KDT2-Q3/vcpkg
-	url = https://github.com/microsoft/vcpkg.git
