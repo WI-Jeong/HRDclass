@@ -25,6 +25,36 @@ int Factorial_Re(int number)
 }
 
 
+int Fibonacci(int number)
+{
+	if (1 == number || 2 == number)
+	{
+		return 1;
+	}
+
+	int Prev1 = 1;
+	int Prev2 = 1;
+	int Value = 0;
+
+	for (int i = 0; i < number-2; ++i)
+	{
+		Value = Prev1 + Prev2;
+		Prev1 = Prev2;
+		Prev2 = Value;	
+	}
+}
+
+
+int Fibonnacci_Re(int number)
+{
+	if (1 == number || 2 == number)
+	{
+		return 1;
+	}
+
+	return Fibonnacci_Re(number - 1) + Fibonnacci_Re(number - 2);
+}
+
 int main()
 {
 
@@ -33,6 +63,10 @@ int main()
 	Value = FFactorial(10);
 
 	Value = Factorial_Re(5);
+
+	Value = Fibonacci(7);
+
+	Value = Fibonacci_Re(7);
 
 }
 
