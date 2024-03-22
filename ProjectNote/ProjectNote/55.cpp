@@ -31,5 +31,8 @@ int main()
 	//printf("Test함수 호출 횟수: %d\n", icallcount);
 
 	ABC = 100;
+
+	int aaa = 0;
+	//float aaa = 3.14;
 	
 }
