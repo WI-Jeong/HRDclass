@@ -23,6 +23,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="55.cpp" />
+    <ClCompile Include="extern.cpp" />
     <ClCompile Include="func.cpp" />
   </ItemGroup>
   <ItemGroup>
