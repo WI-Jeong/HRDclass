@@ -1,36 +1,19 @@
 #include<iostream>
-#define PLUS(Value0, Value1) Value0 + Value1
-#define MUL (Value0, Value1) Value0 * Value1
 
-class A
+int Value = 20;
+
+class Test
 {
 public:
-	A()
+	void Function()
 	{
-		std::cout << "A";
-		Function();
-	}
-	virtual void Function()
-	{
-		std::cout << "AF";
-	}
-};
-
-class B :public A
-{
-public:
-	B()
-	{
-		std::cout << "B";
-		Function();
-	}
-	 void Function() override
-	{
-		std::cout << "BF";
+		printf_s("%d",Value);
 	}
 };
 
 int main()
 {
-	B newB = B();
+	Test* Ptr = nullptr;
+	Ptr->Function();
 }
+
