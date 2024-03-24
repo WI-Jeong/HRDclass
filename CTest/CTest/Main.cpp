@@ -1,27 +1,8 @@
 #include<iostream>
-
-class Test
-{
-public:
-	virtual void Function()
-	{
-
-	}
-
-private:
-	bool Value0;
-	int Value2;
-	int Value3;
-};
-
+#define PLUS(Value0, Value1) Value0 + Value1
+#define MUL (Value0, Value1) Value0 * Value1
 
 int main()
 {
-	std::cout << sizeof(Test);
-
-	int Value = 0;
-	int Value1 = 20;
-
-	int& Ref = Value;
-
+	int Value = MUL(PLUS(10, 10), PLUS(10, 10));
 }
