@@ -24,7 +24,9 @@
     </ClCompile>
     <ClCompile Include="55.cpp" />
     <ClCompile Include="extern.cpp" />
-    <ClCompile Include="func.cpp" />
+    <ClCompile Include="func.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="func.h" />

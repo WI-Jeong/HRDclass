@@ -2,37 +2,19 @@
 #include "func.h"
 #include "general.h"
 
-int g_i = 0;
-static int gstatic = 0;
 
-int Test()
-{
-	static int i = 0;
-	//++g_i;
-	++i;
-	
-	return i;
-}
 
 int main()
 {
-	int i = Mul(10, 20);
-	g_iExtern = 500;
-	Add(0, 0);
+	int i = 0;
+	int* pint = &i;
 
-	Test();
-	Test();
-	Test();
-	Test();
-	int icallcount=Test();
+	volatile const int cint = 100;
 
-	//g_i = 0;
+	pint = (int*)&cint;
 
-	//printf("Test함수 호출 횟수: %d\n", icallcount);
+	*pint = 300;
 
-	ABC = 100;
-
-	int aaa = 0;
-	//float aaa = 3.14;
+	printf("cint출력: %d\n", cint);
 	
 }
