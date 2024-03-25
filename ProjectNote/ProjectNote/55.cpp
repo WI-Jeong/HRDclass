@@ -6,15 +6,21 @@
 
 int main()
 {
-	int i = 0;
-	int* pint = &i;
+	int a = 0;
+	int* pint = &a;
 
-	volatile const int cint = 100;
+	const int* pconstint = &a;
+	*pconstint;
+	//*pconstint = 100;
+	int b = 0;
+	pconstint = &b;
 
-	pint = (int*)&cint;
+	int* const pintconst = &a;
+	*pintconst = 400;
+	//pintconst = &b;
 
-	*pint = 300;
+	const int* const pconstintconst = nullptr;
 
-	printf("cint출력: %d\n", cint);
-	
+	int const* p = &a;
+
 }
