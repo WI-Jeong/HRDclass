@@ -2,25 +2,17 @@
 #include "func.h"
 #include "general.h"
 
+void Output(const int* pi)
+{
+	int A = *pi;
+	*pi;
+	//*pi = 777;
+}
 
 
 int main()
 {
 	int a = 0;
-	int* pint = &a;
-
-	const int* pconstint = &a;
-	*pconstint;
-	//*pconstint = 100;
-	int b = 0;
-	pconstint = &b;
-
-	int* const pintconst = &a;
-	*pintconst = 400;
-	//pintconst = &b;
-
-	const int* const pconstintconst = nullptr;
-
-	int const* p = &a;
-
+	a = 100;
+	Output(&a);
 }
