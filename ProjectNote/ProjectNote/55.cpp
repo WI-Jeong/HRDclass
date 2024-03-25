@@ -2,19 +2,33 @@
 #include "func.h"
 #include "general.h"
 
-void Output(const int* pi)
+void Test(int a)
 {
-	int A = *pi;
-	int* pint = (int*)pi;
-	*pint = 100;
+}
+
+void Test(int a, int b)
+{
+
+}
+
+void Test(float a)
+{
+
+}
+
+void StrCat(wchar_t* _pDest, unsigned int _iSize, const wchar_t* _pSrc)
+{
+
 }
 
 
 int main()
 {
-	void* pvoid = nullptr;
-	int abc = 0;
-	pvoid = &abc;
-	//*pvoid;
-	pvoid+1;
+	wchar_t szString[100] = L"abc";
+
+
+	wcscat_s(szString, 100, L"def");
+
+	wcscat_s(wchar_t *Destination, rsize_t _SizeInWords, const wchar_t *_Source);
+	wcscat_s<_Size>(wchar_t(&Destination)[_Size], const wchar_t *_Source);
 }
