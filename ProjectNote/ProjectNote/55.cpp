@@ -5,14 +5,16 @@
 void Output(const int* pi)
 {
 	int A = *pi;
-	*pi;
-	//*pi = 777;
+	int* pint = (int*)pi;
+	*pint = 100;
 }
 
 
 int main()
 {
-	int a = 0;
-	a = 100;
-	Output(&a);
+	void* pvoid = nullptr;
+	int abc = 0;
+	pvoid = &abc;
+	//*pvoid;
+	pvoid+1;
 }
