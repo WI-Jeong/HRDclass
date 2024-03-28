@@ -52,6 +52,8 @@ void StrCat(wchar_t* _pDest, unsigned int _iSize, const wchar_t* _pSrc)
 		assert(nullptr);
 	}
 
+	//문자열 이어 붙이기 
+
 }
 
 
