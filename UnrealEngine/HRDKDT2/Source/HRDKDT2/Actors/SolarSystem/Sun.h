@@ -16,6 +16,7 @@ public:
 	ASun();
 
 protected:
+	virtual void OnConstruction(const FTransform& Transform) override;
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -26,5 +27,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent=nullptr;
+
+	UMaterialInstanceDynamic* MID = nullptr;
 
 };

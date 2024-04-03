@@ -27,6 +27,17 @@ ASun::ASun()
 
 }
 
+
+
+void ASun::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	UMaterialInterface* Material=StaticMeshComponent->GetMaterial(0);
+
+	MID = StaticMeshComponent->CreateDynamicMaterialInstance(0, Material);
+}
+
 // Called when the game starts or when spawned
 void ASun::BeginPlay()
 {
