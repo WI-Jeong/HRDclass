@@ -25,12 +25,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnSunPower(float InPower);
+
 private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent=nullptr;
 
+	UPROPERTY(EditAnywhere)
 	UTimelineComponent* SunPowerTimelineComponent = nullptr;
 
+	UPROPERTY()
 	UMaterialInstanceDynamic* MID = nullptr;
 
+	static inline UMaterial* SunMaterial = nullptr;
 };
