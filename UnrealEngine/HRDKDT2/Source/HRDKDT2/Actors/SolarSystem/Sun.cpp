@@ -12,6 +12,10 @@ ASun::ASun()
 	bool bCDO=HasAnyFlags(EObjectFlags::RF_ClassDefaultObject);
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	SunPowerTimelineComponent = CreateDefaultSubobject<UTimelineComponent>(TEXT("SunPower Timeline"));
+	
+
+
 	SetRootComponent(StaticMeshComponent);
 
 	{

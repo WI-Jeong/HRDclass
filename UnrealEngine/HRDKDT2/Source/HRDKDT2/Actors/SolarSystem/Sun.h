@@ -29,6 +29,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent=nullptr;
 
+	UTimelineComponent* SunPowerTimelineComponent = nullptr;
+
 	UMaterialInstanceDynamic* MID = nullptr;
 
 };
