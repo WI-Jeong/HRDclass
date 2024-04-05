@@ -40,7 +40,14 @@ ASun::ASun()
 		SunPowerTimelineComponent->AddInterpFloat(ObjectFinder.Object, Delegate);
 		SunPowerTimelineComponent->SetPlayRate(0.5f);
 		SunPowerTimelineComponent->SetLooping(true);
-
+	}
+	{
+		PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("Sun Light"));
+		PointLight->SetupAttachment(GetRootComponent());
+		PointLight->Intensity = 10.f;
+		PointLight->AttenuationRadius = 10000000.f;
+		PointLight->bUseInverseSquaredFalloff = false;
+		PointLight->LightFalloffExponent = 0.0001f;
 	}
 
 }
