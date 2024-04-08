@@ -7,9 +7,6 @@
 
 int main()
 {	
-	int aaa = 0;
-	float aaa = 3.14;
-
 
 
 }
