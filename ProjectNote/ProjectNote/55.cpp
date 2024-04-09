@@ -7,8 +7,9 @@
 
 int main()
 {
-	                           
-	unsigned int Var3{ (unsigned int)4294967295 };
-	Var3 = Var3 + 1;
-
+	char c = 0;
+	c = 255;
+	std::cout << c;
+	// 1111 1111
+	// 0000 0001         
 }
