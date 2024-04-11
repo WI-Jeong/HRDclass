@@ -7,9 +7,6 @@
 
 int main()
 {
-	char c = 0;
-	c = 255;
-	std::cout << c;
-	// 1111 1111
-	// 0000 0001         
+	int a = 123;
+	std::cout << typeid(a).name() << std::endl;
 }
