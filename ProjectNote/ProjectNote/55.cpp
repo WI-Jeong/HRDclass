@@ -16,8 +16,21 @@ enum EENUM
 
 int main()
 {
-	std::cout << sizeof(EENUM) << std::endl;
-	std::cout << typeid(EENUM).name() << std::endl;
-
-	EENUM::num1;
+	switch (EENUM)
+	{
+	case num:
+		std::cout << "입력한 숫자는 10입니다." << std::endl;
+		break;
+	case num1:
+		std::cout << "입력한 숫자는 11입니다." << std::endl;
+		break;
+	case num2:
+		std::cout << "입력한 숫자는 77입니다." << std::endl;
+		break;
+	case num3:
+		std::cout << "입력한 숫자는 78입니다." << std::endl;
+		break;
+	default:
+		break;
+	}
 }
