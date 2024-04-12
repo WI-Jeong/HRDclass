@@ -5,32 +5,36 @@
 #include "general.h"
 
 
-enum EENUM
+enum ESeason
 {
-	num = 10,
-	num1,
-	num2 = 77,
-	num3
+	Spring = 1,
+	Summer,
+	Fall,
+	Winter
 };
 
 
 int main()
 {
-	switch (EENUM)
+
+	ESeason Birthday = ESeason::Fall;
+
+	switch (Birthday)
 	{
-	case num:
-		std::cout << "입력한 숫자는 10입니다." << std::endl;
+	case Spring:
+		std::cout << "생일이 속한 계절은 봄 입니다." << std::endl;
 		break;
-	case num1:
-		std::cout << "입력한 숫자는 11입니다." << std::endl;
+
+	case Summer:
+		std::cout << "생일이 속한 계절은 여름 입니다." << std::endl;
 		break;
-	case num2:
-		std::cout << "입력한 숫자는 77입니다." << std::endl;
+
+	case Fall:
+		std::cout << "생일이 속한 계절은 가을 입니다." << std::endl;
 		break;
-	case num3:
-		std::cout << "입력한 숫자는 78입니다." << std::endl;
-		break;
+
 	default:
+		std::cout << "생일이 속한 계절은 봄 입니다." << std::endl;
 		break;
 	}
 }
