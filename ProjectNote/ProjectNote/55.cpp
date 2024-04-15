@@ -1,19 +1,17 @@
 #include <iostream>
+#include <format>
 
-void addPadding(int dataSize, int blockSize)
+struct temp {
+    double e; // 8byte
+    int a; // 4byte
+    int b; // 4byte
+    char c; // 1byte
+    char d; // 1byte
+    short f; // 2byte
+};
+
+void main()
 {
-    int padding = blockSize - (dataSize % blockSize);
-    std::cout << "Add " << padding << " bytes of padding" << std::endl;
+    std::cout << std::format("구조체 temp의 크기 : {}\n", sizeof(temp));
+
 }
-
-int main()
-{
-    int dataSize = 12; // 데이터 크기
-    int blockSize = 8; // 블록 크기
-    addPadding(dataSize, blockSize);
-    return 0;
-}
-
-
-
-
