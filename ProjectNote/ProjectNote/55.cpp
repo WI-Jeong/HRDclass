@@ -3,13 +3,24 @@
 #include <format>
 #include "func.h"
 #include "general.h"
-#define NAME_SIZE 77
+#define NAME_SIZE 32
+
+
+struct player
+{
+	char name[NAME_SIZE];
+	charactertype type;
+	int i;
+	int j;
+	struct startest;
+};
 
 int main()
 {
-	std::cout << NAME_SIZE << std::endl;
+	player TESTPLAYER;
 
-	return 0;
+	std::cout << TESTPLAYER.i << std::endl;
+	std::cout << TESTPLAYER.name << std::endl;
 }
 
 
