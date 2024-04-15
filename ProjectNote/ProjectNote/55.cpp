@@ -1,25 +1,38 @@
 #include <iostream>
 #include <format>
+#define NAME_SIZE 32
 
-struct FMystruct
+struct player
 {
-	int a;
-	float b;
-	short c;
-	char d;
+	char name[NAME_SIZE];
+	int i;
+	int j;
+	struct startest;
 };
 
-struct FMystruct2
+struct FPadding
 {
-	char d;
-	int a;
-	float b;
-	short c;
+	char C;
+
 };
+
+struct FPadding2
+{
+	char C;
+	int I;
+};
+
+struct FPadding3
+{
+	int I;
+	char C;
+	char C2; 
+	
+};
+
+
 
 int main()
 {
-	std::cout << sizeof(FMystruct) << std::endl;
-	std::cout << sizeof(FMystruct2) << std::endl;
-	
+	std::cout << sizeof(FPadding3);
 }
