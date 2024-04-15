@@ -1,30 +1,18 @@
 #include <iostream>
-#include <assert.h>
-#include <format>
-#include "func.h"
-#include "general.h"
-#define NAME_SIZE 32
 
-
-struct player
+void addPadding(int dataSize, int blockSize)
 {
-	char name[NAME_SIZE];
-	charactertype type;
-	int i;
-	int j;
-	struct startest;
-};
+    int padding = blockSize - (dataSize % blockSize);
+    std::cout << "Add " << padding << " bytes of padding" << std::endl;
+}
 
 int main()
 {
-	player TESTPLAYER;
-
-	std::cout << TESTPLAYER.i << std::endl;
-	std::cout << TESTPLAYER.name << std::endl;
+    int dataSize = 12; // 데이터 크기
+    int blockSize = 8; // 블록 크기
+    addPadding(dataSize, blockSize);
+    return 0;
 }
-
-
-
 
 
 
