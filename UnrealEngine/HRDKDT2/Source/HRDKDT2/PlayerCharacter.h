@@ -5,7 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "HRDKDT2.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraActor.h"
+#include "Camera/CameraComponent.h"
 #include "PlayerCharacter.generated.h"
+
 
 UCLASS()
 class HRDKDT2_API APlayerCharacter : public ACharacter
@@ -26,5 +30,28 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	UPROPERTY(Category=Camera, VisibleAnywhere, Blueprintreadonly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USpringArmComponent> mSpringArm;
+
+	UPROPERTY(Category = Camera, VisibleAnywhere, Blueprintreadonly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCameraComponent> mCamera;
+
+private:
+	void MoveFront(float Scale);
+	void MoveSide(float Scale);
+	void RotationCharacterYaw(float Scale);
+	void RotationCharacterPitch(float Scale);
+	void CameraZoom(float Scale);
+
+	void RotationCamera();
+	void RotationCameraReleased();
+	void JumpKey();
+	void AttackKey();
+
+protected:
+	bool mCameraRotationEnable;
+
 
 };

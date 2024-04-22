@@ -14,5 +14,11 @@ UCLASS()
 class HRDKDT2_API ABlastCharacter : public APlayerCharacter
 {
 	GENERATED_BODY()
+
+public:
+	ABlastCharacter();
+
+protected:
+	UCapsuleComponent* CapsuleComponent;
 	
 };
