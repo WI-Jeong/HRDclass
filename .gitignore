@@ -369,3 +369,11 @@ UnrealEngine/HRDKDT2/Content/Developers
 UnrealEngine/HRDKDT2/*sln
 UnrealEngine/HRDKDT2/.vsconfig
 
+UnrealEngine/BBH/Binaries
+UnrealEngine/BBH/Intermediate
+UnrealEngine/BBH/saved
+UnrealEngine/BBH/Content/Developers
+UnrealEngine/BBH/*sln
+UnrealEngine/BBH/.vsconfig
+
+
