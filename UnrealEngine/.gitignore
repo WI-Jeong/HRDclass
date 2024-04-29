@@ -73,3 +73,10 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 Game/*
+
+HRDclass/UnrealEngine/BBH/Intermediate/CachedAssetRegistry_0.bin
+HRDclass/UnrealEngine/BBH/Saved/Autosaves/PackageRestoreData.json
+HRDclass/UnrealEngine/BBH/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini
+HRDclass/UnrealEngine/BBH/Saved/Config/WindowsEditor/Engine.ini
+HRDclass/UnrealEngine/BBH/Saved/SourceControl/UncontrolledChangelists.json
+HRDclass/UnrealEngine/HRDKDT2/.vsconfig
