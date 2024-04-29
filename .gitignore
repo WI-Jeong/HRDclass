@@ -362,17 +362,17 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-UnrealEngine/HRDKDT2/Binaries
-UnrealEngine/HRDKDT2/Intermediate
-UnrealEngine/HRDKDT2/saved
-UnrealEngine/HRDKDT2/Content/Developers
+UnrealEngine/HRDKDT2/Binaries/
+UnrealEngine/HRDKDT2/Intermediate/
+UnrealEngine/HRDKDT2/saved/
+UnrealEngine/HRDKDT2/Content/Developers/
 UnrealEngine/HRDKDT2/*sln
 UnrealEngine/HRDKDT2/.vsconfig
 
-UnrealEngine/BBH/Binaries
-UnrealEngine/BBH/Intermediate
-UnrealEngine/BBH/Saved
-UnrealEngine/BBH/Content/Developers
+UnrealEngine/BBH/Binaries/
+UnrealEngine/BBH/Intermediate/
+UnrealEngine/BBH/Saved/
+UnrealEngine/BBH/Content/Developers/
 UnrealEngine/BBH/*sln
 UnrealEngine/BBH/.vsconfig
 
