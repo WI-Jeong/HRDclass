@@ -392,10 +392,11 @@ DerivedDataCache/*
 Game/*
 
 
-UnrealEngine/BBH/Binaries/
+UnrealEngine/BBH/Binaries/*
 UnrealEngine/BBH/Intermediate/*
-UnrealEngine/BBH/Saved/*
-UnrealEngine/BBH/Content/Developers/
+UnrealEngine/BBH/Saved/Config/*
+UnrealEngine/BBH/Saved/Autosaves/*
+UnrealEngine/BBH/Content/Developers/*
 UnrealEngine/BBH/*sln
 UnrealEngine/BBH/.vsconfig
 
