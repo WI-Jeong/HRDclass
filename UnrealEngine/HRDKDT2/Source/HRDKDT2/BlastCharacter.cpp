@@ -17,6 +17,6 @@ ABlastCharacter::ABlastCharacter()
 
 	GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -98.0));
 
-	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));
+	GetMesh()->SetRelativeRotation(FRotator(0.0, -90.0, 0.0));	
 
 }

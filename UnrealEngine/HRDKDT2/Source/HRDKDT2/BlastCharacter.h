@@ -19,6 +19,5 @@ public:
 	ABlastCharacter();
 
 protected:
-	UCapsuleComponent* CapsuleComponent;
-	
+	UCapsuleComponent* CapsuleComponent;	
 };
