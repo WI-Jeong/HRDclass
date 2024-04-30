@@ -16,5 +16,9 @@ class HRDKDT2_API ABlastGameModeBase : public AGameModeBase
 
 public:
 	ABlastGameModeBase();
+
+protected:
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 };

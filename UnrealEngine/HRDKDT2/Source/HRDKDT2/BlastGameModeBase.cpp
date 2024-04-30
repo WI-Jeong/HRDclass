@@ -15,4 +15,20 @@ ABlastGameModeBase::ABlastGameModeBase()
 	{
 		DefaultPawnClass = BluePrintPawn.Class;
 	}
+
+	UWorld* World = GetWorld();
+	UWorld* GGWorld = GWorld;
+}
+
+void ABlastGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UWorld* World = GetWorld();
+	UWorld* GGWorld = GWorld;
+}
+
+void ABlastGameModeBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
 }

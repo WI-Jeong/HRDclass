@@ -8,7 +8,14 @@ public class HRDKDT2 : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] {            
+            "Core", "CoreUObject", "Engine", "InputCore", "UMG",
+            "MoviePlayer",
+            "EnhancedInput",
+            "AIModule",
+            "LevelSequence", "MovieScene",
+            "Niagara",
+            "Paper2D" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
