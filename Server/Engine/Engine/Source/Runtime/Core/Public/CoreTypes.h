@@ -1,2 +1,4 @@
 #pragma once
-#include "HAL/Platform.h"
+#pragma warning(disable: 4251)
+#include <string>
+#include <format>

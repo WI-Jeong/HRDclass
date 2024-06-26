@@ -20,10 +20,16 @@ if '%errorlevel%' NEQ '0' (goto UACPrompt) else ( goto gotAdmin )
     REM 관리자 권한으로 실행하는 경우 기본 경로가 달라서, 이를 bat파일 경로(%~dp0)로 변경한다
     CD /D "%~dp0"
 :-----------------------------------------------------------------------------------------------------------------------------
-
 call "%ProgramFiles%\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat"
 echo [Build Sharpmake]
 dotnet build --configuration Release .\Engine\Engine\Source\Programs\Sharpmake\Sharpmake.Application\Sharpmake.Application.csproj
+
+echo [vcpkg task]
+set "VCPKG_ROOT=..\vcpkg"
+echo VCPKG_ROOT: %VCPKG_ROOT%
+call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
+%VCPKG_ROOT%\vcpkg install rapidjson:x64-windows boost:x64-windows sentry-native:x64-windows
+%VCPKG_ROOT%\vcpkg integreate install
 
 echo [Done]
 pause
