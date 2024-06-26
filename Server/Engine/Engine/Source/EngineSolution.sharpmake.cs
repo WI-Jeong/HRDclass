@@ -13,7 +13,7 @@ public class EngineSolution : Solution
         IsFileNameToLower = false;
 
         AddTargets(new EngineTarget(
-            // ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server
+            ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server
             ELaunchType.Server,
             Platform.win64,
             DevEnv.vs2022,
