@@ -9,6 +9,10 @@ int32 EnginePreInit(const TCHAR* CmdLine)
 {
 	E_Log(trace, "");
 	const int32 ErrorLevel = EngineLoop.PreInit(CmdLine);
+
+	UClass Test = UClass(TEXT("Test"), typeid(UObject), sizeof(UObject), nullptr, nullptr);
+	UObject* Obj = Test.GetDefaultObject(false);
+
 	return ErrorLevel;
 }
 
