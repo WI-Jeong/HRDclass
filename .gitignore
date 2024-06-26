@@ -376,3 +376,5 @@ BBH/Content/Developers/
 BBH/*sln
 BBH/.vsconfig
 
+Server/Engine/intermediate
+Server/Engine/Engine.Sln
