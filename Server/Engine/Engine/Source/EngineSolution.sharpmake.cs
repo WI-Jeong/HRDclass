@@ -2,7 +2,9 @@ using System;
 using System.IO;
 using Sharpmake;
 
+[module: Include("%EngineDir%/Engine/Source/CommonProject.sharpmake.cs")]
 [module: Include("%EngineDir%/Engine/Source/Console/EngineConsole.sharpmake.cs")]
+[module: Include("%EngineDir%/Engine/Source/Runtime/**/*.sharpmake.cs")]
 [module: Include("Utils.cs")]
 
 [Generate]
@@ -21,7 +23,7 @@ public class EngineSolution : Solution
     }
 
     [Configure]
-    public void ConfigureAll(Solution.Configuration conf, EngineTarget target)
+    public virtual void ConfigureAll(Configuration conf, EngineTarget target)
     {
         Utils.MakeConfiturationNameDefine(conf, target);
 
@@ -32,6 +34,11 @@ public class EngineSolution : Solution
 
         // Add Projects
         {
+            // dll
+            conf.AddProject<Core>(target);
+            conf.AddProject<Launch>(target);
+
+            // exe
             conf.AddProject<EngineConsole>(target);
         }
     }
