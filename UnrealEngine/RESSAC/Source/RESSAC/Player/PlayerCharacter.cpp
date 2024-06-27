@@ -94,6 +94,10 @@ void APlayerCharacter::RotationCharacterPitch(float Scale)
 
 void APlayerCharacter::CameraZoom(float Scale)
 {
+	float	Length = Scale * 10.f;
+
+	mSpringArm->TargetArmLength -= Length;
+
 }
 
 void APlayerCharacter::RotationCamera()
