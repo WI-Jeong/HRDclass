@@ -2,6 +2,9 @@
 
 
 #include "PlayerCharacter.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -23,6 +26,21 @@ APlayerCharacter::APlayerCharacter()
 	mCamera->SetupAttachment(mSpringArm);
 
 	mCameraRotationEnable = false;
+
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext>DEFAULTCONTEXT(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Input/IMC_Move.IMC_Move'"));
+	if (DEFAULTCONTEXT.Succeeded())
+	{
+		DefaultContext = DEFAULTCONTEXT.Object;
+	}
+
+
+	static ConstructorHelpers::FObjectFinder<UInputAction>IA_Move(TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Move.IA_Move'"));
+	if (IA_Move.Succeeded())
+	{
+		MoveAction = IA_Move.Object;
+	}
+
+
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +48,12 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* SubSystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+			SubSystem->AddMappingContext(DefaultContext, 0);
+	}
 }
 
 // Called every frame
@@ -44,59 +68,63 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis(TEXT("MoveFront"), this, &APlayerCharacter::MoveFront);
-	PlayerInputComponent->BindAxis(TEXT("MoveSide"), this, &APlayerCharacter::MoveSide);
-	PlayerInputComponent->BindAxis(TEXT("RotationCharacter"), this, &APlayerCharacter::RotationCharacterYaw);
-	PlayerInputComponent->BindAxis(TEXT("RotationCamera"), this, &APlayerCharacter::RotationCharacterPitch);
-	PlayerInputComponent->BindAxis(TEXT("CameraZoom"), this, &APlayerCharacter::CameraZoom);
+	//PlayerInputComponent->BindAxis(TEXT("MoveFront"), this, &APlayerCharacter::MoveFront);
+	//PlayerInputComponent->BindAxis(TEXT("MoveSide"), this, &APlayerCharacter::MoveSide);
+	//PlayerInputComponent->BindAxis(TEXT("RotationCharacter"), this, &APlayerCharacter::RotationCharacterYaw);
+	//PlayerInputComponent->BindAxis(TEXT("RotationCamera"), this, &APlayerCharacter::RotationCharacterPitch);
+	//PlayerInputComponent->BindAxis(TEXT("CameraZoom"), this, &APlayerCharacter::CameraZoom);
 
-	PlayerInputComponent->BindAction(TEXT("RotationCamera"), EInputEvent::IE_Pressed, this, &APlayerCharacter::RotationCamera);
-	PlayerInputComponent->BindAction(TEXT("RotationCamera"), EInputEvent::IE_Released, this, &APlayerCharacter::RotationCameraReleased);
-	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &APlayerCharacter::JumpKey);
-	PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed, this, &APlayerCharacter::AttackKey);
+	//PlayerInputComponent->BindAction(TEXT("RotationCamera"), EInputEvent::IE_Pressed, this, &APlayerCharacter::RotationCamera);
+	//PlayerInputComponent->BindAction(TEXT("RotationCamera"), EInputEvent::IE_Released, this, &APlayerCharacter::RotationCameraReleased);
+	//PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &APlayerCharacter::JumpKey);
+	//PlayerInputComponent->BindAction(TEXT("Attack"), EInputEvent::IE_Pressed, this, &APlayerCharacter::AttackKey);
 
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
+	}
 }
 
 void APlayerCharacter::MoveFront(float Scale)
 {
-	AddMovementInput(GetActorForwardVector(), Scale);
+	//AddMovementInput(GetActorForwardVector(), Scale);
 }
 
 void APlayerCharacter::MoveSide(float Scale)
 {
-	AddMovementInput(GetActorRightVector(), Scale);
+	//AddMovementInput(GetActorRightVector(), Scale);
 }
 
 void APlayerCharacter::RotationCharacterYaw(float Scale)
 {
-	if (mCameraRotationEnable)
-	{
-		float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; 
+	//if (mCameraRotationEnable)
+	//{
+	//	float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; 
 
-		mSpringArm->AddRelativeRotation(FRotator(0.0, (double)Rot, 0.0));
+	//	mSpringArm->AddRelativeRotation(FRotator(0.0, (double)Rot, 0.0));
 
-	}
-	else
-	{
-		AddControllerYawInput(Scale);
-	}
+	//}
+	//else
+	//{
+	//	AddControllerYawInput(Scale);
+	//}
 }
 
 void APlayerCharacter::RotationCharacterPitch(float Scale)
 {
-	if (mCameraRotationEnable)
-	{
-		float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; //deltatime 가져오기 
+	//if (mCameraRotationEnable)
+	//{
+	//	float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; //deltatime 가져오기 
 
-		mSpringArm->AddRelativeRotation(FRotator((double)Rot, 0.0, 0.0));
-	}
+	//	mSpringArm->AddRelativeRotation(FRotator((double)Rot, 0.0, 0.0));
+	//}
 }
 
 void APlayerCharacter::CameraZoom(float Scale)
 {
-	float	Length = Scale * 10.f;
+	//float	Length = Scale * 10.f;
 
-	mSpringArm->TargetArmLength -= Length;
+	//mSpringArm->TargetArmLength -= Length;
 
 }
 
@@ -107,7 +135,7 @@ void APlayerCharacter::RotationCamera()
 
 void APlayerCharacter::RotationCameraReleased()
 {
-	mCameraRotationEnable = false;
+	//mCameraRotationEnable = false;
 }
 
 void APlayerCharacter::JumpKey()
@@ -118,3 +146,24 @@ void APlayerCharacter::AttackKey()
 {
 }
 
+void APlayerCharacter::Move(const FInputActionValue& Value)
+{
+	FVector2D MovementVector = Value.Get<FVector2D>();
+
+	if (Controller != nullptr)
+	{
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		// get forward vector
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		// get right vector 
+		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+		// add movement 
+		AddMovementInput(ForwardDirection, MovementVector.Y);
+		AddMovementInput(RightDirection, MovementVector.X);
+	}
+}

@@ -6,10 +6,11 @@
 #include "EngineMinimal.h"
 #include "EngineGlobals.h"
 #include "Engine.h"
+#include "InputActionValue.h"   
 #include "UObject/NoExportTypes.h"
 #include "GameInfo.generated.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(RESSAC, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(RESSAC, Log, All);    
 
 #define   LOG_CALLINFO   (FString(__FUNCTION__) + TEXT("[") + FString::FromInt(__LINE__) + TEXT("]"))
 

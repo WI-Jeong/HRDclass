@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
+#include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -46,4 +47,15 @@ private:
 	void RotationCameraReleased();
 	void JumpKey();
 	void AttackKey();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UInputMappingContext* DefaultContext;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* MoveAction;
+
+protected:
+	void Move(const FInputActionValue& Value);
+
 };
