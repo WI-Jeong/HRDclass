@@ -21,13 +21,15 @@ struct CORE_API FObjectInitializer
 	EObjectFlags ObjectFlags = EObjectFlags::RF_NoFlags;
 	FString Name;
 
-	shared_ptr<UObject> GetObj() const { return Obj; }
+	UObject* GetObj() const { return Obj; }
 
 	FObjectInitializer() {}
 	FObjectInitializer(const EObjectFlags InObjectFlags);
 	FObjectInitializer(const FStaticConstructObjectParameters& StaticConstructParams);
 
-private:
 	// FObjectInitializer를 사용해서 신규로 만들어진 UObject 객체
-	shared_ptr<UObject> Obj;
+	shared_ptr<UObject> SharedObj;
+
+	// FAllocator 내부에서 MamoryPool로 부터 얻어온 주소(shared_ptr 크기를 고려해서 계산된 주소)
+	UObject* Obj = nullptr;
 };

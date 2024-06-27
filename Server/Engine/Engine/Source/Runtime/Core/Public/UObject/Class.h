@@ -1,5 +1,6 @@
 #pragma once
 #include "UObject.h"
+#include "UObjectArray.h"
 
 /**
  * An object class.
@@ -69,5 +70,6 @@ UClass* GetPrivateStaticClassBody(
 template<class T>
 void InternalConstructor(const FObjectInitializer& X)
 {
-	int a;
+	FObjectInitializer* ObjectInitializer = const_cast<FObjectInitializer*>(&X);
+	ObjectInitializer->SharedObj = allocate_shared<T>(FAllocator<T>(*ObjectInitializer));
 }

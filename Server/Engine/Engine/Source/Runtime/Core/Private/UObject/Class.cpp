@@ -36,7 +36,7 @@ CORE_API UObject* UClass::CreateDefaultObject()
 {
 	_ASSERT(!ClassDefaultObject);
 
-	const uint64 SharedPtrSize = sizeof(_Ref_count_obj_alloc3<UObject, std::allocator<UObject>>) - sizeof(UObject);
+	const uint64 SharedPtrSize = sizeof(_Ref_count_obj_alloc3<UObject, FAllocator<UObject>>) - sizeof(UObject);
 	GUObjectArray.Create(ClassTypeInfo, SharedPtrSize + ClassSize);
 
 	FStaticConstructObjectParameters StaticConstructObjectParameters{ this };
@@ -45,7 +45,7 @@ CORE_API UObject* UClass::CreateDefaultObject()
 	FObjectInitializer ObjectInitializer{ StaticConstructObjectParameters };
 	ClassConstructor(ObjectInitializer);
 
-	ClassDefaultObject = ObjectInitializer.GetObj();
+	ClassDefaultObject = ObjectInitializer.SharedObj;
 
 	return ClassDefaultObject.get();
 }
