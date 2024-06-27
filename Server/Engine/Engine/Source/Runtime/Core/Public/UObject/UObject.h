@@ -1,21 +1,9 @@
 #pragma once
 #include "CoreTypes.h"
+#include "UObjectGlobals.h"
 
 class UClass;
 class UObject;
-
-struct CORE_API FObjectInitializer
-{
-	UClass* Class = nullptr;
-	EObjectFlags ObjectFlags = EObjectFlags::RF_NoFlags;
-
-	/** Object this object resides in. */
-	UObject* OuterPrivate = nullptr;
-	FString Name;
-
-	FObjectInitializer() {}
-	FObjectInitializer(const EObjectFlags InObjectFlags);
-};
 
 // 의도된 사항으로 일부 경고를 무시합니다.
 #pragma warning(disable:26495)

@@ -2,6 +2,13 @@
 
 FEngineLoop EngineLoop;
 
+class LAUNCH_API UTest : public UObject
+{
+public:
+	int a = 0;
+};
+
+extern CORE_API map<FString, UClass*> MapClass;
 /**
  * PreInits the engine loop
  */
@@ -10,8 +17,14 @@ int32 EnginePreInit(const TCHAR* CmdLine)
 	E_Log(trace, "");
 	const int32 ErrorLevel = EngineLoop.PreInit(CmdLine);
 
-	UClass Test = UClass(TEXT("Test"), typeid(UObject), sizeof(UObject), nullptr, nullptr);
-	UObject* Obj = Test.GetDefaultObject(false);
+	GetPrivateStaticClassBody<UTest>(TEXT("UTest"),
+		(UClass::ClassConstructorType)InternalConstructor<UTest>, nullptr, nullptr);
+
+	UClass* Class = MapClass[TEXT("UTest")];
+	UObject* Object = Class->GetDefaultObject(false);
+
+	/*UClass Test = UClass(TEXT("Test"), typeid(UObject), sizeof(UObject), nullptr, nullptr);
+	UObject* Obj = Test.GetDefaultObject(false);*/
 
 	return ErrorLevel;
 }

@@ -7,7 +7,7 @@ void FMemoryPool::Create(const string_view InTypeName, const uint64 InSizePerOne
 	if (Pool)
 	{
 		// 이미 pool이 만들어져 있다.
-		_ASSERT(false);
+		//_ASSERT(false);
 		return;
 	}
 

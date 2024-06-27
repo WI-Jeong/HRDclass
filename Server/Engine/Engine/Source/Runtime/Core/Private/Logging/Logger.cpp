@@ -27,7 +27,8 @@ FLogger::FLogger(std::string_view InLogFileName)
 		keywords::max_files = 256,	// 최대 저장 파일 수
 		keywords::file_name = LogFileName + "_%Y-%m-%d_%H-%M-%S.%N.log",
 		keywords::rotation_size = 10 * 1024 * 1024,
-		keywords::time_based_rotation = sinks::file::rotation_at_time_interval(boost::posix_time::hours(24)),
+		// 재생성 시점 (일 변경시)
+		keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
 		keywords::format =
 		(
 			expr::stream

@@ -8,10 +8,10 @@ class UClass : public UObject
 {
 private:
 	UClass* SuperClass;
-	UObject* ClassDefaultObject;
+	shared_ptr<UObject> ClassDefaultObject;
 
 public:
-	FStringView ClassName;
+	FString ClassName;
 	const type_info& ClassTypeInfo;
 	const uint64 ClassSize;
 
@@ -21,7 +21,7 @@ public:
 	using StaticClassFunctionType = function<UClass* (void)>;
 
 	UClass() = delete;
-	CORE_API UClass(FStringView InClassName, const type_info& InClassTypeInfo,
+	CORE_API UClass(FString InClassName, const type_info& InClassTypeInfo,
 		const uint64 InClassSize, ClassConstructorType InClassConstructor,
 		StaticClassFunctionType InSuperClassFunction);
 
@@ -40,3 +40,34 @@ protected:
 	CORE_API void InternalCreateDefaultObjectWrapper() const;
 	CORE_API UObject* CreateDefaultObject();
 };
+
+CORE_API UClass* RegisterEngineClass(
+	FString InClassName,
+	UClass::ClassConstructorType InClassConstructor,
+	UClass::StaticClassFunctionType InSuperClassFunction,
+	function<void()> InClassReflection,
+	const type_info& InClassTypeInfo,
+	const uint64 InClassSize
+);
+
+template<class T>
+UClass* GetPrivateStaticClassBody(
+	FString InClassName,
+	UClass::ClassConstructorType InClassConstructor,
+	UClass::StaticClassFunctionType InSuperClassFunction,
+	function<void()> InClassReflection)
+{
+	const type_info& ClassTypeInfo = typeid(T);
+	const uint64 ClassSize = sizeof(T);
+
+	UClass* NewClass = RegisterEngineClass(InClassName, InClassConstructor, InSuperClassFunction, InClassReflection,
+		ClassTypeInfo, ClassSize);
+
+	return NewClass;
+}
+
+template<class T>
+void InternalConstructor(const FObjectInitializer& X)
+{
+	int a;
+}

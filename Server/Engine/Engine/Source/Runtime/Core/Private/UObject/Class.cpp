@@ -1,7 +1,9 @@
 #include "UObject/Class.h"
 #include "UObject/UObjectArray.h"
 
-UClass::UClass(FStringView InClassName, const type_info& InClassTypeInfo, const uint64 InClassSize, ClassConstructorType InClassConstructor, StaticClassFunctionType InSuperClassFunction)
+CORE_API map<FString, UClass*> MapClass;
+
+UClass::UClass(FString InClassName, const type_info& InClassTypeInfo, const uint64 InClassSize, ClassConstructorType InClassConstructor, StaticClassFunctionType InSuperClassFunction)
 	: SuperClass(nullptr)
 	, ClassDefaultObject(nullptr)
 	, ClassName(InClassName)
@@ -22,7 +24,7 @@ UObject* UClass::GetDefaultObject(bool bNoCreate) const
 		// CDO를 만든다
 		InternalCreateDefaultObjectWrapper();
 	}
-	return ClassDefaultObject;
+	return ClassDefaultObject.get();
 }
 
 CORE_API void UClass::InternalCreateDefaultObjectWrapper() const
@@ -37,6 +39,33 @@ CORE_API UObject* UClass::CreateDefaultObject()
 	const uint64 SharedPtrSize = sizeof(_Ref_count_obj_alloc3<UObject, std::allocator<UObject>>) - sizeof(UObject);
 	GUObjectArray.Create(ClassTypeInfo, SharedPtrSize + ClassSize);
 
+	FStaticConstructObjectParameters StaticConstructObjectParameters{ this };
+	StaticConstructObjectParameters.SetFlags = EObjectFlags::RF_ClassDefaultObject;
 
-	return ClassDefaultObject;
+	FObjectInitializer ObjectInitializer{ StaticConstructObjectParameters };
+	ClassConstructor(ObjectInitializer);
+
+	ClassDefaultObject = ObjectInitializer.GetObj();
+
+	return ClassDefaultObject.get();
+}
+
+CORE_API UClass* RegisterEngineClass(FString InClassName,
+	UClass::ClassConstructorType InClassConstructor,
+	UClass::StaticClassFunctionType InSuperClassFunction,
+	function<void()> InClassReflection,
+	const type_info& InClassTypeInfo, const uint64 InClassSize)
+{
+	GUObjectArray.Create(typeid(UClass), sizeof(UClass));
+	UObjectBase* ObjectBase = (UObjectBase*)GUObjectArray.Malloc(typeid(UClass));
+
+	new(ObjectBase)UObjectBase(nullptr, EObjectFlags::RF_Class, nullptr);
+
+	UClass* NewClass = new(ObjectBase)UClass(InClassName, InClassTypeInfo, InClassSize,
+		InClassConstructor, InSuperClassFunction);
+	NewClass->Name = TEXT("UClass");
+
+	MapClass.insert(make_pair(InClassName, NewClass));
+
+	return NewClass;
 }
