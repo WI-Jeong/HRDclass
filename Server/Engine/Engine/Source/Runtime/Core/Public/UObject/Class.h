@@ -25,7 +25,7 @@ public:
 	CORE_API UClass(FString InClassName, const type_info& InClassTypeInfo,
 		const uint64 InClassSize, ClassConstructorType InClassConstructor,
 		StaticClassFunctionType InSuperClassFunction);
-
+	~UClass() {}
 	UClass* GetSuperClass() const { return SuperClass; }
 
 	template<class T>

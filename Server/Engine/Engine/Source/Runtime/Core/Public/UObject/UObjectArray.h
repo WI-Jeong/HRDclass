@@ -57,23 +57,12 @@ public:
 	constexpr FAllocator(const FAllocator&) noexcept = default;
 	template <class _Other>
 	constexpr FAllocator(const FAllocator<_Other>& InOther) noexcept :
-		ObjectInitializer(InOther.ObjectInitializer)
+		ObjectInitializer(InOther.ObjectInitializer),
+		DestructorClass(InOther.DestructorClass)
 	{
 	}
 	_CONSTEXPR20 ~FAllocator() = default;
 	_CONSTEXPR20 FAllocator& operator=(const FAllocator&) = default;
-
-	template< class U >
-	_CONSTEXPR20 void destroy(U* p)
-	{
-	}
-	_CONSTEXPR20 void deallocate(_Ty* const _Ptr, const size_t _Count) {
-		_STL_ASSERT(_Ptr != nullptr || _Count == 0, "null pointer cannot point to a block of non-zero size");
-		_STL_ASSERT(_Count == 1, "error");
-		// no overflow check on the following multiply; we assume _Allocate did that check
-		//_Deallocate<_New_alignof<_Ty>>(_Ptr, sizeof(_Ty) * _Count);
-		//GUObjectArray.Free(ObjectInitializer.Class->ClassTypeInfo, _Ptr);
-	}
 
 	_NODISCARD_RAW_PTR_ALLOC _CONSTEXPR20 __declspec(allocator) _Ty* allocate(_CRT_GUARDOVERFLOW const size_t /*_Count*/) {
 		static_assert(sizeof(value_type) > 0, "value_type must be complete before calling allocate.");
@@ -89,8 +78,26 @@ public:
 		_Objty::__DefaultConstructor(ObjectInitializer);
 	}
 
+	template< class U >
+	_CONSTEXPR20 void destroy(U* p)
+	{
+		UClass* Class = p->GetClass();
+		DestructorClass = Class;
+		_ASSERT(Class);
+		p->~U();
+	}
+	_CONSTEXPR20 void deallocate(_Ty* const _Ptr, const size_t _Count) {
+		_STL_ASSERT(_Ptr != nullptr || _Count == 0, "null pointer cannot point to a block of non-zero size");
+		_STL_ASSERT(_Count == 1, "error");
+		GUObjectArray.Free(DestructorClass->ClassTypeInfo, _Ptr);
+		// no overflow check on the following multiply; we assume _Allocate did that check
+		//_Deallocate<_New_alignof<_Ty>>(_Ptr, sizeof(_Ty) * _Count);
+		//GUObjectArray.Free(ObjectInitializer.Class->ClassTypeInfo, _Ptr);
+	}
+
 public:
 	FObjectInitializer& ObjectInitializer;
+	UClass* DestructorClass = nullptr;
 };
 
 _EXPORT_STD template <class _Ty, class _Other>
