@@ -13,16 +13,16 @@ public class EngineSolution : Solution
     public EngineSolution() : base(typeof(EngineTarget))
     {
         IsFileNameToLower = false;
+		Name = "Engine";
 
         AddTargets(new EngineTarget(
-            ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server
-            ELaunchType.Server,
+            ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server,
             Platform.win64,
             DevEnv.vs2022,
             Optimization.Debug | Optimization.Release));
     }
 
-    [Configure]
+    [Configure()]
     public virtual void ConfigureAll(Configuration conf, EngineTarget target)
     {
         Utils.MakeConfiturationNameDefine(conf, target);
@@ -36,6 +36,7 @@ public class EngineSolution : Solution
         {
             // dll
             conf.AddProject<Core>(target);
+            conf.AddProject<Engine>(target);
             conf.AddProject<Launch>(target);
 
             // exe

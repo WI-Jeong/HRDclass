@@ -50,15 +50,14 @@ public:
 
 	using propagate_on_container_move_assignment = true_type;
 	using is_always_equal _CXX20_DEPRECATE_IS_ALWAYS_EQUAL = true_type;
-	FAllocator(FObjectInitializer& InObjectInitializer) noexcept :
-		ObjectInitializer(InObjectInitializer)
+	FAllocator(FObjectInitializer* InObjectInitializer) noexcept :
+		Data(InObjectInitializer)
 	{
 	}
 	constexpr FAllocator(const FAllocator&) noexcept = default;
 	template <class _Other>
-	constexpr FAllocator(const FAllocator<_Other>& InOther) noexcept :
-		ObjectInitializer(InOther.ObjectInitializer),
-		DestructorClass(InOther.DestructorClass)
+	constexpr FAllocator(const FAllocator<_Other>& InOther) noexcept
+		: Data(InOther.Data.ObjectInitializer)
 	{
 	}
 	_CONSTEXPR20 ~FAllocator() = default;
@@ -66,38 +65,40 @@ public:
 
 	_NODISCARD_RAW_PTR_ALLOC _CONSTEXPR20 __declspec(allocator) _Ty* allocate(_CRT_GUARDOVERFLOW const size_t /*_Count*/) {
 		static_assert(sizeof(value_type) > 0, "value_type must be complete before calling allocate.");
-		_Ty* Pointer = (_Ty*)GUObjectArray.Malloc(ObjectInitializer.Class->ClassTypeInfo);
+		_Ty* Pointer = (_Ty*)GUObjectArray.Malloc(Data.ObjectInitializer->Class->ClassTypeInfo);
 		return Pointer;
 	}
 
 	template <class _Objty, class... _Types>
 	_CXX17_DEPRECATE_OLD_ALLOCATOR_MEMBERS void construct(_Objty* const _Ptr, _Types&&... _Args)
 	{
-		ObjectInitializer.Obj = _Ptr;
-		new(ObjectInitializer.GetObj())UObjectBase(ObjectInitializer.Class, ObjectInitializer.ObjectFlags, ObjectInitializer.OuterPrivate);
-		_Objty::__DefaultConstructor(ObjectInitializer);
+		Data.ObjectInitializer->Obj = _Ptr;
+		new(Data.ObjectInitializer->GetObj())UObjectBase(Data.ObjectInitializer->Class,
+			Data.ObjectInitializer->ObjectFlags, Data.ObjectInitializer->OuterPrivate);
+		_Objty::__DefaultConstructor(*Data.ObjectInitializer);
 	}
 
 	template< class U >
 	_CONSTEXPR20 void destroy(U* p)
 	{
 		UClass* Class = p->GetClass();
-		DestructorClass = Class;
+		Data.DestructorClass = Class;
 		_ASSERT(Class);
 		p->~U();
 	}
 	_CONSTEXPR20 void deallocate(_Ty* const _Ptr, const size_t _Count) {
 		_STL_ASSERT(_Ptr != nullptr || _Count == 0, "null pointer cannot point to a block of non-zero size");
 		_STL_ASSERT(_Count == 1, "error");
-		GUObjectArray.Free(DestructorClass->ClassTypeInfo, _Ptr);
-		// no overflow check on the following multiply; we assume _Allocate did that check
-		//_Deallocate<_New_alignof<_Ty>>(_Ptr, sizeof(_Ty) * _Count);
-		//GUObjectArray.Free(ObjectInitializer.Class->ClassTypeInfo, _Ptr);
+		GUObjectArray.Free(Data.DestructorClass->ClassTypeInfo, _Ptr);
 	}
 
 public:
-	FObjectInitializer& ObjectInitializer;
-	UClass* DestructorClass = nullptr;
+	union FData
+	{
+		FObjectInitializer* ObjectInitializer;
+		UClass* DestructorClass;
+	};
+	FData Data;
 };
 
 _EXPORT_STD template <class _Ty, class _Other>
