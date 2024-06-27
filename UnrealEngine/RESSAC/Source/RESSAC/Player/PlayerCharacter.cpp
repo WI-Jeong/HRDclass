@@ -9,6 +9,18 @@ APlayerCharacter::APlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	mSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	mCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+
+	mSpringArm->SetRelativeLocation(FVector(0.0, 0.0, 160.0));
+	mSpringArm->SetRelativeRotation(FRotator(-10.0, 90.0, 0.0));
+	mSpringArm->TargetArmLength = 500.f;
+
+	//부모 컴포넌트로 Mesh를 지정한다. 
+	mSpringArm->SetupAttachment(GetMesh());
+
+	//카메라는 부모만 지정
+	mCamera->SetupAttachment(mSpringArm);
 }
 
 // Called when the game starts or when spawned
