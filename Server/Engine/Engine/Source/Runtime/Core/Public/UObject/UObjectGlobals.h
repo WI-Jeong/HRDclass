@@ -1,6 +1,10 @@
 #pragma once
 #include "CoreTypes.h"
 
+FORCEINLINE bool CORE_API IsEngineExitRequested();
+
+void CORE_API RequestEngineExit(const string ReasonString);
+
 class UClass;
 class UObject;
 struct CORE_API FStaticConstructObjectParameters
@@ -34,6 +38,8 @@ struct CORE_API FObjectInitializer
 	UObject* Obj = nullptr;
 };
 
+CORE_API shared_ptr<UObject> StaticConstructorObject_Internal(FStaticConstructObjectParameters& Params);
+
 template<typename T>
 shared_ptr<T> NewObject(UObject* Outer, UClass* Class = nullptr, FString Name = NAME_NONE, EObjectFlags Flags = RF_NoFlags)
 {
@@ -46,5 +52,6 @@ shared_ptr<T> NewObject(UObject* Outer, UClass* Class = nullptr, FString Name = 
 	Params.Outer = Outer;
 	Params.Name = Name;
 	Params.SetFlags = Flags;
-	// 
+
+	return Cast<T>(StaticConstructorObject_Internal(Params));
 }

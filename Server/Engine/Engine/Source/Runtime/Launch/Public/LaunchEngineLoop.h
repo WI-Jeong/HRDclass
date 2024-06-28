@@ -28,5 +28,7 @@ public:
 	void Exit();
 
 private:
-	// UEngine
+	shared_ptr<UEngine> Engine;
 };
+
+extern ENGINE_API UEngine* GEngine;

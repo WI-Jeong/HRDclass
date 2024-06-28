@@ -53,7 +53,10 @@ int32 LAUNCH_API GuardedMain(const TCHAR* CmdLine)
 	if (ErrorLevel != 0) { return ErrorLevel; }
 
 	// 시뮬레이션
-	EngineTick();
+	while (!IsEngineExitRequested())
+	{
+		EngineTick();
+	}
 
 	// 종료
 	EngineExit();
