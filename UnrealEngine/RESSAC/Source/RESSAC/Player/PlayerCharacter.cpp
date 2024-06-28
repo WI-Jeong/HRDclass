@@ -40,7 +40,11 @@ APlayerCharacter::APlayerCharacter()
 		MoveAction = IA_Move.Object;
 	}
 
-
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/Player/AB_Phase.AB_Phase_C'"));
+	if (AnimClass.Succeeded())
+	{
+		GetMesh()->SetAnimInstanceClass(AnimClass.Class);
+	}
 }
 
 // Called when the game starts or when spawned
