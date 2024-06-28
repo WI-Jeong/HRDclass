@@ -33,3 +33,18 @@ struct CORE_API FObjectInitializer
 	// FAllocator 내부에서 MamoryPool로 부터 얻어온 주소(shared_ptr 크기를 고려해서 계산된 주소)
 	UObject* Obj = nullptr;
 };
+
+template<typename T>
+shared_ptr<T> NewObject(UObject* Outer, UClass* Class = nullptr, FString Name = NAME_NONE, EObjectFlags Flags = RF_NoFlags)
+{
+	if (!Class)
+	{
+		Class = T::StaticClass();
+	}
+
+	FStaticConstructObjectParameters Params(Class);
+	Params.Outer = Outer;
+	Params.Name = Name;
+	Params.SetFlags = Flags;
+	// 
+}

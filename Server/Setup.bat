@@ -29,7 +29,7 @@ set "VCPKG_ROOT=..\vcpkg"
 echo VCPKG_ROOT: %VCPKG_ROOT%
 call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
 %VCPKG_ROOT%\vcpkg install rapidjson:x64-windows boost:x64-windows sentry-native:x64-windows
-%VCPKG_ROOT%\vcpkg integreate install
+%VCPKG_ROOT%\vcpkg integrate install
 
 echo [Done]
 pause

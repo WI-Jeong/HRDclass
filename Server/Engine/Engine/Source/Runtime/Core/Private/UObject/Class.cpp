@@ -63,6 +63,7 @@ CORE_API UObject* UClass::CreateDefaultObject()
 
 	FStaticConstructObjectParameters StaticConstructObjectParameters{ this };
 	StaticConstructObjectParameters.SetFlags = EObjectFlags::RF_ClassDefaultObject;
+	StaticConstructObjectParameters.Name = ClassName;
 
 	FObjectInitializer ObjectInitializer{ StaticConstructObjectParameters };
 	ClassConstructor(ObjectInitializer);
