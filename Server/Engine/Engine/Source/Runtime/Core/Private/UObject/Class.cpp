@@ -27,6 +27,28 @@ UObject* UClass::GetDefaultObject(bool bNoCreate) const
 	return ClassDefaultObject.get();
 }
 
+CORE_API bool UClass::IsChildOf(const UClass* SomeBase) const
+{
+	_ASSERT(this);
+
+	if (SomeBase == nullptr)
+	{
+		return false;
+	}
+
+	bool bOldResult = false;
+	for (const UClass* TempClass = this; TempClass; TempClass = TempClass->GetSuperClass())
+	{
+		if (TempClass == SomeBase)
+		{
+			bOldResult = true;
+			break;
+		}
+	}
+
+	return bOldResult;
+}
+
 CORE_API void UClass::InternalCreateDefaultObjectWrapper() const
 {
 	const_cast<UClass*>(this)->CreateDefaultObject();

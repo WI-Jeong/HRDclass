@@ -35,11 +35,21 @@ public:
 	/** Returns true if this class either is class T, or is a child of class T. This will not crash on null class */
 	template<class T>
 	bool IsChildOf() const { return IsChildOf(T::StaticClass()); }
-	CORE_API bool IsChildOf(const UClass* SomeBase) const { _ASSERT(false); return false; }
+	CORE_API bool IsChildOf(const UClass* SomeBase) const;
 
 protected:
 	CORE_API void InternalCreateDefaultObjectWrapper() const;
 	CORE_API UObject* CreateDefaultObject();
+
+private:
+	/**
+	 * This signature intentionally hides the method declared in UObjectBaseUtility to make it private.
+	 * Call IsChildOf instead; Hidden because calling IsA on a class almost always indicates an error where the caller should use IsChildOf
+	 */
+	bool IsA(const UClass* Parent) const
+	{
+		return UObject::IsA(Parent);
+	}
 };
 
 CORE_API UClass* RegisterEngineClass(
