@@ -16,3 +16,8 @@ enum EObjectFlags
 
 #define DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(TClass) \
 	static void __DefaultConstructor(const FObjectInitializer& X) { new((EInternal*)X.GetObj())TClass(X); }
+
+#define GENERATED_BODY()
+#define UCLASS(...)
+#define UPROPERTY()
+//#define UFUNCTION()((EInternal*)X.GetObj())TClass(X); }

@@ -1,7 +1,7 @@
 using System.IO;
 using Sharpmake;
 
-[module: Include("Utils.cs")]
+[module:Include("Utils.cs")]
 
 public abstract class CommonProject : Project
 {
@@ -14,13 +14,14 @@ public abstract class CommonProject : Project
 
         SourceRootPath = @"[project.RootPath]";
         SourceFilesExtensions.Add(".cs");
+        //SourceFilesCompileExtensions.Add(".ixx");
 
         AddTargets(new EngineTarget(
-            // ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server
-            ELaunchType.Server,
-            Platform.win64,
-            DevEnv.vs2022,
-            Optimization.Debug | Optimization.Release));
+                ELaunchType.Editor | ELaunchType.Client | ELaunchType.Server,
+                Platform.win64,
+                DevEnv.vs2022,
+                Optimization.Debug | Optimization.Release
+        ));
     }
 
     [Configure]
@@ -29,8 +30,9 @@ public abstract class CommonProject : Project
         Utils.MakeConfiturationNameDefine(conf, target);
         conf.DumpDependencyGraph = true;
 
+        // conf.Output = Configuration.OutputType.Exe;
         conf.Output = Configuration.OutputType.Dll;
-
+        //conf.Output = Configuration.OutputType.Lib;
         conf.Options.Add(Options.Vc.General.CharacterSet.Unicode);
         conf.Options.Add(Options.Vc.Compiler.JumboBuild.Enable);
         conf.Options.Add(Options.Vc.Compiler.CppLanguageStandard.CPP20);
@@ -86,7 +88,7 @@ public abstract class CommonProject : Project
         //conf.EventPreBuild.Add("msbuild EngineConfig.vcxproj /p:platform=x64 /p:configuration=\"Debug Client\"");
         //conf.EventPreBuild.Add("msbuild UserConfig.vcxproj /p:platform=x64 /p:configuration=\"Debug Client\"");
         string EngineDir = Utils.GetEngineDir();
-        ///conf.EventPreBuild.Add(@"cmd /c """ + EngineDir + @"\Engine\Source\Programs\HeaderParser\HeaderParser.bat"" $(SolutionDir) [project.Name] [project.SourceRootPath] " + EngineDir);
+        conf.EventPreBuild.Add(@"cmd /c """ + EngineDir + @"\Engine\Source\Programs\HeaderParser\HeaderParser.bat"" $(SolutionDir) [project.Name] [project.SourceRootPath] " + EngineDir);
 
         // if not set, no precompile option will be used.
         //conf.PrecompHeader = "stdafx.h";

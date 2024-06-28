@@ -24,6 +24,10 @@ call "%ProgramFiles%\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevC
 echo [Build Sharpmake]
 dotnet build --configuration Release .\Engine\Engine\Source\Programs\Sharpmake\Sharpmake.Application\Sharpmake.Application.csproj
 
+echo [Build Header Parser]
+cmake -G "Visual Studio 17 2022" -A x64 -S Engine\Engine\Source\Programs\HeaderParser -B Engine\Engine\Source\Programs\HeaderParser\out
+cmake --build Engine\Engine\Source\Programs\HeaderParser\out --config Release
+
 echo [vcpkg task]
 set "VCPKG_ROOT=..\vcpkg"
 echo VCPKG_ROOT: %VCPKG_ROOT%
