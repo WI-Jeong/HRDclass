@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "Engine/GameInstance.h"
 #include "Engine.generated.h"
 
 UCLASS()
@@ -16,6 +17,9 @@ public:
 	void PreExit();
 
 protected:
+	// GameInstance
+	shared_ptr<UGameInstance> GameInstance;
+
 	// World
 };
 

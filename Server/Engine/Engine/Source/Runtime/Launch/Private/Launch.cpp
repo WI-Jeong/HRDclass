@@ -29,7 +29,6 @@ int32 EngineInit()
  */
 void EngineTick()
 {
-	E_Log(trace, "");
 	EngineLoop.Tick();
 }
 

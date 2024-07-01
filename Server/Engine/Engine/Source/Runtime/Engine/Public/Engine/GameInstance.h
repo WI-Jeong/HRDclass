@@ -7,9 +7,15 @@
 UCLASS()
 class ENGINE_API UGameInstance : public UObject
 {
-    GENERATED_BODY();
+	GENERATED_BODY();
 
 public:
-    UGameInstance();
-    ~UGameInstance();
+	virtual void Initailize();
+	virtual void StartGameInstance();
+
+public:
+	UGameInstance();
+	~UGameInstance();
+
+	// weak_ptr World
 };

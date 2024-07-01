@@ -64,3 +64,13 @@ CORE_API string to_string(FStringView InString);
 CORE_API FString to_wstring(const string& InString);
 // UTF8 -> wstring
 CORE_API FString to_wstring(string_view InString);
+
+/**
+ * Get default object of a class.
+ * @see UClass::GetDefaultObject()
+ */
+template< class T >
+inline const T* GetDefault()
+{
+	return (const T*)T::StaticClass()->GetDefaultObject();
+}
