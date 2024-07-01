@@ -11,18 +11,21 @@ class CORE_API UObjectBase : public std::enable_shared_from_this<UObjectBase>
 {
 public:
 	UObjectBase() {}
-	UObjectBase(UClass* InClass, EObjectFlags InObjectFlags, UObject* InOuter);
+	UObjectBase(UClass* InClass, EObjectFlags InObjectFlags, UObject* InOuter, const FString& InName);
 	virtual ~UObjectBase() {}
 
 	EObjectFlags GetFlags() const { return ObjectFlags; }
 	UObject* GetOuter() const { return OuterPrivate; }
-	UClass* GetClass() const { return Class; }
+	UClass* GetClass() const { return ClassPrivate; }
+	const FString& GetName() const { return NamePrivate; }
 
-protected:
+private:
 	EObjectFlags ObjectFlags;
 	/** Object this object resides in. */
 	UObject* OuterPrivate;
-	UClass* Class;
+	UClass* ClassPrivate;
+	/** Name of this object */
+	FString NamePrivate;
 };
 #pragma warning(default:26495)
 
@@ -69,10 +72,6 @@ public:
 	{
 		return (GetFlags() & FlagToCheck) != 0;
 	}
-
-	const FString& GetName() const { return Name; }
-
-	FString Name;
 };
 
 template<class T1, class T2>

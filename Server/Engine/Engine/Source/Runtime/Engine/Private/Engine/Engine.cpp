@@ -1,5 +1,7 @@
 #include "Engine/Engine.h"
 
+UEngine* GEngine = nullptr;
+
 UEngine::UEngine()
 {
 

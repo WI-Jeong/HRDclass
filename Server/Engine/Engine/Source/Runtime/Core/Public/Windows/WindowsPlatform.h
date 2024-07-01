@@ -20,7 +20,3 @@ struct FWindowsPlatformTypes : public FGenericPlatformTypes
 };
 
 typedef FWindowsPlatformTypes FPlatformTypes;
-
-// DLL export and import definitions
-#define DLLEXPORT __declspec(dllexport)
-#define DLLIMPORT __declspec(dllimport)

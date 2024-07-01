@@ -20,4 +20,8 @@ enum EObjectFlags
 #define GENERATED_BODY()
 #define UCLASS(...)
 #define UPROPERTY()
-//#define UFUNCTION()((EInternal*)X.GetObj())TClass(X); }
+//#define UFUNCTION()
+
+// DLL export and import definitions
+#define DLLEXPORT __declspec(dllexport)
+#define DLLIMPORT __declspec(dllimport)

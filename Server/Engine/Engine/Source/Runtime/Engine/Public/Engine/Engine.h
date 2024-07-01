@@ -18,3 +18,5 @@ public:
 protected:
 	// World
 };
+
+extern ENGINE_API UEngine* GEngine;

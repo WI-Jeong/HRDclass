@@ -1,8 +1,9 @@
 #include "UObject/UObject.h"
 
-UObjectBase::UObjectBase(UClass* InClass, EObjectFlags InObjectFlags, UObject* InOuter)
+UObjectBase::UObjectBase(UClass* InClass, EObjectFlags InObjectFlags, UObject* InOuter, const FString& InName)
 	: ObjectFlags(InObjectFlags)
 	, OuterPrivate(InOuter)
-	, Class(InClass)
+	, ClassPrivate(InClass)
+	, NamePrivate(InName)
 {
 }

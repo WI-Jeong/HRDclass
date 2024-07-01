@@ -30,5 +30,3 @@ public:
 private:
 	shared_ptr<UEngine> Engine;
 };
-
-extern ENGINE_API UEngine* GEngine;

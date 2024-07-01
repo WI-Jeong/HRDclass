@@ -1,6 +1,5 @@
 #include "LaunchEngineLoop.h"
 
-UEngine* GEngine = nullptr;
 extern CORE_API map<FString, UClass*> MapClass;
 
 int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
