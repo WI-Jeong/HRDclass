@@ -76,13 +76,13 @@ CORE_API string to_string(FStringView InString)
 	return wstring_convert<codecvt_utf8<WIDECHAR>>().to_bytes(InString.data());
 }
 
-CORE_API wstring to_wstring(const string& InString)
+CORE_API FString to_wstring(const string& InString)
 {
 	// UTF8 -> wstring
 	return wstring_convert<codecvt_utf8<WIDECHAR>>().from_bytes(InString);
 }
 
-CORE_API wstring to_wstring(string_view InString)
+CORE_API FString to_wstring(string_view InString)
 {
 	// UTF8 -> wstring
 	return wstring_convert<codecvt_utf8<WIDECHAR>>().from_bytes(InString.data());

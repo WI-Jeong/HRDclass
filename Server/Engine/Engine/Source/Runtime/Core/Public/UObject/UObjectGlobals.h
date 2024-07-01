@@ -61,6 +61,6 @@ CORE_API string to_string(const FString& InString);
 // wstring -> UTF8
 CORE_API string to_string(FStringView InString);
 // UTF8 -> wstring
-CORE_API wstring to_wstring(const string& InString);
+CORE_API FString to_wstring(const string& InString);
 // UTF8 -> wstring
-CORE_API wstring to_wstring(string_view InString);
+CORE_API FString to_wstring(string_view InString);

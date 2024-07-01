@@ -14,6 +14,14 @@ void FConfigCacheIni::InitializeConfigSystem()
 	}
 
 	GConfig = new FConfigCacheIni;
+	if (GConfig->LoadIniFile(GEngineIni, GBaseEngineIni))
+	{
+		GConfig->LoadIniFile(GEngineIni, GDefaultEngineIni, true);
+
+		FString GameInstanceClassName;
+		GConfig->GetConfig(GEngineIni).Get("/Script/EngineSettings.GameMapsSettings", "GameInstanceClass", GameInstanceClassName);
+		E_Log(trace, "{} GI class", to_string(GameInstanceClassName))
+	}
 }
 
 void FConfigCacheIni::DestroyConfigSystem()
@@ -35,15 +43,15 @@ bool FConfigCacheIni::LoadIniFile(FStringView InKey, const FString& InIniFileNam
 
 	if (!bTryOverride)
 	{
-		//bLoad = ConfigFile.Load(LoadIniFilePath);
+		bLoad = ConfigFile.Load(LoadIniFilePath);
 		if (!bLoad)
 		{
-			E_Log(error, "Load Failed: {}", LoadIniFilePath);
+			E_Log(error, "Load Failed: {}", to_string(LoadIniFilePath));
 		}
 	}
 	else
 	{
-		//bLoad = ConfigFile.TryOverride(LoadIniFilePath);
+		bLoad = ConfigFile.TryOverride(LoadIniFilePath);
 	}
 
 	return bLoad;
