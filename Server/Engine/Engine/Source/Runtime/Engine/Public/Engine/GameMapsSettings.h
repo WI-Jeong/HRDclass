@@ -7,9 +7,11 @@
 UCLASS()
 class ENGINE_API UGameMapsSettings : public UObject
 {
-    GENERATED_BODY();
+	GENERATED_BODY();
 
 public:
-    UGameMapsSettings();
-    ~UGameMapsSettings();
+	UGameMapsSettings();
+
+	UClass* GameInstanceClass = nullptr;
+	UClass* GameModeClass = nullptr;
 };

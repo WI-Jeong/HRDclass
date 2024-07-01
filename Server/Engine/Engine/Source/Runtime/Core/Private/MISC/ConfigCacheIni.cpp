@@ -17,10 +17,6 @@ void FConfigCacheIni::InitializeConfigSystem()
 	if (GConfig->LoadIniFile(GEngineIni, GBaseEngineIni))
 	{
 		GConfig->LoadIniFile(GEngineIni, GDefaultEngineIni, true);
-
-		FString GameInstanceClassName;
-		GConfig->GetConfig(GEngineIni).Get("/Script/EngineSettings.GameMapsSettings", "GameInstanceClass", GameInstanceClassName);
-		E_Log(trace, "{} GI class", to_string(GameInstanceClassName))
 	}
 }
 
