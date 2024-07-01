@@ -4,3 +4,6 @@
 
 #include "UObject/Class.h"
 #include "UObject/SubclassOf.h"
+
+#include "MISC/ConfigCacheIni.h"
+#include "MISC/Paths.h"

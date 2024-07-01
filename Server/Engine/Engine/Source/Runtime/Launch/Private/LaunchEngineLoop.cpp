@@ -5,6 +5,7 @@ extern CORE_API map<FString, UClass*> MapClass;
 int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 {
 	// 설정 파일 로드
+	FConfigCacheIni::InitializeConfigSystem();
 
 	// User DLL을 load
 
@@ -51,4 +52,6 @@ void FEngineLoop::Exit()
 	}
 	MapClass.clear();
 	GUObjectArray.Destroy();
+
+	FConfigCacheIni::DestroyConfigSystem();
 }

@@ -63,3 +63,27 @@ CORE_API shared_ptr<UObject> StaticConstructorObject_Internal(FStaticConstructOb
 
 	return ObjectInitializer.SharedObj;
 }
+
+CORE_API string to_string(const FString& InString)
+{
+	// wstring -> UTF8
+	return wstring_convert<codecvt_utf8<WIDECHAR>>().to_bytes(InString);
+}
+
+CORE_API string to_string(FStringView InString)
+{
+	// wstring -> UTF8
+	return wstring_convert<codecvt_utf8<WIDECHAR>>().to_bytes(InString.data());
+}
+
+CORE_API wstring to_wstring(const string& InString)
+{
+	// UTF8 -> wstring
+	return wstring_convert<codecvt_utf8<WIDECHAR>>().from_bytes(InString);
+}
+
+CORE_API wstring to_wstring(string_view InString)
+{
+	// UTF8 -> wstring
+	return wstring_convert<codecvt_utf8<WIDECHAR>>().from_bytes(InString.data());
+}

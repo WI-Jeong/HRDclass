@@ -1,4 +1,3 @@
-
 using System;
 using System.IO;
 using Sharpmake;
@@ -65,6 +64,7 @@ public class Utils
         // Defines
         {
             conf.Defines.Add("SOLUTION_NAME=\"$(SolutionName)\"");
+            conf.Defines.Add("_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING");
 
             if (target.Name == "Release")
             {

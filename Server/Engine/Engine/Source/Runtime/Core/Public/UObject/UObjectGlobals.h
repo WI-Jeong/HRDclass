@@ -55,3 +55,12 @@ shared_ptr<T> NewObject(UObject* Outer, UClass* Class = nullptr, FString Name = 
 
 	return Cast<T>(StaticConstructorObject_Internal(Params));
 }
+
+// wstring -> UTF8
+CORE_API string to_string(const FString& InString);
+// wstring -> UTF8
+CORE_API string to_string(FStringView InString);
+// UTF8 -> wstring
+CORE_API wstring to_wstring(const string& InString);
+// UTF8 -> wstring
+CORE_API wstring to_wstring(string_view InString);
