@@ -3,7 +3,6 @@
 void UGameInstance::Initailize()
 {
     // World 생성
-    E_Log(trace, "Hello2");
 }
 
 void UGameInstance::StartGameInstance()
