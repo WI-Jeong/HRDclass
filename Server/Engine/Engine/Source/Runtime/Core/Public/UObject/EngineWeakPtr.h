@@ -8,16 +8,10 @@ class engine_weak_ptr : public weak_ptr<_Ty>
 {
 public:
 	engine_weak_ptr() noexcept {}
-	engine_weak_ptr(const engine_weak_ptr& InOther) noexcept
-	{
-		this->_Weakly_construct_from(InOther);
-	}
+	engine_weak_ptr(const engine_weak_ptr& InOther) noexcept : weak_ptr<_Ty>(InOther) { }
 
 	template <class _Ty2, enable_if_t<_SP_pointer_compatible<_Ty2, _Ty>::value, int> = 0>
-	engine_weak_ptr(const shared_ptr<_Ty2>& InOther) noexcept
-	{
-		this->_Weakly_construct_from(InOther);
-	}
+	engine_weak_ptr(const shared_ptr<_Ty2>& InOther) noexcept : weak_ptr<_Ty>(InOther) { }
 
 	engine_weak_ptr& operator=(const engine_weak_ptr& InOther) noexcept
 	{
