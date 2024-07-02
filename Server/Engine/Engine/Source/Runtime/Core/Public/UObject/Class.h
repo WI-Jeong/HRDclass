@@ -22,7 +22,7 @@ public:
 	using ClassConstructorType = function<void(const FObjectInitializer&)>;
 	ClassConstructorType ClassConstructor;
 
-	using StaticClassFunctionType = function<UClass* (void)>;
+	using StaticClassFunctionType = function<UClass*(void)>;
 
 	UClass() = delete;
 	CORE_API UClass(FString InClassName, const type_info& InClassTypeInfo,

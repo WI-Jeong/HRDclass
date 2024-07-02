@@ -7,5 +7,5 @@ AGameModeBase::AGameModeBase()
 
 AGameModeBase::~AGameModeBase()
 {
-
+	
 }

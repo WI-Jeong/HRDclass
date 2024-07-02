@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Sharpmake;
 
-[module: Include("EngineSolution.sharpmake.cs")]
+[module:Include("EngineSolution.sharpmake.cs")]
 
 public static class Main
 {

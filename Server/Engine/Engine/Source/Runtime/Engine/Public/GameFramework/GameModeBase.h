@@ -8,9 +8,9 @@
 UCLASS()
 class ENGINE_API AGameModeBase : public AActor
 {
-    GENERATED_BODY();
+	GENERATED_BODY();
 
 public:
-    AGameModeBase();
-    ~AGameModeBase();
+	AGameModeBase();
+	~AGameModeBase();
 };

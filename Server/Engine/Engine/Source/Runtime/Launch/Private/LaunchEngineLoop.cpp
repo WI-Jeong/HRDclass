@@ -8,7 +8,18 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 	FConfigCacheIni::InitializeConfigSystem();
 
 	// User DLL을 load
-
+	const FString& ProejctDllDir = FPaths::ProjectDllDir();
+	if (filesystem::is_directory(ProejctDllDir))
+	{
+		for (const auto& It : filesystem::directory_iterator(ProejctDllDir))
+		{
+			if (It.path().extension() == TEXT(".dll"))
+			{
+				LoadLibrary(It.path().c_str());
+			}
+		}
+	}
+	
 	// Create CDO
 	for (auto& It : MapClass)
 	{

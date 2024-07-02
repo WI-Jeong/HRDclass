@@ -7,9 +7,9 @@
 UCLASS()
 class ENGINE_API AActor : public UObject
 {
-    GENERATED_BODY();
+	GENERATED_BODY();
 
 public:
-    AActor();
-    ~AActor();
+	AActor();
+	~AActor();
 };

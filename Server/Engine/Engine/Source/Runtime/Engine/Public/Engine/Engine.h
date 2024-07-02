@@ -3,7 +3,7 @@
 #include "Engine/GameInstance.h"
 #include "Engine.generated.h"
 
-UCLASS()
+UCLASS() 
 class ENGINE_API UEngine : public UObject
 {
 	GENERATED_BODY()

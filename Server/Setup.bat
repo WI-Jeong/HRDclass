@@ -35,5 +35,11 @@ call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
 %VCPKG_ROOT%\vcpkg install rapidjson:x64-windows boost:x64-windows sentry-native:x64-windows
 %VCPKG_ROOT%\vcpkg integrate install
 
+echo [register .sproject]
+assoc .sproject=sprojectfile
+ftype sprojectfile=
+ftype sprojectfile=%cd%\Engine\GenerateSolution.bat %cd%\Engine .\Source\GameSolution.sharpmake.cs
+
+echo.
 echo [Done]
 pause

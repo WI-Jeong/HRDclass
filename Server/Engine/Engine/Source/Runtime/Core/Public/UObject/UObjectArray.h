@@ -50,8 +50,8 @@ public:
 
 	using propagate_on_container_move_assignment = true_type;
 	using is_always_equal _CXX20_DEPRECATE_IS_ALWAYS_EQUAL = true_type;
-	FAllocator(FObjectInitializer* InObjectInitializer) noexcept :
-		Data(InObjectInitializer)
+	FAllocator(FObjectInitializer* InObjectInitializer) noexcept : 
+		Data(InObjectInitializer) 
 	{
 	}
 	constexpr FAllocator(const FAllocator&) noexcept = default;
@@ -73,7 +73,7 @@ public:
 	_CXX17_DEPRECATE_OLD_ALLOCATOR_MEMBERS void construct(_Objty* const _Ptr, _Types&&... _Args)
 	{
 		Data.ObjectInitializer->Obj = _Ptr;
-		new(Data.ObjectInitializer->GetObj())UObjectBase(Data.ObjectInitializer->Class,
+		new(Data.ObjectInitializer->GetObj())UObjectBase(Data.ObjectInitializer->Class, 
 			Data.ObjectInitializer->ObjectFlags, Data.ObjectInitializer->OuterPrivate, Data.ObjectInitializer->Name);
 		_Objty::__DefaultConstructor(*Data.ObjectInitializer);
 	}

@@ -9,7 +9,7 @@ class FEngineLoop
 public:
 	/**
 	 * Pre-Initialize the main loop - parse command line, sets up GIsEditor, etc..
-	 *
+	 * 
 	 * @param CmdLine The command line.
 	 * @return The error level; 0 if successful, > 0 if there were errors.
 	 */

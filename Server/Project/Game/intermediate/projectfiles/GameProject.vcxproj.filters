@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\MyProject\ProjectGameInstance.cpp">
+      <Filter>MyProject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\GameProject.sharpmake.cs" />
+    <ClInclude Include="..\..\Source\GameSolution.sharpmake.cs" />
+    <ClInclude Include="..\..\Source\MyProject\ProjectGameInstance.h">
+      <Filter>MyProject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="MyProject">
+      <UniqueIdentifier>{52fb0168-4616-3ee1-5eab-ca9a6bd84430}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

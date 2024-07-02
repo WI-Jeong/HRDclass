@@ -74,7 +74,7 @@ CORE_API UObject* UClass::CreateDefaultObject()
 	const uint64 SharedPtrSize = sizeof(_Ref_count_obj_alloc3<UObject, FAllocator<UObject>>) - sizeof(UObject);
 	GUObjectArray.Create(ClassTypeInfo, SharedPtrSize + ClassSize);
 
-	FStaticConstructObjectParameters StaticConstructObjectParameters{ this };
+	FStaticConstructObjectParameters StaticConstructObjectParameters {this};
 	StaticConstructObjectParameters.SetFlags = EObjectFlags::RF_ClassDefaultObject;
 	StaticConstructObjectParameters.Name = ClassName;
 
@@ -87,9 +87,9 @@ CORE_API UObject* UClass::CreateDefaultObject()
 }
 
 CORE_API UClass* RegisterEngineClass(FString InClassName,
-	UClass::ClassConstructorType InClassConstructor,
-	UClass::StaticClassFunctionType InSuperClassFunction,
-	function<void()> InClassReflection,
+	UClass::ClassConstructorType InClassConstructor, 
+	UClass::StaticClassFunctionType InSuperClassFunction, 
+	function<void()> InClassReflection, 
 	const type_info& InClassTypeInfo, const uint64 InClassSize)
 {
 	GUObjectArray.Create(typeid(UClass), sizeof(UClass));
