@@ -378,3 +378,5 @@ BBH/.vsconfig
 
 Server/Engine/intermediate
 Server/Engine/Engine.Sln
+Server/Project/Game/Intermediate
+Server/Project/Game/*sln
