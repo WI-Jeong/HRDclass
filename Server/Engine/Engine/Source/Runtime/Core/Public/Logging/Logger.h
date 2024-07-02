@@ -7,6 +7,9 @@ using FLogLevel = boost::log::trivial::severity_level;
 class CORE_API FLogger
 {
 public:
+	static void InitializeLogSystem();
+	static void DestroyLogSystem();
+
 	FLogger(std::string_view InLogFileName);
 	FLogger(const FLogger&) = delete;
 	FLogger& operator=(const FLogger&) = delete;
@@ -17,5 +20,5 @@ private:
 	const std::string LogFileName;
 };
 
-extern CORE_API FLogger GLogger;
-#define E_Log(LogLevel, FormatMsg, ...) GLogger.Log(FLogLevel::LogLevel, std::string(__FUNCTION__) + ": " + std::format(FormatMsg, __VA_ARGS__));
+extern CORE_API FLogger* GLogger;
+#define E_Log(LogLevel, FormatMsg, ...) GLogger->Log(FLogLevel::LogLevel, std::string(__FUNCTION__) + ": " + std::format(FormatMsg, __VA_ARGS__));

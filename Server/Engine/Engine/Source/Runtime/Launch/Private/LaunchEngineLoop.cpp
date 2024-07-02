@@ -4,7 +4,15 @@ extern CORE_API map<FString, UClass*> MapClass;
 
 int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 {
+#if WITH_DEBUG
+	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
+	_crtBreakAlloc = 377;
+
+	// 메모리릭 탐지 검증
+	int* Test = new int;
+#endif
 	// 설정 파일 로드
+	FLogger::InitializeLogSystem();
 	FConfigCacheIni::InitializeConfigSystem();
 
 	// User DLL을 load
@@ -31,13 +39,6 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 
 int32 FEngineLoop::Init()
 {
-//#if WITH_DEBUG
-//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | 
-//		_CRTDBG_DELAY_FREE_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//	// 메모리릭 탐지 검증
-//	int* Test = new int;
-//	_CrtSetBreakAlloc(2606);
-//#endif
 	Engine = NewObject<UEngine>(nullptr);
 	GEngine = Engine.get();
 
@@ -59,9 +60,12 @@ void FEngineLoop::Tick()
 
 void FEngineLoop::Exit()
 {
-	Engine->PreExit();
-	Engine = nullptr;
-	GEngine = nullptr;
+	if (Engine)
+	{
+		Engine->PreExit();
+		Engine = nullptr;
+		GEngine = nullptr;
+	}
 
 	for (auto& It : MapClass)
 	{
@@ -72,4 +76,5 @@ void FEngineLoop::Exit()
 	GUObjectArray.Destroy();
 
 	FConfigCacheIni::DestroyConfigSystem();
+	FLogger::DestroyLogSystem();
 }

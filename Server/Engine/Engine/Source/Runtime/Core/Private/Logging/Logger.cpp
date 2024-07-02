@@ -1,5 +1,4 @@
 #include "Logging/Logger.h"
-
 #include <boost/log/utility/setup/file.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/expressions.hpp>
@@ -12,7 +11,26 @@ namespace src = boost::log::sources;
 namespace expr = boost::log::expressions;
 namespace attrs = boost::log::attributes;
 namespace keywords = boost::log::keywords;
-FLogger GLogger("GLog");
+CORE_API FLogger* GLogger = nullptr;
+
+void FLogger::InitializeLogSystem()
+{
+	if (GLogger)
+	{
+		E_Log(error, "GLogger exist");
+		return;
+	}
+	GLogger = new FLogger("GLog");
+}
+
+void FLogger::DestroyLogSystem()
+{
+	if (GLogger)
+	{
+		delete GLogger;
+		GLogger = nullptr;
+	}
+}
 
 FLogger::FLogger(std::string_view InLogFileName)
 	: LogFileName(InLogFileName)

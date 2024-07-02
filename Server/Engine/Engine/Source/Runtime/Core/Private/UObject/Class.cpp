@@ -95,7 +95,7 @@ CORE_API UClass* RegisterEngineClass(FString InClassName,
 	GUObjectArray.Create(typeid(UClass), sizeof(UClass));
 	UObjectBase* ObjectBase = (UObjectBase*)GUObjectArray.Malloc(typeid(UClass));
 
-	new(ObjectBase)UObjectBase(nullptr, EObjectFlags::RF_Class, nullptr, TEXT("UClass"));
+	new(ObjectBase)UObjectBase(nullptr, EObjectFlags::RF_Class, nullptr);
 
 	UClass* NewClass = new(ObjectBase)UClass(InClassName, InClassTypeInfo, InClassSize,
 		InClassConstructor, InSuperClassFunction);
