@@ -35,6 +35,7 @@ public:
 		}
 
 		OutValue = to_wstring(String);
+		return true;
 	}
 
 private:
