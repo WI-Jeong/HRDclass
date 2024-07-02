@@ -4,6 +4,8 @@
 #include "CoreMinimal.h"
 #include "GameInstance.generated.h"
 
+class UEngine;
+
 UCLASS()
 class ENGINE_API UGameInstance : public UObject
 {
@@ -12,6 +14,8 @@ class ENGINE_API UGameInstance : public UObject
 public:
 	virtual void Initailize();
 	virtual void StartGameInstance();
+
+	UEngine* GetEngine();
 
 public:
 	UGameInstance();

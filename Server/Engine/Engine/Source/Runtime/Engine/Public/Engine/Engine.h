@@ -1,12 +1,14 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Engine/World.h"
 #include "Engine.generated.h"
 
 UCLASS() 
 class ENGINE_API UEngine : public UObject
 {
 	GENERATED_BODY()
+	friend class UGameInstance;
 public:
 	UEngine();
 
@@ -21,6 +23,7 @@ protected:
 	shared_ptr<UGameInstance> GameInstance;
 
 	// World
+	shared_ptr<UWorld> World;
 };
 
 extern ENGINE_API UEngine* GEngine;
