@@ -87,3 +87,30 @@ CORE_API FString to_wstring(string_view InString)
 	// UTF8 -> wstring
 	return wstring_convert<codecvt_utf8<WIDECHAR>>().from_bytes(InString.data());
 }
+
+CORE_API uint64 operator""_hash(const ANSICHAR * NewString, size_t)
+{
+	// 문자열을 Hash function에 넣으면 숫자가 나온다
+	// 같은 문자열을 넣으면 같은 숫자가 난온다
+	// Hash 충돌: 그러나 가끔 다른 문자열을 넣었을때 동일한 숫자가 나올수도 있다.
+	static hash<string_view> HashFunction;
+	return HashFunction(NewString);
+}
+
+CORE_API uint64 operator""_hash(const WIDECHAR * NewString, size_t)
+{
+	static hash<wstring_view> HashFunction;
+	return HashFunction(NewString);
+}
+
+CORE_API uint64 Hash(const ANSICHAR* NewString)
+{
+	static hash<string_view> HashFunction;
+	return HashFunction(NewString);
+}
+
+CORE_API uint64 Hash(const WIDECHAR* NewString)
+{
+	static hash<wstring_view> HashFunction;
+	return HashFunction(NewString);
+}

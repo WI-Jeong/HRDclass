@@ -65,6 +65,11 @@ CORE_API FString to_wstring(const string& InString);
 // UTF8 -> wstring
 CORE_API FString to_wstring(string_view InString);
 
+CORE_API uint64 operator""_hash(const ANSICHAR * NewString, size_t);
+CORE_API uint64 operator""_hash(const WIDECHAR * NewString, size_t);
+CORE_API uint64 Hash(const ANSICHAR* NewString);
+CORE_API uint64 Hash(const WIDECHAR* NewString);
+
 /**
  * Get default object of a class.
  * @see UClass::GetDefaultObject()

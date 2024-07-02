@@ -92,6 +92,9 @@ CORE_API UClass* RegisterEngineClass(FString InClassName,
 	function<void()> InClassReflection, 
 	const type_info& InClassTypeInfo, const uint64 InClassSize)
 {
+	// Reflection 함수 호출
+	InClassReflection();
+
 	GUObjectArray.Create(typeid(UClass), sizeof(UClass));
 	UObjectBase* ObjectBase = (UObjectBase*)GUObjectArray.Malloc(typeid(UClass));
 

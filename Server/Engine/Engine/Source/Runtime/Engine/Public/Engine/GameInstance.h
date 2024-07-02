@@ -21,5 +21,9 @@ public:
 	UGameInstance();
 	~UGameInstance();
 
+	UPROPERTY()
+	int Test = 10;
+
+	UPROPERTY()
 	engine_weak_ptr<class UWorld> World;
 };
