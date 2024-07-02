@@ -9,3 +9,11 @@ AActor::~AActor()
 {
 	
 }
+
+void AActor::BeginPlay()
+{
+}
+
+void AActor::Tick(float DeltaSeconds)
+{
+}

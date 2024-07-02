@@ -31,6 +31,13 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 
 int32 FEngineLoop::Init()
 {
+//#if WITH_DEBUG
+//	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | 
+//		_CRTDBG_DELAY_FREE_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+//	// 메모리릭 탐지 검증
+//	int* Test = new int;
+//	_CrtSetBreakAlloc(2606);
+//#endif
 	Engine = NewObject<UEngine>(nullptr);
 	GEngine = Engine.get();
 
@@ -46,7 +53,7 @@ int32 FEngineLoop::Init()
 
 void FEngineLoop::Tick()
 {
-	// RequestEngineExit("Test");
+	RequestEngineExit("Test");
 	Engine->Tick(0.);
 }
 

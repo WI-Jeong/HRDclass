@@ -12,4 +12,8 @@ class ENGINE_API AActor : public UObject
 public:
 	AActor();
 	~AActor();
+
+public:
+	virtual void BeginPlay();
+	virtual void Tick(float DeltaSeconds);
 };

@@ -10,6 +10,8 @@ class UObject;
 #pragma warning(disable:26495)
 class CORE_API UObjectBase : public std::enable_shared_from_this<UObjectBase>
 {
+	template<class T>
+	friend class FAllocator;
 public:
 	UObjectBase() {}
 	UObjectBase(UClass* InClass, EObjectFlags InObjectFlags, UObject* InOuter, const FString& InName);

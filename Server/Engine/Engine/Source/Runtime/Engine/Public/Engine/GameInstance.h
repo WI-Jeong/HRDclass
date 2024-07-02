@@ -21,5 +21,5 @@ public:
 	UGameInstance();
 	~UGameInstance();
 
-	// weak_ptr World
+	engine_weak_ptr<class UWorld> World;
 };

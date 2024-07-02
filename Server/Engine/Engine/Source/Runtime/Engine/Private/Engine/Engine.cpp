@@ -21,7 +21,7 @@ void UEngine::Start()
 
 void UEngine::Tick(float DeltaSeconds)
 {
-	// World -> Tick
+	World->Tick(DeltaSeconds);
 }
 
 void UEngine::PreExit()
