@@ -11,7 +11,6 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 	// 메모리릭 탐지 검증
 	int* Test = new int;
 #endif
-	// 설정 파일 로드
 	FLogger::InitializeLogSystem();
 	FConfigCacheIni::InitializeConfigSystem();
 
