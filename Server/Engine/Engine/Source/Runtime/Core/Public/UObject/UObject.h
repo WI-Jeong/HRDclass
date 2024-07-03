@@ -72,6 +72,10 @@ public:
 	}
 
 	const FString& GetName() const { return NamePrivate; }
+
+private:
+	friend class UClass;
+	template<typename> friend class FAllocator;
 	/** Name of this object */
 	FString NamePrivate;
 };

@@ -8,6 +8,8 @@ void UProjectGameInstance::Initailize()
 void UProjectGameInstance::StartGameInstance()
 {
 	Super::StartGameInstance();
+
+	UClass::LogReflectionData(this);
 }
 
 UProjectGameInstance::UProjectGameInstance()

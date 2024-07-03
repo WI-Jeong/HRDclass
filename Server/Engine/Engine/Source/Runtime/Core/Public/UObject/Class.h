@@ -40,6 +40,9 @@ public:
 	bool IsChildOf() const { return IsChildOf(T::StaticClass()); }
 	CORE_API bool IsChildOf(const UClass* SomeBase) const;
 
+	// Temp code
+	CORE_API static void LogReflectionData(UObject* InObject);
+
 protected:
 	CORE_API void InternalCreateDefaultObjectWrapper() const;
 	CORE_API UObject* CreateDefaultObject();

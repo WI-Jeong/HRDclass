@@ -15,4 +15,10 @@ public:
 
 	UProjectGameInstance();
 	~UProjectGameInstance();
+
+	UPROPERTY()
+	int IntVar = 123;
+
+	UPROPERTY()
+	float FloatVar = 22.345;
 };
