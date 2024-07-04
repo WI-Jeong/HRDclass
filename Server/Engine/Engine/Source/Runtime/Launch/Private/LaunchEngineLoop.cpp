@@ -6,7 +6,7 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 {
 #if WITH_DEBUG
 	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
-	_crtBreakAlloc = 377;
+	//_crtBreakAlloc = 377;
 
 	// 메모리릭 탐지 검증
 	int* Test = new int;
@@ -53,7 +53,10 @@ int32 FEngineLoop::Init()
 
 void FEngineLoop::Tick()
 {
-	RequestEngineExit("Test");
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		RequestEngineExit("Test");
+	}
 	Engine->Tick(0.);
 }
 
