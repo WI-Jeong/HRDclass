@@ -62,6 +62,8 @@ void FEngineLoop::Tick()
 
 void FEngineLoop::Exit()
 {
+	ObjectMap.clear();
+
 	if (Engine)
 	{
 		Engine->PreExit();

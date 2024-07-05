@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreTypes.h"
+#include "EngineWeakPtr.h"
 
 FORCEINLINE bool CORE_API IsEngineExitRequested();
 
@@ -79,3 +80,5 @@ inline const T* GetDefault()
 {
 	return (const T*)T::StaticClass()->GetDefaultObject();
 }
+
+extern CORE_API map<UClass*, vector<engine_weak_ptr<UObject>>> ObjectMap;

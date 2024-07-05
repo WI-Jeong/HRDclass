@@ -1,13 +1,17 @@
-﻿#include "ServerGameMode.h"
+﻿#include "ClientGameMode.h"
 
-void AServerGameMode::BeginPlay()
+void AClientGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
 	NetDriver = NewObject<UNetDriver>(this);
 	FNetworkNotify NetworkNotify;
 	FURL URL;
-	NetDriver->InitListen(NetworkNotify, URL, true, 5);
+	if (!NetDriver->InitConnect(NetworkNotify, URL))
+	{
+		RequestEngineExit("Connect failed");
+		return;
+	}
 
 	auto& Vector = ObjectMap[UNetDriver::StaticClass()];
 	for (engine_weak_ptr<UObject> It : Vector)
@@ -16,19 +20,19 @@ void AServerGameMode::BeginPlay()
 	}
 }
 
-void AServerGameMode::Tick(float DeltaSeconds)
+void AClientGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
 	NetDriver->Tick(DeltaSeconds);
 }
 
-AServerGameMode::AServerGameMode()
+AClientGameMode::AClientGameMode()
 {
 
 }
 
-AServerGameMode::~AServerGameMode()
+AClientGameMode::~AClientGameMode()
 {
 	
 }

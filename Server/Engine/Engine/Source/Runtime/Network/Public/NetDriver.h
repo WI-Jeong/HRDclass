@@ -38,11 +38,13 @@ protected:
 
 // -------------- Client
 public:
-	virtual bool InitConnect(FNetworkNotify InNotify, FURL& ConnectURL) { _ASSERT(false); return false; }
+	virtual bool InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclassOf<UNetConnection> InNetConnectionClass = UNetConnection::StaticClass());
 
 
 // -------------- 공통
 public:
+	virtual bool InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNetConnection> InNetConnectionClass);
+
 	virtual void Tick(float DeltaSeconds);
 
 public:

@@ -3,10 +3,10 @@
 
 #include "EngineMinimal.h"
 #include "NetworkMinimal.h"
-#include "ServerGameMode.generated.h"
+#include "ClientGameMode.generated.h"
 
 UCLASS()
-class SERVERPROJECT_API AServerGameMode : public AGameModeBase
+class CLIENTPROJECT_API AClientGameMode : public AGameModeBase
 {
 	GENERATED_BODY();
 
@@ -14,8 +14,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds);
 
-	AServerGameMode();
-	~AServerGameMode();
+	AClientGameMode();
+	~AClientGameMode();
 
 	shared_ptr<UNetDriver> NetDriver;
 };

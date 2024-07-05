@@ -4,6 +4,8 @@
 
 bool GIsRequestingExit = false; /* Indicates that MainLoop() should be exited at the end of the current iteration */
 
+CORE_API map<UClass*, vector<engine_weak_ptr<UObject>>> ObjectMap;
+
 bool IsEngineExitRequested()
 {
 	return GIsRequestingExit;
@@ -60,6 +62,9 @@ CORE_API shared_ptr<UObject> StaticConstructorObject_Internal(FStaticConstructOb
 	}
 
 	InClass->ClassConstructor(ObjectInitializer);
+
+	auto& ObjectVector = ObjectMap[InClass];
+	ObjectVector.emplace_back(ObjectInitializer.SharedObj);
 
 	return ObjectInitializer.SharedObj;
 }
