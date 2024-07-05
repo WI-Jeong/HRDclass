@@ -22,24 +22,47 @@ bool UNetDriver::InitListen(FNetworkNotify InNotify,
 
 void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 {
+	if (InReuseConnection)
+	{
+		InReuseConnection->CleanUp();
+	}
+
 	shared_ptr<UNetConnection> NewConnection = InReuseConnection ? 
 		InReuseConnection : NewObject<UNetConnection>(this, NetConnectionClass);
 	if (!InReuseConnection)
 	{
 		NewConnection->InitRemoteConnection(Context,
+			bind(&ThisClass::OnClientAccept, this, placeholders::_1),
 			bind(&ThisClass::OnClientConectionClosed, this, placeholders::_1),
 			bind(&ThisClass::OnClientReceived, this, placeholders::_1, placeholders::_2));
 		MapBacklog.insert(make_pair(NewConnection.get(), NewConnection));
 	}
 
 	Acceptor->async_accept(*NewConnection->GetSocket(), 
-		[NewConnection](const boost::system::error_code& Error)
+		[this, NewConnection](const boost::system::error_code& Error)
 		{
-			E_Log(trace, "New Client Accept: {}", to_string(NewConnection->GetName()))
-			int a;
-			// 
+			E_Log(trace, "New Client Accept: {}", to_string(NewConnection->GetName()));
+			if (Error)
+			{
+				E_Log(error, "AsyncAccept error");
+
+				StartAccept(NewConnection);
+				return;
+			}
+
+			// Move NewConnection Backlog to PendingConnection.
+			MapBacklog.erase(NewConnection.get());
+			MapPendingConnection.insert(make_pair(NewConnection.get(), NewConnection));
+
+			StartAccept();
+
+			NewConnection->OnAccept();
 		}
 	);
+}
+
+void UNetDriver::OnClientAccept(UNetConnection* NetConnection)
+{
 }
 
 void UNetDriver::OnClientConectionClosed(UNetConnection* NetConnection)
@@ -59,6 +82,7 @@ bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclas
 
 	shared_ptr<UNetConnection> NewConnection = NewObject<UNetConnection>(this, NetConnectionClass);
 	NewConnection->InitRemoteConnection(Context,
+		bind(&ThisClass::OnClientAccept, this, placeholders::_1),
 		bind(&ThisClass::OnClientConectionClosed, this, placeholders::_1),
 		bind(&ThisClass::OnClientReceived, this, placeholders::_1, placeholders::_2));
 

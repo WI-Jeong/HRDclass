@@ -30,11 +30,13 @@ public:
 protected:
 	void StartAccept(shared_ptr<UNetConnection> InReuseConnection = nullptr);
 
-	void OnClientConectionClosed(UNetConnection* NetConnection);
-	void OnClientReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
+	virtual void OnClientAccept(UNetConnection* NetConnection);
+	virtual void OnClientConectionClosed(UNetConnection* NetConnection);
+	virtual void OnClientReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
 
 protected:
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapBacklog;
+	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapPendingConnection;
 
 // -------------- Client
 public:

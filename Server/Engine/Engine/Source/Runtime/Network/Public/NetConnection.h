@@ -7,6 +7,22 @@
 #pragma pack(push, 1)
 struct FPacketHeader
 {
+	enum EPreDefinedPacketID
+	{
+		EHelloPacket = 2,	// Client to Server; 클라가 처음 접속하며 서버로 보내는 Packet
+		EHelloPacketAck,	// Server to Client; HelloPacket을 받으면 클라로 보내는 Packet
+
+		EEnd
+	};
+
+public:
+	FPacketHeader() = default;
+	FPacketHeader(const uint32 NewPacketID) : PacketID(NewPacketID) {}
+	void SetPayload(const uint32 InPayload) { Payload = InPayload; }
+	void SetPacketID(const uint32 InPacketID) { PacketID = InPacketID; }
+	uint32 GetPayload() const { return Payload; }
+	uint32 GetPacketID() const { return PacketID; }
+
 private:
 	// Packet의 본문의 크기
 	uint32 Payload = 0;
@@ -30,21 +46,37 @@ class NETWORK_API UNetConnection : public UObject
 
 public:
 	void InitRemoteConnection(boost::asio::io_context& InContext,
-		function<void(UNetConnection*)> InOnConnectionClosed,
-		function<void(UNetConnection*, FPacketHeader*)> InOnRecv);
+		function<void(UNetConnection*)> InAcceptFunction,
+		function<void(UNetConnection*)> InConnectionClosedFunction,
+		function<void(UNetConnection*, FPacketHeader*)> InRecvFunction);
 
 	FSocket* GetSocket() const { return Socket.get(); }
 
+	void OnAccept();
+
+	// 재사용 직전에 CleanUp
+	void CleanUp();
+
 protected:
 	void InitBase(boost::asio::io_context& InContext);
+	
+	EConnectionState GetConnectionState() const { return ConnectionState; }
+	void SetConnectionState(const EConnectionState NewState) { ConnectionState = NewState; }
+
+	void ReadPacketHeader();
+	void ReadPacketBody(const FPacketHeader& InPacketHeader);
 
 public:
 	UNetConnection();
 	~UNetConnection();
 
 private:
+	FPacketHeader RecvPacketHeaderBuffer;
+
+private:
 	EConnectionState ConnectionState = EConnectionState::USOCK_Invalid;
 	unique_ptr<FSocket> Socket;
-	function<void(UNetConnection*)> OnConnectionClosed;
-	function<void(UNetConnection*, FPacketHeader*)> OnRecv;
+	function<void(UNetConnection*)> AcceptFunction;
+	function<void(UNetConnection*)> ConnectionClosedFunction;
+	function<void(UNetConnection*, FPacketHeader*)> RecvFunction;
 };

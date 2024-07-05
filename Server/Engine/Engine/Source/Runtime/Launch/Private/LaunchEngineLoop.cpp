@@ -53,10 +53,10 @@ int32 FEngineLoop::Init()
 
 void FEngineLoop::Tick()
 {
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	/*if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
 		RequestEngineExit("Test");
-	}
+	}*/
 	Engine->Tick(0.);
 }
 
