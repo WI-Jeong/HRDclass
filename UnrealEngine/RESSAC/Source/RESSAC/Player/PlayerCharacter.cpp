@@ -101,27 +101,27 @@ void APlayerCharacter::MoveSide(float Scale)
 
 void APlayerCharacter::RotationCharacterYaw(float Scale)
 {
-	//if (mCameraRotationEnable)
-	//{
-	//	float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; 
+	if (mCameraRotationEnable)
+	{
+		float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; //deltatime 가져오기 
 
-	//	mSpringArm->AddRelativeRotation(FRotator(0.0, (double)Rot, 0.0));
+		mSpringArm->AddRelativeRotation(FRotator(0.0, (double)Rot, 0.0));
 
-	//}
-	//else
-	//{
-	//	AddControllerYawInput(Scale);
-	//}
+	}
+	else
+	{
+		AddControllerYawInput(Scale);
+	}
 }
 
 void APlayerCharacter::RotationCharacterPitch(float Scale)
 {
-	//if (mCameraRotationEnable)
-	//{
-	//	float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; //deltatime 가져오기 
+	if (mCameraRotationEnable)
+	{
+		float	Rot = 180.f * GetWorld()->GetDeltaSeconds() * Scale; //deltatime 가져오기 
 
-	//	mSpringArm->AddRelativeRotation(FRotator((double)Rot, 0.0, 0.0));
-	//}
+		mSpringArm->AddRelativeRotation(FRotator((double)Rot, 0.0, 0.0));
+	}
 }
 
 void APlayerCharacter::CameraZoom(float Scale)
@@ -139,7 +139,7 @@ void APlayerCharacter::RotationCamera()
 
 void APlayerCharacter::RotationCameraReleased()
 {
-	//mCameraRotationEnable = false;
+	mCameraRotationEnable = false;
 }
 
 void APlayerCharacter::JumpKey()
