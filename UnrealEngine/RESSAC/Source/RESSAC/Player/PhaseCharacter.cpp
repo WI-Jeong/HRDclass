@@ -25,4 +25,10 @@ APhaseCharacter::APhaseCharacter()
 	//Pitch Y
 	//Yaw   Z
 	//Roll  X
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimClass(TEXT("/Script/Engine.AnimBlueprint'/Game/Player/AB_Phase.AB_Phase_C'"));
+
+	if (AnimClass.Succeeded())
+		GetMesh()->SetAnimInstanceClass(AnimClass.Class);
+
 }

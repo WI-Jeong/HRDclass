@@ -58,6 +58,8 @@ void APlayerCharacter::BeginPlay()
 			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 			SubSystem->AddMappingContext(DefaultContext, 0);
 	}
+
+	mPlayerAnim = Cast<UPlayerAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 // Called every frame
@@ -144,6 +146,11 @@ void APlayerCharacter::RotationCameraReleased()
 
 void APlayerCharacter::JumpKey()
 {
+	if (CanJump())
+	{
+		Jump();
+		mPlayerAnim->ChangeAnim(EPlayerAnimType::Jump);
+	}
 }
 
 void APlayerCharacter::AttackKey()

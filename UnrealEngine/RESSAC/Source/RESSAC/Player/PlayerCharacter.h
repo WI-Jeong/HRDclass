@@ -4,6 +4,7 @@
 
 #include "../GameInfo.h"
 #include "GameFramework/Character.h"
+#include "PlayerAnimInstance.h" 
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
 
@@ -54,6 +55,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
+
+	TObjectPtr<class UPlayerAnimInstance> mPlayerAnim;
 
 protected:
 	void Move(const FInputActionValue& Value);

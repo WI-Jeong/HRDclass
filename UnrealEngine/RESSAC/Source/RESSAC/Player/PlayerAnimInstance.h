@@ -26,6 +26,9 @@ class RESSAC_API UPlayerAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 
 public:
+	UPlayerAnimInstance();
+
+public:
 	virtual void NativeInitializeAnimation();
 	virtual void NativeUpdateAnimation(float DeltaSeconds);
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds);
@@ -36,6 +39,16 @@ public:
 protected:
 	UPROPERTY(Category = Data, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float	mMoveSpeed;
+
+protected:
+	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	EPlayerAnimType mAnimType;
+
+public:
+	void ChangeAnim(EPlayerAnimType AnimType)
+	{
+		mAnimType = AnimType;
+	}
 
 	
 };
