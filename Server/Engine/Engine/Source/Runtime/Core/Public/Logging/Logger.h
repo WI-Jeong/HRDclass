@@ -20,11 +20,11 @@ public:
 private:
 	const std::string LogFileName;
 
-	/*bool bTerminate = false;
-	jthread Thread;
-	mutex Mutex;
-	condition_variable CV;
-	queue<string> MessageQueue;*/
+	//bool bTerminate = false;
+	//jthread Thread;
+	//mutex Mutex;
+	//condition_variable CV;
+	//queue<string> MessageQueue;
 };
 
 extern CORE_API FLogger* GLogger;

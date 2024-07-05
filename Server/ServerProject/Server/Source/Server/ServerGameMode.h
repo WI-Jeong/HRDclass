@@ -2,6 +2,7 @@
 // AssortRock Inc.
 
 #include "EngineMinimal.h"
+#include "NetworkMinimal.h"
 #include "ServerGameMode.generated.h"
 
 UCLASS()
@@ -14,4 +15,6 @@ public:
 
 	AServerGameMode();
 	~AServerGameMode();
+
+	shared_ptr<UNetDriver> NetDriver;
 };
