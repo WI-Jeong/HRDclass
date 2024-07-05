@@ -8,7 +8,7 @@
 class UNetDriver;
 struct FNetworkNotify
 {
-	function<void(UNetDriver*, UNetConnection*)> OnAccept;
+	function<void(UNetDriver*, UNetConnection*)> OnConnect;
 	function<void(UNetDriver*, UNetConnection*)> OnConnectionClosed;
 	function<void(UNetDriver*, UNetConnection*, FPacketHeader*)> OnRecv;
 };
@@ -30,9 +30,15 @@ public:
 protected:
 	void StartAccept(shared_ptr<UNetConnection> InReuseConnection = nullptr);
 
-	virtual void OnClientAccept(UNetConnection* NetConnection);
-	virtual void OnClientConectionClosed(UNetConnection* NetConnection);
-	virtual void OnClientReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
+	// Server
+	virtual void OnClientAccepted(UNetConnection* NetConnection);
+	
+	// Client
+	virtual void OnConnected(UNetConnection* NetConnection);
+
+	// Common
+	virtual void OnConectionClosed(UNetConnection* NetConnection);
+	virtual void OnReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
 
 protected:
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapBacklog;
@@ -41,10 +47,14 @@ protected:
 // -------------- Client
 public:
 	virtual bool InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclassOf<UNetConnection> InNetConnectionClass = UNetConnection::StaticClass());
+	engine_weak_ptr<UNetConnection> GetClientConnection() { return ClientConnection; }
 
+protected:
+	shared_ptr<UNetConnection> ClientConnection;
 
 // -------------- 공통
 public:
+	void Send(UNetConnection* TargetConnection, const uint32 PacketID, void* PacketBody, const uint32 BodySize);
 	virtual bool InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNetConnection> InNetConnectionClass);
 
 	virtual void Tick(float DeltaSeconds);

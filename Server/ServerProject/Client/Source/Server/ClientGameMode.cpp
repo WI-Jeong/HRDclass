@@ -13,11 +13,8 @@ void AClientGameMode::BeginPlay()
 		return;
 	}
 
-	auto& Vector = ObjectMap[UNetDriver::StaticClass()];
-	for (engine_weak_ptr<UObject> It : Vector)
-	{
-		engine_weak_ptr<UNetDriver> ItNet = Cast<UNetDriver>(It);
-	}
+	ClientConnection = NetDriver->GetClientConnection();
+	NetDriver->Send(ClientConnection.Get(), FPacketHeader::EHelloPacket, nullptr, 0);
 }
 
 void AClientGameMode::Tick(float DeltaSeconds)

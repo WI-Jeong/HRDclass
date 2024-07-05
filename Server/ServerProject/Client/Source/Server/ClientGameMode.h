@@ -18,4 +18,5 @@ public:
 	~AClientGameMode();
 
 	shared_ptr<UNetDriver> NetDriver;
+	engine_weak_ptr<UNetConnection> ClientConnection;
 };

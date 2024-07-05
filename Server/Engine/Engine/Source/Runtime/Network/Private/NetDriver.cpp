@@ -32,9 +32,9 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 	if (!InReuseConnection)
 	{
 		NewConnection->InitRemoteConnection(Context,
-			bind(&ThisClass::OnClientAccept, this, placeholders::_1),
-			bind(&ThisClass::OnClientConectionClosed, this, placeholders::_1),
-			bind(&ThisClass::OnClientReceived, this, placeholders::_1, placeholders::_2));
+			bind(&ThisClass::OnClientAccepted, this, placeholders::_1),
+			bind(&ThisClass::OnConectionClosed, this, placeholders::_1),
+			bind(&ThisClass::OnReceived, this, placeholders::_1, placeholders::_2));
 		MapBacklog.insert(make_pair(NewConnection.get(), NewConnection));
 	}
 
@@ -56,20 +56,24 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 
 			StartAccept();
 
-			NewConnection->OnAccept();
+			NewConnection->OnConnect();
 		}
 	);
 }
 
-void UNetDriver::OnClientAccept(UNetConnection* NetConnection)
+void UNetDriver::OnClientAccepted(UNetConnection* NetConnection)
 {
 }
 
-void UNetDriver::OnClientConectionClosed(UNetConnection* NetConnection)
+void UNetDriver::OnConnected(UNetConnection* NetConnection)
 {
 }
 
-void UNetDriver::OnClientReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader)
+void UNetDriver::OnConectionClosed(UNetConnection* NetConnection)
+{
+}
+
+void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader)
 {
 }
 
@@ -82,9 +86,9 @@ bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclas
 
 	shared_ptr<UNetConnection> NewConnection = NewObject<UNetConnection>(this, NetConnectionClass);
 	NewConnection->InitRemoteConnection(Context,
-		bind(&ThisClass::OnClientAccept, this, placeholders::_1),
-		bind(&ThisClass::OnClientConectionClosed, this, placeholders::_1),
-		bind(&ThisClass::OnClientReceived, this, placeholders::_1, placeholders::_2));
+		bind(&ThisClass::OnConnected, this, placeholders::_1),
+		bind(&ThisClass::OnConectionClosed, this, placeholders::_1),
+		bind(&ThisClass::OnReceived, this, placeholders::_1, placeholders::_2));
 
 	boost::asio::ip::tcp::endpoint EndPoint(boost::asio::ip::address::from_string(ConnectURL.Host), ConnectURL.Port);
 
@@ -98,7 +102,15 @@ bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclas
 		return false;
 	}
 
+	ClientConnection = NewConnection;
+	ClientConnection->OnConnect();
+
 	return true;
+}
+
+void UNetDriver::Send(UNetConnection* TargetConnection, const uint32 PacketID, void* PacketBody, const uint32 BodySize)
+{
+	TargetConnection->Send(PacketID, PacketBody, BodySize);
 }
 
 bool UNetDriver::InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNetConnection> InNetConnectionClass)

@@ -31,7 +31,7 @@ private:
 
 #pragma pack(pop)
 
-enum EConnectionState
+enum EConnectionState : uint8
 {
 	USOCK_Invalid = 0, // Connection is invalid, possibly uninitialized.
 	USOCK_Closed = 1, // Connection permanently closed.
@@ -43,21 +43,21 @@ UCLASS()
 class NETWORK_API UNetConnection : public UObject
 {
 	GENERATED_BODY();
-
+	friend class UNetDriver;
 public:
 	void InitRemoteConnection(boost::asio::io_context& InContext,
-		function<void(UNetConnection*)> InAcceptFunction,
+		function<void(UNetConnection*)> InConnectFunction, // Server의 경우 Accept 이후 Hello Packet을 받은 시점 / 클라의 경우 connect 성공 시점
 		function<void(UNetConnection*)> InConnectionClosedFunction,
 		function<void(UNetConnection*, FPacketHeader*)> InRecvFunction);
 
+	void Send(const uint32 PacketID, void* PacketBody, const uint32 BodySize);
+	void LowLevelSend(void* Data, const uint64 Size);
 	FSocket* GetSocket() const { return Socket.get(); }
 
-	void OnAccept();
-
+protected:
 	// 재사용 직전에 CleanUp
 	void CleanUp();
-
-protected:
+	void OnConnect();
 	void InitBase(boost::asio::io_context& InContext);
 	
 	EConnectionState GetConnectionState() const { return ConnectionState; }
@@ -72,11 +72,12 @@ public:
 
 private:
 	FPacketHeader RecvPacketHeaderBuffer;
+	boost::pool<> BufferPool{ 1460 * 2 }; // TCP MTU Payload size * 2
 
 private:
 	EConnectionState ConnectionState = EConnectionState::USOCK_Invalid;
 	unique_ptr<FSocket> Socket;
-	function<void(UNetConnection*)> AcceptFunction;
+	function<void(UNetConnection*)> ConnectFunction;
 	function<void(UNetConnection*)> ConnectionClosedFunction;
 	function<void(UNetConnection*, FPacketHeader*)> RecvFunction;
 };
