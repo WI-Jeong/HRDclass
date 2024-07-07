@@ -3,23 +3,24 @@
 #include <thread>
 using namespace std;
 
-void thread_function(int count)
-{
-	for (int i = 0; i < count; i++)
-	{
-		cout << " i - " << i << endl;
-		this_thread::sleep_for(chrono::milliseconds(10));
-	}
-}
 
 int main()
 {
-	thread _t1(thread_function, 10);
+	short s = 0;
+	s = 65535;
+	std::cout << "Short변수 s의 값은: " << s << std::endl;
 
-	thread _t2(thread_function, 10);
-	cout << "main process" << endl;
+	unsigned s1 = 0;
+	s1 = 65535;
+	std::cout << "unsigned short타입 변수 s1의 값은: " << s1 << std::endl;
 
-	_t1.join();
-	_t2.join();
-	return 0;
+	char c = 0;
+	c = 255;
+	std::cout << "char변수 c의 값은: " << (int)c << std::endl;
+
+	unsigned char c1 = 0;
+	c1 = 255;
+	std::cout << "unsigned char변수 c1의 값은: " << (int)c1 << std::endl;
+
+
 }
