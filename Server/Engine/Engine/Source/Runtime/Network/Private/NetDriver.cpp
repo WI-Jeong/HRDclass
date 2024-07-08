@@ -8,6 +8,7 @@ bool UNetDriver::InitListen(FNetworkNotify InNotify,
 	{
 		return false;
 	}
+	bServer = true;
 
 	Acceptor = make_shared<boost::asio::ip::tcp::acceptor>(Context,
 		tcp::endpoint(tcp::v4(), (boost::asio::ip::port_type)ListenURL.Port), bReuseAddressAndPort);
@@ -31,15 +32,16 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 		InReuseConnection : NewObject<UNetConnection>(this, NetConnectionClass);
 	if (!InReuseConnection)
 	{
-		NewConnection->InitRemoteConnection(Context,
+		NewConnection->InitRemoteConnection(bServer, URL, Context,
 			bind(&ThisClass::OnClientAccepted, this, placeholders::_1),
+			bind(&ThisClass::OnConnected, this, placeholders::_1),
 			bind(&ThisClass::OnConectionClosed, this, placeholders::_1),
 			bind(&ThisClass::OnReceived, this, placeholders::_1, placeholders::_2));
-		MapBacklog.insert(make_pair(NewConnection.get(), NewConnection));
 	}
+	MapBacklog.insert(make_pair(NewConnection.get(), NewConnection));
 
 	Acceptor->async_accept(*NewConnection->GetSocket(), 
-		[this, NewConnection](const boost::system::error_code& Error)
+		[this, NewConnection, InReuseConnection](const boost::system::error_code& Error)
 		{
 			E_Log(trace, "New Client Accept: {}", to_string(NewConnection->GetName()));
 			if (Error)
@@ -52,29 +54,66 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 
 			// Move NewConnection Backlog to PendingConnection.
 			MapBacklog.erase(NewConnection.get());
-			MapPendingConnection.insert(make_pair(NewConnection.get(), NewConnection));
 
-			StartAccept();
+			if (InReuseConnection == nullptr)
+			{
+				StartAccept();
+			}
 
-			NewConnection->OnConnect();
+			NewConnection->OnPendingConnect();
 		}
 	);
 }
 
 void UNetDriver::OnClientAccepted(UNetConnection* NetConnection)
 {
+	MapPendingConnection.insert(make_pair(NetConnection, Cast<UNetConnection>(NetConnection)));
+}
+
+void UNetDriver::OnPendingConnected(UNetConnection* NetConnection)
+{
+	NetConnection->Send(FPacketHeader::EHelloPacket, nullptr, 0);
 }
 
 void UNetDriver::OnConnected(UNetConnection* NetConnection)
 {
+	NetworkNotify.OnConnect(this, NetConnection);
 }
 
 void UNetDriver::OnConectionClosed(UNetConnection* NetConnection)
 {
+	NetworkNotify.OnConnectionClosed(this, NetConnection);
+
+	if (bServer)
+	{
+		StartAccept(Cast<UNetConnection>(NetConnection));
+		MapPendingConnection.erase(NetConnection);
+	}
 }
 
 void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader)
 {
+	if (PacketHeader->GetPacketID() == FPacketHeader::EPreDefinedPacketID::EHelloPacket)
+	{
+		NetConnection->OnConnect();
+
+		if (bServer)
+		{
+			NetConnection->Send(FPacketHeader::EPreDefinedPacketID::EHelloPacket, nullptr, 0);
+		}
+	}
+	else if (NetConnection->GetConnectionState() == EConnectionState::USOCK_Open)
+	{
+		NetworkNotify.OnRecv(this, NetConnection, PacketHeader);
+	}
+	else
+	{	// USOCK_Open 상태가 아닌데, HelloPacket이 아니라면
+		// 비정상적인 요청으로 간주하고 강제로 연결을 끊는다.
+		NetConnection->CleanUp();
+		return;
+	}
+
+	NetConnection->ReadPacketHeader();
 }
 
 bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclassOf<UNetConnection> InNetConnectionClass)
@@ -83,27 +122,21 @@ bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclas
 	{
 		return false;
 	}
+	bServer = false;
 
 	shared_ptr<UNetConnection> NewConnection = NewObject<UNetConnection>(this, NetConnectionClass);
-	NewConnection->InitRemoteConnection(Context,
+	bool bResult = NewConnection->InitRemoteConnection(bServer, URL, Context,
+		bind(&ThisClass::OnPendingConnected, this, placeholders::_1),
 		bind(&ThisClass::OnConnected, this, placeholders::_1),
 		bind(&ThisClass::OnConectionClosed, this, placeholders::_1),
 		bind(&ThisClass::OnReceived, this, placeholders::_1, placeholders::_2));
 
-	boost::asio::ip::tcp::endpoint EndPoint(boost::asio::ip::address::from_string(ConnectURL.Host), ConnectURL.Port);
-
-	tcp::resolver Resolver(Context);
-	boost::system::error_code ErrorCode;
-	boost::asio::connect(*NewConnection->GetSocket(), Resolver.resolve(EndPoint), ErrorCode);
-	
-	if (ErrorCode)
+	if (!bResult)
 	{
-		E_Log(error, "connect failed: {}", ErrorCode.message());
 		return false;
 	}
 
 	ClientConnection = NewConnection;
-	ClientConnection->OnConnect();
 
 	return true;
 }
@@ -115,6 +148,13 @@ void UNetDriver::Send(UNetConnection* TargetConnection, const uint32 PacketID, v
 
 bool UNetDriver::InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNetConnection> InNetConnectionClass)
 {
+	if (bInit)
+	{
+		E_Log(error, "이미 초기화 되어 있습니다.");
+		return false;
+	}
+
+	bInit = true;
 	NetworkNotify = InNotify;
 	URL = InURL;
 	NetConnectionClass = InNetConnectionClass;
@@ -129,9 +169,8 @@ bool UNetDriver::InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNe
 
 void UNetDriver::Tick(float DeltaSeconds)
 {
-	boost::system::error_code ErrorCode;
-
 	uint32 PollCountPerTick = 0;
+	boost::system::error_code ErrorCode;
 	while (uint32 n = Context.poll_one(ErrorCode))
 	{
 		if (ErrorCode)
@@ -145,14 +184,4 @@ void UNetDriver::Tick(float DeltaSeconds)
 			break;
 		}
 	}
-}
-
-UNetDriver::UNetDriver()
-{
-
-}
-
-UNetDriver::~UNetDriver()
-{
-	
 }

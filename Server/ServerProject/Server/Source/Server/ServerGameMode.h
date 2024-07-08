@@ -14,6 +14,8 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds);
 
+	void OnRecv(UNetDriver* InNetDriver, UNetConnection* InNetConnection, FPacketHeader* InPacketHeader);
+
 	AServerGameMode();
 	~AServerGameMode();
 

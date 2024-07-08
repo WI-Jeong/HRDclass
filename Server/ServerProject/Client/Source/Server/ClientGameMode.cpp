@@ -5,7 +5,16 @@ void AClientGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	NetDriver = NewObject<UNetDriver>(this);
-	FNetworkNotify NetworkNotify;
+	FNetworkNotify NetworkNotify(
+		[this](UNetDriver*, UNetConnection*)
+		{
+		},
+		[this](UNetDriver*, UNetConnection*)
+		{
+		},
+		[this](UNetDriver*, UNetConnection*, FPacketHeader*)
+		{
+		});
 	FURL URL;
 	if (!NetDriver->InitConnect(NetworkNotify, URL))
 	{
@@ -14,7 +23,6 @@ void AClientGameMode::BeginPlay()
 	}
 
 	ClientConnection = NetDriver->GetClientConnection();
-	NetDriver->Send(ClientConnection.Get(), FPacketHeader::EHelloPacket, nullptr, 0);
 }
 
 void AClientGameMode::Tick(float DeltaSeconds)
@@ -22,6 +30,7 @@ void AClientGameMode::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	NetDriver->Tick(DeltaSeconds);
+	//RequestEngineExit("");
 }
 
 AClientGameMode::AClientGameMode()

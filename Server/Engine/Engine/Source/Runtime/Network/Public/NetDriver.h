@@ -8,6 +8,17 @@
 class UNetDriver;
 struct FNetworkNotify
 {
+	friend class UNetDriver;
+public:
+	FNetworkNotify(
+		function<void(UNetDriver*, UNetConnection*)> InOnConnect,
+		function<void(UNetDriver*, UNetConnection*)> InOnConnectionClosed,
+		function<void(UNetDriver*, UNetConnection*, FPacketHeader*)> InOnRecv) :
+		OnConnect(InOnConnect), OnConnectionClosed(InOnConnectionClosed), OnRecv(InOnRecv) {}
+
+private:
+	FNetworkNotify() {}
+
 	function<void(UNetDriver*, UNetConnection*)> OnConnect;
 	function<void(UNetDriver*, UNetConnection*)> OnConnectionClosed;
 	function<void(UNetDriver*, UNetConnection*, FPacketHeader*)> OnRecv;
@@ -17,7 +28,6 @@ UCLASS()
 class NETWORK_API UNetDriver : public UObject
 {
 	GENERATED_BODY();
-
 
 //-------------- Server 
 public:
@@ -30,19 +40,10 @@ public:
 protected:
 	void StartAccept(shared_ptr<UNetConnection> InReuseConnection = nullptr);
 
-	// Server
-	virtual void OnClientAccepted(UNetConnection* NetConnection);
-	
-	// Client
-	virtual void OnConnected(UNetConnection* NetConnection);
-
-	// Common
-	virtual void OnConectionClosed(UNetConnection* NetConnection);
-	virtual void OnReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
-
 protected:
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapBacklog;
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapPendingConnection;
+	shared_ptr<boost::asio::ip::tcp::acceptor> Acceptor;
 
 // -------------- Client
 public:
@@ -59,15 +60,26 @@ public:
 
 	virtual void Tick(float DeltaSeconds);
 
-public:
-	UNetDriver();
-	~UNetDriver();
+	// Server
+	virtual void OnClientAccepted(UNetConnection* NetConnection);
+
+	// Client: connect 성공 시
+	virtual void OnPendingConnected(UNetConnection* NetConnection);
+
+	// Client: connect이후, HelloPacket을 수신
+	// Server: accept이후, HelloPacket을 수신
+	virtual void OnConnected(UNetConnection* NetConnection);
+
+	// Common
+	virtual void OnConectionClosed(UNetConnection* NetConnection);
+	virtual void OnReceived(UNetConnection* NetConnection, FPacketHeader* PacketHeader);
 
 protected:
+	bool bInit = false;
+	bool bServer = false;
 	TSubclassOf<UNetConnection> NetConnectionClass;
 	FURL URL;
 	FNetworkNotify NetworkNotify;
 
 	boost::asio::io_context Context;
-	shared_ptr<boost::asio::ip::tcp::acceptor> Acceptor;
 };

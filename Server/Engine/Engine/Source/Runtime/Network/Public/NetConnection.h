@@ -10,14 +10,15 @@ struct FPacketHeader
 	enum EPreDefinedPacketID
 	{
 		EHelloPacket = 2,	// Client to Server; 클라가 처음 접속하며 서버로 보내는 Packet
-		EHelloPacketAck,	// Server to Client; HelloPacket을 받으면 클라로 보내는 Packet
-
+							// Server to Client; 클라로 부터 EHelloPacket를 수신하면 응답으로 보낸다
 		EEnd
 	};
 
 public:
 	FPacketHeader() = default;
 	FPacketHeader(const uint32 NewPacketID) : PacketID(NewPacketID) {}
+	FPacketHeader(const uint32 NewPacketID, const uint32 NewPayloadSize) : 
+		PacketID(NewPacketID), Payload(NewPayloadSize) {}
 	void SetPayload(const uint32 InPayload) { Payload = InPayload; }
 	void SetPacketID(const uint32 InPacketID) { PacketID = InPacketID; }
 	uint32 GetPayload() const { return Payload; }
@@ -45,8 +46,12 @@ class NETWORK_API UNetConnection : public UObject
 	GENERATED_BODY();
 	friend class UNetDriver;
 public:
-	void InitRemoteConnection(boost::asio::io_context& InContext,
-		function<void(UNetConnection*)> InConnectFunction, // Server의 경우 Accept 이후 Hello Packet을 받은 시점 / 클라의 경우 connect 성공 시점
+	bool InitRemoteConnection(
+		const bool bServer,
+		const FURL& InURL,
+		boost::asio::io_context& InContext,
+		function<void(UNetConnection*)> InPendingConnectFunction, // Server의 경우 Accept 시점, Client의 경우 Connect 시점
+		function<void(UNetConnection*)> InConnectFunction, // Hello Packet을 받은 시점
 		function<void(UNetConnection*)> InConnectionClosedFunction,
 		function<void(UNetConnection*, FPacketHeader*)> InRecvFunction);
 
@@ -57,8 +62,9 @@ public:
 protected:
 	// 재사용 직전에 CleanUp
 	void CleanUp();
+	void OnPendingConnect();
 	void OnConnect();
-	void InitBase(boost::asio::io_context& InContext);
+	void InitBase(const FURL& InURL, boost::asio::io_context& InContext);
 	
 	EConnectionState GetConnectionState() const { return ConnectionState; }
 	void SetConnectionState(const EConnectionState NewState) { ConnectionState = NewState; }
@@ -75,8 +81,11 @@ private:
 	boost::pool<> BufferPool{ 1460 * 2 }; // TCP MTU Payload size * 2
 
 private:
+	bool bNetDriverIsServer = false;
+	FURL URL;
 	EConnectionState ConnectionState = EConnectionState::USOCK_Invalid;
 	unique_ptr<FSocket> Socket;
+	function<void(UNetConnection*)> PendingConnectFunction;
 	function<void(UNetConnection*)> ConnectFunction;
 	function<void(UNetConnection*)> ConnectionClosedFunction;
 	function<void(UNetConnection*, FPacketHeader*)> RecvFunction;
