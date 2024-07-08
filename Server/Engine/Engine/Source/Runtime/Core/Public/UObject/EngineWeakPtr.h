@@ -44,15 +44,21 @@ public:
 
 	template <class _Ty2 = _Ty, enable_if_t<!disjunction_v<is_array<_Ty2>, is_void<_Ty2>>, int> = 0>
 	_NODISCARD _Ty2& operator*() const noexcept {
-		return *(this->lock().get());
+		return *Get();
 	}
 
 	template <class _Ty2 = _Ty, enable_if_t<!is_array_v<_Ty2>, int> = 0>
 	_NODISCARD _Ty2* operator->() const noexcept {
-		return this->lock().get();
+		return Get();
 	}
 	template <class _Ty2 = _Ty, enable_if_t<!is_array_v<_Ty2>, int> = 0>
 	_NODISCARD _Ty2* Get() const noexcept {
+#if WITH_DEBUG
+		if (!IsValid())
+		{
+			_ASSERT(false);
+		}
+#endif
 		return this->lock().get();
 	}
 
