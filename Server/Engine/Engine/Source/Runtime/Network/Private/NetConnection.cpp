@@ -38,6 +38,11 @@ bool UNetConnection::InitRemoteConnection(
 	return true;
 }
 
+void UNetConnection::Send(FPacketHeader* Packet)
+{
+	Send(Packet->GetPacketID(), Packet + 1, Packet->GetPayload());
+}
+
 void UNetConnection::Send(const uint32 PacketID, void* PacketBody, const uint32 BodySize)
 {
 	const size_t SendBufferSize = BufferPool.get_requested_size();
@@ -75,7 +80,7 @@ void UNetConnection::LowLevelSend(void* Data, const uint64 Size)
 			BufferPool.free(Data);
 			if (ErrorCode)
 			{
-				E_Log(error, "async_write error: {}", ErrorCode.message());
+				E_Log(info, "async_write error: {}", ErrorCode.message());
 				CleanUp();
 				return;
 			}
@@ -171,11 +176,31 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 	if (PayloadSize == 0)
 	{
 		RecvFunction(this, PacketHeader);
-	}
 
-	// 명시적으로 소멸할 필요가 없는 기본 자료형만 있음
-	//PacketHeader->~FPacketHeader();
-	BufferPool.free(PacketHeader);
+		// 명시적으로 소멸할 필요가 없는 기본 자료형만 있음
+		//PacketHeader->~FPacketHeader();
+		BufferPool.free(PacketHeader);
+	}
+	else
+	{
+		boost::asio::async_read(*GetSocket(),
+			boost::asio::buffer(PacketHeader + 1, PayloadSize),
+			[this, PacketHeader](boost::system::error_code ErrorCode, uint64 /*InRecvSize*/)
+			{
+				if (ErrorCode)
+				{
+					E_Log(trace, "{}", ErrorCode.message());
+					CleanUp();
+					return;
+				}
+				RecvFunction(this, PacketHeader);
+
+				// 명시적으로 소멸할 필요가 없는 기본 자료형만 있음
+				//PacketHeader->~FPacketHeader();
+				BufferPool.free(PacketHeader);
+			}
+		);
+	}
 }
 
 UNetConnection::UNetConnection()

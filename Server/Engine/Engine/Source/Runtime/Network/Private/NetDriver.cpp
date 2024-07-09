@@ -141,6 +141,11 @@ bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclas
 	return true;
 }
 
+void UNetDriver::Send(UNetConnection* TargetConnection, FPacketHeader* Packet)
+{
+	TargetConnection->Send(Packet);
+}
+
 void UNetDriver::Send(UNetConnection* TargetConnection, const uint32 PacketID, void* PacketBody, const uint32 BodySize)
 {
 	TargetConnection->Send(PacketID, PacketBody, BodySize);

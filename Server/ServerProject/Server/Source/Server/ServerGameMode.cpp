@@ -28,7 +28,24 @@ void AServerGameMode::BeginPlay()
 
 void AServerGameMode::OnRecv(UNetDriver* InNetDriver, UNetConnection* InNetConnection, FPacketHeader* InPacketHeader)
 {
+	EMyPacketType PacketType = (EMyPacketType)InPacketHeader->GetPacketID();
+	switch (PacketType)
+	{
+	case EMyPacketType::EMessage:
+	{
+		FMessagePacket* MessagePacket = (FMessagePacket*)InPacketHeader;
+		string Message = string(MessagePacket->Buffer.begin(), MessagePacket->Buffer.end());
+		E_Log(trace, "{}", Message);
 
+		MessagePacket->Buffer[11] = '2';
+
+		InNetConnection->Send(InPacketHeader);
+		break;
+	}
+	default:
+		E_Log(error, "Unsupport packet type.");
+		break;
+	}
 }
 
 void AServerGameMode::Tick(float DeltaSeconds)

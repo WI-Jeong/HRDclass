@@ -55,6 +55,7 @@ protected:
 
 // -------------- 공통
 public:
+	void Send(UNetConnection* TargetConnection, FPacketHeader* Packet);
 	void Send(UNetConnection* TargetConnection, const uint32 PacketID, void* PacketBody, const uint32 BodySize);
 	virtual bool InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNetConnection> InNetConnectionClass);
 

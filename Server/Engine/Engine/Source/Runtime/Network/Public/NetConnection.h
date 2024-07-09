@@ -7,7 +7,7 @@
 #pragma pack(push, 1)
 struct FPacketHeader
 {
-	enum EPreDefinedPacketID
+	enum EPreDefinedPacketID : uint32
 	{
 		EHelloPacket = 2,	// Client to Server; 클라가 처음 접속하며 서버로 보내는 Packet
 							// Server to Client; 클라로 부터 EHelloPacket를 수신하면 응답으로 보낸다
@@ -55,6 +55,7 @@ public:
 		function<void(UNetConnection*)> InConnectionClosedFunction,
 		function<void(UNetConnection*, FPacketHeader*)> InRecvFunction);
 
+	void Send(FPacketHeader* Packet);
 	void Send(const uint32 PacketID, void* PacketBody, const uint32 BodySize);
 	void LowLevelSend(void* Data, const uint64 Size);
 	FSocket* GetSocket() const { return Socket.get(); }

@@ -5,6 +5,19 @@
 #include "NetworkMinimal.h"
 #include "ClientGameMode.generated.h"
 
+enum class EMyPacketType : uint32
+{
+	EStart = FPacketHeader::EEnd,
+	EMessage,
+};
+
+struct FMessagePacket : public FPacketHeader
+{
+	FMessagePacket() :
+		FPacketHeader((uint32)EMyPacketType::EMessage, sizeof(FMessagePacket) - sizeof(FPacketHeader)) {}
+	array<char, 1024> Buffer = {};
+};
+
 UCLASS()
 class CLIENTPROJECT_API AClientGameMode : public AGameModeBase
 {
@@ -18,5 +31,4 @@ public:
 	~AClientGameMode();
 
 	shared_ptr<UNetDriver> NetDriver;
-	engine_weak_ptr<UNetConnection> ClientConnection;
 };

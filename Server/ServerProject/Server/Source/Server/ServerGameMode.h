@@ -5,6 +5,20 @@
 #include "NetworkMinimal.h"
 #include "ServerGameMode.generated.h"
 
+
+enum class EMyPacketType : uint32
+{
+	EStart = FPacketHeader::EEnd,
+	EMessage,
+};
+
+struct FMessagePacket : public FPacketHeader
+{
+	FMessagePacket() :
+		FPacketHeader((uint32)EMyPacketType::EMessage, sizeof(FMessagePacket) - sizeof(FPacketHeader)) {}
+	array<char, 1024> Buffer = {};
+};
+
 UCLASS()
 class SERVERPROJECT_API AServerGameMode : public AGameModeBase
 {
