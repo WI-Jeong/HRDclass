@@ -44,8 +44,15 @@ UCLASS()
 class NETWORK_API UNetConnection : public UObject
 {
 	GENERATED_BODY();
+	friend struct FPendingConnectionTimeOutTask;
 	friend class UNetDriver;
-public:
+
+protected:
+	void Send(FPacketHeader* Packet);
+	void Send(const uint32 PacketID, void* PacketBody, const uint32 BodySize);
+	void LowLevelSend(void* Data, const uint64 Size);
+
+protected:
 	bool InitRemoteConnection(
 		const bool bServer,
 		const FURL& InURL,
@@ -55,14 +62,11 @@ public:
 		function<void(UNetConnection*)> InConnectionClosedFunction,
 		function<void(UNetConnection*, FPacketHeader*)> InRecvFunction);
 
-	void Send(FPacketHeader* Packet);
-	void Send(const uint32 PacketID, void* PacketBody, const uint32 BodySize);
-	void LowLevelSend(void* Data, const uint64 Size);
 	FSocket* GetSocket() const { return Socket.get(); }
 
 protected:
 	// 재사용 직전에 CleanUp
-	void CleanUp();
+	virtual void CleanUp();
 	void OnPendingConnect();
 	void OnConnect();
 	void InitBase(const FURL& InURL, boost::asio::io_context& InContext);
@@ -72,6 +76,8 @@ protected:
 
 	void ReadPacketHeader();
 	void ReadPacketBody(const FPacketHeader& InPacketHeader);
+
+	const chrono::system_clock::time_point& GetPendingConnectTime() const { return PendingConnectTime; }
 
 public:
 	UNetConnection();
@@ -84,6 +90,9 @@ private:
 private:
 	bool bNetDriverIsServer = false;
 	FURL URL;
+
+	chrono::system_clock::time_point PendingConnectTime;
+
 	EConnectionState ConnectionState = EConnectionState::USOCK_Invalid;
 	unique_ptr<FSocket> Socket;
 	function<void(UNetConnection*)> PendingConnectFunction;

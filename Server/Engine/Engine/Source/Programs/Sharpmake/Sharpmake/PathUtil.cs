@@ -60,7 +60,7 @@ namespace Sharpmake
                 _ => standardPath.TrimEnd(Path.DirectorySeparatorChar),
             };
 
-            return forceToLower ? standardPath.ToLower() : standardPath;
+            return standardPath;// forceToLower ? standardPath.ToLower() : standardPath;
         }
 
         public static string EnsureTrailingSeparator(string path)

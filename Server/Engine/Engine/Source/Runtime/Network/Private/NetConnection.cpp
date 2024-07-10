@@ -97,6 +97,8 @@ void UNetConnection::OnPendingConnect()
 	ReadPacketHeader();
 
 	PendingConnectFunction(this);
+
+	PendingConnectTime = chrono::system_clock::now();
 }
 
 void UNetConnection::OnConnect()
@@ -112,8 +114,10 @@ void UNetConnection::CleanUp()
 	{
 		Socket->close();
 		E_Log(info, "{}", to_string(GetName()));
-		SetConnectionState(EConnectionState::USOCK_Closed);
 		ConnectionClosedFunction(this);
+		SetConnectionState(EConnectionState::USOCK_Closed);
+
+		PendingConnectTime = {};
 	}
 }
 

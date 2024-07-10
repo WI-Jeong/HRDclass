@@ -27,6 +27,7 @@ private:
 UCLASS()
 class NETWORK_API UNetDriver : public UObject
 {
+	friend struct FPendingConnectionTimeOutTask;
 	GENERATED_BODY();
 
 //-------------- Server 
@@ -41,8 +42,14 @@ protected:
 	void StartAccept(shared_ptr<UNetConnection> InReuseConnection = nullptr);
 
 protected:
+	// 아직 async_accept 상태인 Connection
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapBacklog;
+	// 클라로 부터 connect 되었으나, Hello Packet을 받지 못한 Connection
 	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapPendingConnection;
+	// 클라로 부터 Hello Packet을 받은 Connection
+	unordered_map<UNetConnection*, shared_ptr<UNetConnection>> MapOpenConnection;
+
+	// socket, bind, listen을 수행하는 asio class
 	shared_ptr<boost::asio::ip::tcp::acceptor> Acceptor;
 
 // -------------- Client

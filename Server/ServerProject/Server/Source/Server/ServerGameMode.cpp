@@ -17,7 +17,7 @@ void AServerGameMode::BeginPlay()
 	);
 
 	FURL URL;
-	NetDriver->InitListen(NetworkNotify, URL, true, 1);
+	NetDriver->InitListen(NetworkNotify, URL, true, 5);
 
 	auto& Vector = ObjectMap[UNetDriver::StaticClass()];
 	for (engine_weak_ptr<UObject> It : Vector)
@@ -37,9 +37,9 @@ void AServerGameMode::OnRecv(UNetDriver* InNetDriver, UNetConnection* InNetConne
 		string Message = string(MessagePacket->Buffer.begin(), MessagePacket->Buffer.end());
 		E_Log(trace, "{}", Message);
 
-		MessagePacket->Buffer[11] = '2';
+		MessagePacket->Buffer[12] = '2';
 
-		InNetConnection->Send(InPacketHeader);
+		NetDriver->Send(InNetConnection, InPacketHeader);
 		break;
 	}
 	default:
@@ -53,6 +53,11 @@ void AServerGameMode::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	NetDriver->Tick(DeltaSeconds);
+
+	//if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	//{
+	//	RequestEngineExit("Test");
+	//}
 }
 
 AServerGameMode::AServerGameMode()

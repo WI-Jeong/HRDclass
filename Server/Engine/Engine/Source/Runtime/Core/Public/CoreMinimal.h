@@ -8,3 +8,5 @@
 
 #include "MISC/ConfigCacheIni.h"
 #include "MISC/Paths.h"
+
+#include "Task/Task.h"

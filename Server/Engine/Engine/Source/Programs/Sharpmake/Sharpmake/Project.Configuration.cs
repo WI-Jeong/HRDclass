@@ -3310,6 +3310,18 @@ namespace Sharpmake
 
             internal void Link(Builder builder)
             {
+                // HBKim
+                if (Project.ClassName == "EngineConsole")
+                {
+                    foreach (KeyValuePair<Type, Project> Pair in builder._projects)
+                    {
+                        string ProjectBaseClassName = Pair.Value.GetType().BaseType.Name;
+                        if (ProjectBaseClassName == "UserProject")
+                        {
+                            AddPrivateDependency(Target, Pair.Value.GetType());
+                        }
+                    }
+                }
                 Trace.Assert(_linkState == LinkState.NotLinked);
                 _linkState = LinkState.Linking;
 
@@ -3703,6 +3715,36 @@ namespace Sharpmake
                     {
                         Defines.Add(TargetFileName.ToUpper() + "_API" + "=DLLEXPORT");
                     }
+                    //string ProjectBaseClassName = Project.GetType().BaseType.Name;
+                    //if (ProjectBaseClassName == "UserProject")
+                    //{
+                    //    foreach (KeyValuePair<Type, Project> Pair in builder._projects)
+                    //    {
+                    //        // EngineConsole에 User project build 명령 추가
+                    //        if (Pair.Value.Name == "EngineConsole")
+                    //        {
+                    //            Configuration c = Pair.Value.GetConfiguration(Target);
+                    //            //EngineTarget EngineTarget = (EngineTarget)Target;
+                    //            //string ConfName = Target.Name;
+                    //            //if(EngineTarget.LaunchType == ELaunchType.Editor)
+                    //            //{
+                    //            //    ConfName += " Editor";
+                    //            //}
+                    //            //else if(EngineTarget.LaunchType == ELaunchType.Client)
+                    //            //{
+                    //            //    ConfName += " Client";
+                    //            //}
+                    //            //else if(EngineTarget.LaunchType == ELaunchType.Server)
+                    //            //{
+                    //            //    ConfName += " Server";
+                    //            //}
+                    //            //c.EventPreBuild.Add("msbuild " + Project + @".vcxproj /p:platform=x64 /p:configuration=""" + ConfName + @"""");
+                    //            c.SetDependency(Project.GetType(), (ITarget)Target, DependencySetting.Default);
+                    //            //c.AddPublicDependency(Target, Project.GetType());
+                    //            break;
+                    //        }
+                    //    }
+                    //}
 
                     foreach (Configuration c in _resolvedDependencies)
                     {

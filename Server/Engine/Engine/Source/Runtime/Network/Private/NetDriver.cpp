@@ -1,4 +1,5 @@
 ﻿#include "NetDriver.h"
+#include "Task/PendingConnectionTimeOutTask.h"
 
 bool UNetDriver::InitListen(FNetworkNotify InNotify, 
 	FURL& ListenURL, const bool bReuseAddressAndPort, const uint8 BacklogCount, 
@@ -77,17 +78,37 @@ void UNetDriver::OnPendingConnected(UNetConnection* NetConnection)
 
 void UNetDriver::OnConnected(UNetConnection* NetConnection)
 {
+	if (bServer)
+	{
+		MapOpenConnection.insert(make_pair(NetConnection, Cast<UNetConnection>(NetConnection)));
+		MapPendingConnection.erase(NetConnection);
+	}
 	NetworkNotify.OnConnect(this, NetConnection);
 }
 
 void UNetDriver::OnConectionClosed(UNetConnection* NetConnection)
 {
-	NetworkNotify.OnConnectionClosed(this, NetConnection);
+	if (NetConnection->GetConnectionState() != EConnectionState::USOCK_Pending)
+	{
+		NetworkNotify.OnConnectionClosed(this, NetConnection);
+	}
 
 	if (bServer)
 	{
 		StartAccept(Cast<UNetConnection>(NetConnection));
-		MapPendingConnection.erase(NetConnection);
+
+		if (NetConnection->GetConnectionState() == EConnectionState::USOCK_Pending)
+		{
+			MapPendingConnection.erase(NetConnection);
+		}
+		else if (NetConnection->GetConnectionState() == EConnectionState::USOCK_Open)
+		{
+			MapOpenConnection.erase(NetConnection);
+		}
+		else
+		{
+			E_Log(fatal, "check!");
+		}
 	}
 }
 
@@ -189,4 +210,6 @@ void UNetDriver::Tick(float DeltaSeconds)
 			break;
 		}
 	}
+
+	InvokeTask<FPendingConnectionTimeOutTask>(this);
 }
