@@ -81,7 +81,7 @@ void UNetConnection::LowLevelSend(void* Data, const uint64 Size)
 			if (ErrorCode)
 			{
 				E_Log(info, "async_write error: {}", ErrorCode.message());
-				CleanUp();
+				Shutdown();
 				return;
 			}
 		}
@@ -108,7 +108,7 @@ void UNetConnection::OnConnect()
 	ConnectFunction(this);
 }
 
-void UNetConnection::CleanUp()
+void UNetConnection::Shutdown()
 {
 	if (Socket->is_open())
 	{
@@ -144,7 +144,7 @@ void UNetConnection::ReadPacketHeader()
 			if (ErrorCode)
 			{
 				E_Log(trace, "{}", ErrorCode.message());
-				CleanUp();
+				Shutdown();
 				return;
 			}
 
@@ -170,7 +170,7 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 	if (PacketSize > BufferSize)
 	{
 		E_Log(fatal, "Packet size({})가 Buffer size({}) 보다 크다", PacketSize, BufferSize);
-		CleanUp();
+		Shutdown();
 		return;
 	}
 
@@ -194,7 +194,7 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 				if (ErrorCode)
 				{
 					E_Log(trace, "{}", ErrorCode.message());
-					CleanUp();
+					Shutdown();
 					return;
 				}
 				RecvFunction(this, PacketHeader);

@@ -21,6 +21,6 @@ void FPendingConnectionTimeOutTask::ExecuteTask()
 	for (UNetConnection* It : TimeOutConnections)
 	{
 		E_Log(trace, "{}", to_string(It->GetName()));
-		It->CleanUp();
+		It->Shutdown();
 	}
 }

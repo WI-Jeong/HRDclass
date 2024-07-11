@@ -12,6 +12,7 @@ int32 FEngineLoop::PreInit(const TCHAR* /*CmdLine*/)
 	int* Test = new int;
 #endif
 	FLogger::InitializeLogSystem();
+	FTaskManager::Get();
 	FConfigCacheIni::InitializeConfigSystem();
 
 	// User DLL을 load
@@ -53,10 +54,10 @@ int32 FEngineLoop::Init()
 
 void FEngineLoop::Tick()
 {
-	/*if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
 		RequestEngineExit("Test");
-	}*/
+	}
 	Engine->Tick(0.);
 }
 
@@ -80,5 +81,6 @@ void FEngineLoop::Exit()
 	GUObjectArray.Destroy();
 
 	FConfigCacheIni::DestroyConfigSystem();
+	FTaskManager::Get(true);
 	FLogger::DestroyLogSystem();
 }

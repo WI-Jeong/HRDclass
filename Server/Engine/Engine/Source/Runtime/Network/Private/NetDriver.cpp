@@ -26,7 +26,7 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 {
 	if (InReuseConnection)
 	{
-		InReuseConnection->CleanUp();
+		InReuseConnection->Shutdown();
 	}
 
 	shared_ptr<UNetConnection> NewConnection = InReuseConnection ? 
@@ -131,7 +131,7 @@ void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* Packet
 	else
 	{	// USOCK_Open 상태가 아닌데, HelloPacket이 아니라면
 		// 비정상적인 요청으로 간주하고 강제로 연결을 끊는다.
-		NetConnection->CleanUp();
+		NetConnection->Shutdown();
 		return;
 	}
 
@@ -207,7 +207,7 @@ void UNetDriver::Tick(float DeltaSeconds)
 
 		PollCountPerTick += n;
 		if (PollCountPerTick >= 1000)
-		{
+		{ 
 			break;
 		}
 	}

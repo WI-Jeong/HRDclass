@@ -65,8 +65,8 @@ protected:
 	FSocket* GetSocket() const { return Socket.get(); }
 
 protected:
-	// 재사용 직전에 CleanUp
-	virtual void CleanUp();
+	// 재사용 직전에 Shutdown
+	virtual void Shutdown();
 	void OnPendingConnect();
 	void OnConnect();
 	void InitBase(const FURL& InURL, boost::asio::io_context& InContext);
