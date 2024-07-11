@@ -120,6 +120,7 @@ void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* Packet
 
 		if (bServer)
 		{
+			E_Log(trace, "Send to {} HelloPacket", to_string(NetConnection->GetName()));
 			NetConnection->Send(FPacketHeader::EPreDefinedPacketID::EHelloPacket, nullptr, 0);
 		}
 	}

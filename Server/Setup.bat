@@ -38,7 +38,7 @@ call %VCPKG_ROOT%\bootstrap-vcpkg.bat -disableMetrics
 echo [register .sproject]
 assoc .sproject=sprojectfile
 ftype sprojectfile=
-ftype sprojectfile=%cd%\Engine\GenerateSolution.bat %cd%\Engine .\Source\GameSolution.sharpmake.cs
+ftype sprojectfile=%cd%\Engine\GenerateSolution.bat "%cd%\Engine" .\Source\GameSolution.sharpmake.cs
 
 echo.
 echo [Done]
