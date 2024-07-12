@@ -58,6 +58,7 @@ void FEngineLoop::Tick()
 	{
 		RequestEngineExit("Test");
 	}*/
+	FTaskManager::Get()->ProcessTasks();
 	Engine->Tick(0.);
 }
 

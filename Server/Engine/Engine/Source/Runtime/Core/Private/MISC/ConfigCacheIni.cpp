@@ -53,12 +53,23 @@ bool FConfigCacheIni::LoadIniFile(FStringView InKey, const FString& InIniFileNam
 	return bLoad;
 }
 
+bool FConfigCacheIni::UnLoadIniFile(FStringView InKey)
+{
+	auto It = MapCachedConfig.find(InKey.data());
+	if (It == MapCachedConfig.end())
+	{
+		E_LOG(fatal, "{} not found", to_string(InKey));
+		return false;
+	}
+	MapCachedConfig.erase(It);
+	return true;
+}
+
 FConfigFile& FConfigCacheIni::GetConfig(FStringView InKey)
 {
 	if (MapCachedConfig.find(InKey.data()) == MapCachedConfig.end())
 	{
-		string String = to_string(InKey);
-		E_LOG(fatal, "{} not found", String);
+		E_LOG(fatal, "{} not found", to_string(InKey));
 	}
 
 	return MapCachedConfig[InKey.data()];

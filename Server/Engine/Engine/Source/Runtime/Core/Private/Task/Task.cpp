@@ -11,3 +11,20 @@ FTaskManager* FTaskManager::Get(const bool bDestroy)
 
     return Instance.get();
 }
+
+void FTaskManager::ProcessTasks()
+{
+    TaskMutex.lock();
+    Tasks.insert(Tasks.end(), NewTasks.begin(), NewTasks.end());
+    TaskMutex.unlock();
+
+    for (auto It = Tasks.begin(); It != Tasks.end(); ++It)
+    {
+        It->get()->ExecuteTask();
+    }
+
+    erase_if(Tasks, [](shared_ptr<FTask>& InTask) -> bool
+        {
+            return InTask->IsTaskDone();
+        });
+}

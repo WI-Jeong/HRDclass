@@ -10,6 +10,7 @@ public:
 
 public:
 	bool LoadIniFile(FStringView InKey, const FString& InIniFileName, const bool bTryOverride = false);
+	bool UnLoadIniFile(FStringView InKey);
 	FConfigFile& GetConfig(FStringView InKey);
 
 private:

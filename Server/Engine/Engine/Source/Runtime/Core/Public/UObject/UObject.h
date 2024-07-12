@@ -65,6 +65,8 @@ public:
 		return IsA(T::StaticClass());
 	}
 
+	template<typename T>
+	shared_ptr<T> As() { return Cast<T>(shared_from_this()); }
 	static UClass* StaticClass() { return nullptr; }
 	bool HasAnyFlags(const EObjectFlags FlagToCheck) const
 	{

@@ -4,25 +4,55 @@ void AServerGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	NetDriver = NewObject<UNetDriver>(this);
-	FNetworkNotify NetworkNotify = FNetworkNotify
-	(
-		[this](UNetDriver*, UNetConnection*) 
-		{
-		},
-		[this](UNetDriver*, UNetConnection*)
-		{
-		}, 
-		bind(&ThisClass::OnRecv, this, placeholders::_1, placeholders::_2, placeholders::_3)
-	);
-
-	FURL URL;
-	NetDriver->InitListen(NetworkNotify, URL, true, 5);
-
-	auto& Vector = ObjectMap[UNetDriver::StaticClass()];
-	for (engine_weak_ptr<UObject> It : Vector)
+	// DB
 	{
-		engine_weak_ptr<UNetDriver> ItNet = Cast<UNetDriver>(It);
+		FNetworkNotify NetworkNotify = FNetworkNotify
+		(
+			[this](UNetDriver*, UNetConnection*) {},
+			[this](UNetDriver*, UNetConnection*) {},
+			[this](UNetDriver*, UNetConnection*, FPacketHeader*) {}
+			);
+
+		FURL_DB URL;
+		const FString ConfigKey = TEXT("LoginServerDB");
+		if (GConfig->LoadIniFile(ConfigKey, TEXT("LoginServerDB.ini")))
+		{
+			FConfigFile& Config = GConfig->GetConfig(TEXT("LoginServerDB"));
+			Config.Get("DBSettings", "Host", URL.Host);
+			Config.Get("DBSettings", "Port", URL.Port);
+			Config.Get("DBSettings", "ID", URL.ID);
+			Config.Get("DBSettings", "Password", URL.Password);
+			GConfig->UnLoadIniFile(ConfigKey);
+		}
+
+		DBNetDriver = NewObject<UDBNetDriver>(this);
+		if (!DBNetDriver->InitConnect(NetworkNotify, URL))
+		{
+			RequestEngineExit("DBNetDriver connect failed");
+		}
+	}
+
+	{
+		NetDriver = NewObject<UNetDriver>(this);
+		FNetworkNotify NetworkNotify = FNetworkNotify
+		(
+			[this](UNetDriver*, UNetConnection*)
+			{
+			},
+			[this](UNetDriver*, UNetConnection*)
+			{
+			},
+			bind(&ThisClass::OnRecv, this, placeholders::_1, placeholders::_2, placeholders::_3)
+			);
+
+		FURL URL;
+		NetDriver->InitListen(NetworkNotify, URL, true, 5);
+
+		auto& Vector = ObjectMap[UNetDriver::StaticClass()];
+		for (engine_weak_ptr<UObject> It : Vector)
+		{
+			engine_weak_ptr<UNetDriver> ItNet = Cast<UNetDriver>(It);
+		}
 	}
 }
 
@@ -61,6 +91,7 @@ void AServerGameMode::OnRecv(UNetDriver* InNetDriver, UNetConnection* InNetConne
 			InNetDriver->KickNetConnection(InNetConnection, "ID or Password is empty");
 			break;
 		}
+		// 문자열 길이 확인
 
 		// 회원가입 처리
 
@@ -76,6 +107,7 @@ void AServerGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	DBNetDriver->Tick(DeltaSeconds);
 	NetDriver->Tick(DeltaSeconds);
 
 	//if (GetAsyncKeyState(VK_SPACE) & 0x8000)

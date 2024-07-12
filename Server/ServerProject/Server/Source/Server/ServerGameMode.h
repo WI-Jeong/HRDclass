@@ -49,4 +49,5 @@ public:
 
 protected:
 	shared_ptr<UNetDriver> NetDriver;
+	shared_ptr<UDBNetDriver> DBNetDriver;
 };
