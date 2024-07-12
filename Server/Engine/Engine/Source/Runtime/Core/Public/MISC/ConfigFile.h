@@ -17,7 +17,7 @@ public:
 		bool bFind = Get(InSection, InKey, Field);
 		if (!bFind)
 		{
-			E_Log(error, "Get failed {}, {}", InSection, InKey);
+			E_LOG(error, "Get failed {}, {}", InSection, InKey);
 			return false;
 		}
 

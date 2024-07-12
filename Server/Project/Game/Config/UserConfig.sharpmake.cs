@@ -21,6 +21,6 @@ public class UserConfig : CommonProject
         conf.TargetPath += "/Config";
 
         conf.EventPreBuild.Clear();
-        conf.EventPreBuild.Add(@"(robocopy /s [project.SourceRootPath]" + @" """ + conf.TargetPath + @"/""" + @" *.ini)  ^& IF %ERRORLEVEL% LEQ 3 exit 0");
+        conf.EventPreBuild.Add(@"(robocopy /s ""[project.SourceRootPath]"" " + @"""" + conf.TargetPath + @"""" + " *.ini) ^& IF %ERRORLEVEL% LEQ 3 exit 0");
     }
 }

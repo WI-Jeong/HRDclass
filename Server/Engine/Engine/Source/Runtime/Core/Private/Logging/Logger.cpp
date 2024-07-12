@@ -17,7 +17,7 @@ void FLogger::InitializeLogSystem()
 {
 	if (GLogger)
 	{
-		E_Log(error, "GLogger exist");
+		E_LOG(error, "GLogger exist");
 		return;
 	}
 	GLogger = new FLogger("GLog");
@@ -52,16 +52,20 @@ FLogger::FLogger(std::string_view InLogFileName)
 			expr::stream
 			<< expr::attr< unsigned int >("LineID") << ": "
 			<< expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
-			<< ": <" << logging::trivial::severity
-			<< "> " << expr::smessage
+			<< ": [" << logging::trivial::severity
+			<< "] " << expr::smessage
 			)
 	);
+
 	logging::add_console_log(std::cout, boost::log::keywords::format = (
 		expr::stream
 		<< expr::attr< unsigned int >("LineID") << ": "
 		<< expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
-		<< ": <" << logging::trivial::severity
-		<< "> " << expr::smessage
+		<< ":"
+		<< "[" << logging::trivial::severity
+		<< "] "
+		<< "\033[0m"
+		<< expr::smessage
 		));
 
 	Log(FLogLevel::trace, LogFileName);
@@ -103,6 +107,29 @@ void FLogger::Log(FLogLevel InLogLevel, std::string_view InMessage)
 	//CV.notify_all();
 	////Mutex.unlock();
 
+
+	/*
+	"\033[1;30m" << "black " << "\033[0m"
+	"\033[1;31m" << "red " << "\033[0m"
+	"\033[1;32m" << "green " << "\033[0m"
+	"\033[1;33m" << "yellow " << "\033[0m"
+	"\033[1;34m" << "blue " << "\033[0m"
+	"\033[1;35m" << "magenta " << "\033[0m"
+	"\033[1;36m" << "cyan " << "\033[0m"
+	"\033[1;37m" << "white " << "\033[0m"
+	*/
+
+	static string ColorTable[] =
+	{
+		"\033[1;30m",
+		"\033[1;30m",
+		"\033[1;37m",
+		"\033[1;33m",
+		"\033[1;31m",
+		"\033[1;35m",
+	};
+	std::cout << ColorTable[(int)InLogLevel];
+
 	switch (InLogLevel)
 	{
 	case boost::log::trivial::trace:
@@ -129,4 +156,5 @@ void FLogger::Log(FLogLevel InLogLevel, std::string_view InMessage)
 		_ASSERT(false);
 		break;
 	}
+	std::cout << "\033[0m";
 }

@@ -9,7 +9,7 @@ void FConfigCacheIni::InitializeConfigSystem()
 {
 	if (GConfig)
 	{
-		E_Log(error, "GConfig exist");
+		E_LOG(error, "GConfig exist");
 		return;
 	}
 
@@ -42,7 +42,7 @@ bool FConfigCacheIni::LoadIniFile(FStringView InKey, const FString& InIniFileNam
 		bLoad = ConfigFile.Load(LoadIniFilePath);
 		if (!bLoad)
 		{
-			E_Log(error, "Load Failed: {}", to_string(LoadIniFilePath));
+			E_LOG(error, "Load Failed: {}", to_string(LoadIniFilePath));
 		}
 	}
 	else
@@ -58,7 +58,7 @@ FConfigFile& FConfigCacheIni::GetConfig(FStringView InKey)
 	if (MapCachedConfig.find(InKey.data()) == MapCachedConfig.end())
 	{
 		string String = to_string(InKey);
-		E_Log(fatal, "{} not found", String);
+		E_LOG(fatal, "{} not found", String);
 	}
 
 	return MapCachedConfig[InKey.data()];

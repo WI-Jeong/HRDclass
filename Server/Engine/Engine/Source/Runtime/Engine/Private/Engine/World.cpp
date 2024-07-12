@@ -28,7 +28,7 @@ void UWorld::SetGameMode(TSubclassOf<AGameModeBase> NewGameModeClass)
 {
 	if (GameMode.IsValid())
 	{
-		E_Log(fatal, "GameMode is valid.");
+		E_LOG(fatal, "GameMode is valid.");
 		return;
 	}
 
@@ -39,7 +39,7 @@ engine_weak_ptr<AActor> UWorld::SpawnActor(UClass* InClass, const FActorSpawnPar
 {
 	if (!InClass)
 	{
-		E_Log(error, "Class is nullptr");
+		E_LOG(error, "Class is nullptr");
 	}
 
 	shared_ptr<AActor> NewActor = NewObject<AActor>(this, InClass, SpawnParameters.Name, SpawnParameters.ObjectFlags);

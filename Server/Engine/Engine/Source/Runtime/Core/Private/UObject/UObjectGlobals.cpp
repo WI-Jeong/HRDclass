@@ -13,7 +13,7 @@ bool IsEngineExitRequested()
 
 void CORE_API RequestEngineExit(const string ReasonString)
 {
-	E_Log(trace, "{}", ReasonString.c_str());
+	E_LOG(trace, "{}", ReasonString.c_str());
 	GIsRequestingExit = true;
 }
 
@@ -22,7 +22,7 @@ FStaticConstructObjectParameters::FStaticConstructObjectParameters(UClass* InCla
 {
 	if (!Class)
 	{
-		E_Log(error, "Class is nullptr")
+		E_LOG(error, "Class is nullptr")
 	}
 }
 
@@ -58,7 +58,7 @@ CORE_API shared_ptr<UObject> StaticConstructorObject_Internal(FStaticConstructOb
 	FObjectInitializer ObjectInitializer{ Params };
 	if (ObjectInitializer.ObjectFlags & EObjectFlags::RF_ClassDefaultObject)
 	{
-		E_Log(fatal, "Detected ObjectFlags & RF_ClassDefaultObject");
+		E_LOG(fatal, "Detected ObjectFlags & RF_ClassDefaultObject");
 	}
 
 	InClass->ClassConstructor(ObjectInitializer);

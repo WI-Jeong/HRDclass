@@ -22,6 +22,12 @@ bool UNetDriver::InitListen(FNetworkNotify InNotify,
 	return true;
 }
 
+void UNetDriver::KickNetConnection(UNetConnection* NetConnection, const string_view KickReason)
+{
+	E_LOG(warning, "[Kick] {}, Reason: {}", to_string(NetConnection->GetName()), KickReason);
+	NetConnection->Shutdown();
+}
+
 void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 {
 	if (InReuseConnection)
@@ -44,10 +50,10 @@ void UNetDriver::StartAccept(shared_ptr<UNetConnection> InReuseConnection)
 	Acceptor->async_accept(*NewConnection->GetSocket(), 
 		[this, NewConnection, InReuseConnection](const boost::system::error_code& Error)
 		{
-			E_Log(trace, "New Client Accept: {}", to_string(NewConnection->GetName()));
+			E_LOG(trace, "New Client Accept: {}", to_string(NewConnection->GetName()));
 			if (Error)
 			{
-				E_Log(error, "AsyncAccept error");
+				E_LOG(error, "AsyncAccept error");
 
 				StartAccept(NewConnection);
 				return;
@@ -107,7 +113,7 @@ void UNetDriver::OnConectionClosed(UNetConnection* NetConnection)
 		}
 		else
 		{
-			E_Log(fatal, "check!");
+			E_LOG(fatal, "check!");
 		}
 	}
 }
@@ -120,7 +126,7 @@ void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* Packet
 
 		if (bServer)
 		{
-			E_Log(trace, "Send to {} HelloPacket", to_string(NetConnection->GetName()));
+			E_LOG(trace, "Send to {} HelloPacket", to_string(NetConnection->GetName()));
 			NetConnection->Send(FPacketHeader::EPreDefinedPacketID::EHelloPacket, nullptr, 0);
 		}
 	}
@@ -135,7 +141,12 @@ void UNetDriver::OnReceived(UNetConnection* NetConnection, FPacketHeader* Packet
 		return;
 	}
 
-	NetConnection->ReadPacketHeader();
+	// 이 부분에서 USOCK_Closed가 됐다면 Kick된 상황
+	const EConnectionState State = NetConnection->GetConnectionState();
+	if (State != EConnectionState::USOCK_Closed)
+	{
+		NetConnection->ReadPacketHeader();
+	}
 }
 
 bool UNetDriver::InitConnect(FNetworkNotify InNotify, FURL& ConnectURL, TSubclassOf<UNetConnection> InNetConnectionClass)
@@ -177,7 +188,7 @@ bool UNetDriver::InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNe
 {
 	if (bInit)
 	{
-		E_Log(error, "이미 초기화 되어 있습니다.");
+		E_LOG(error, "이미 초기화 되어 있습니다.");
 		return false;
 	}
 
@@ -187,7 +198,7 @@ bool UNetDriver::InitBase(FNetworkNotify& InNotify, FURL& InURL, TSubclassOf<UNe
 	NetConnectionClass = InNetConnectionClass;
 	if (!NetConnectionClass)
 	{
-		E_Log(error, "NetConnectionClass is nullptr");
+		E_LOG(error, "NetConnectionClass is nullptr");
 		return false;
 	}
 
@@ -202,7 +213,7 @@ void UNetDriver::Tick(float DeltaSeconds)
 	{
 		if (ErrorCode)
 		{
-			E_Log(error, "Context poll one: {}", ErrorCode.message());
+			E_LOG(error, "Context poll one: {}", ErrorCode.message());
 		}
 
 		PollCountPerTick += n;

@@ -5,18 +5,26 @@
 #include "NetworkMinimal.h"
 #include "ServerGameMode.generated.h"
 
-
-enum class EMyPacketType : uint32
+enum class EARPacketType : uint32
 {
 	EStart = FPacketHeader::EEnd,
 	EMessage,
+
+	ELogin,
 };
 
 struct FMessagePacket : public FPacketHeader
 {
 	FMessagePacket() :
-		FPacketHeader((uint32)EMyPacketType::EMessage, sizeof(FMessagePacket) - sizeof(FPacketHeader)) {}
+		FPacketHeader((uint32)EARPacketType::EMessage, sizeof(FMessagePacket) - sizeof(FPacketHeader)) {}
 	array<char, 1024> Buffer = {};
+};
+
+
+struct FAccountPacket : public FPacketHeader
+{
+	std::array<char, 20> ID = {};
+	std::array<char, 20> Password = {};
 };
 
 UCLASS()
@@ -33,5 +41,12 @@ public:
 	AServerGameMode();
 	~AServerGameMode();
 
+	template<class T>
+	bool CheckPacket(T& InPacket)
+	{
+		return InPacket.GetPayload() == (sizeof(T) - sizeof(FPacketHeader));
+	}
+
+protected:
 	shared_ptr<UNetDriver> NetDriver;
 };

@@ -28,4 +28,4 @@ private:
 };
 
 extern CORE_API FLogger* GLogger;
-#define E_Log(LogLevel, FormatMsg, ...) GLogger->Log(FLogLevel::LogLevel, std::string(__FUNCTION__) + ": " + std::format(FormatMsg, __VA_ARGS__));
+#define E_LOG(LogLevel, FormatMsg, ...) GLogger->Log(FLogLevel::LogLevel, std::string(__FUNCTION__) + ": " + std::format(FormatMsg, __VA_ARGS__));

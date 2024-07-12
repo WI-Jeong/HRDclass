@@ -1,5 +1,4 @@
 ﻿#include "NetConnection.h"
-#include "NetDriver.h"
 
 bool UNetConnection::InitRemoteConnection(
 	const bool bServer,
@@ -10,7 +9,7 @@ bool UNetConnection::InitRemoteConnection(
 	function<void(UNetConnection*)> InConnectionClosedFunction,
 	function<void(UNetConnection*, FPacketHeader*)> InRecvFunction)
 {
-	E_Log(info, "{}", to_string(GetName()));
+	E_LOG(trace, "{}", to_string(GetName()));
 	bNetDriverIsServer = bServer;
 	PendingConnectFunction = InPendingConnectFunction;
 	ConnectFunction = InConnectFunction;
@@ -28,7 +27,7 @@ bool UNetConnection::InitRemoteConnection(
 
 		if (ErrorCode)
 		{
-			E_Log(error, "connect failed: {}", ErrorCode.message());
+			E_LOG(error, "connect failed: {}", ErrorCode.message());
 			return false;
 		}
 
@@ -48,7 +47,7 @@ void UNetConnection::Send(const uint32 PacketID, void* PacketBody, const uint32 
 	const size_t SendBufferSize = BufferPool.get_requested_size();
 	if (BodySize + sizeof(FPacketHeader) > SendBufferSize)
 	{
-		E_Log(error, "Send Buffer overflow! BodySize: {} / {}", BodySize, SendBufferSize);
+		E_LOG(error, "Send Buffer overflow! BodySize: {} / {}", BodySize, SendBufferSize);
 		return;
 	}
 	FPacketHeader* Header = (FPacketHeader*)BufferPool.malloc();
@@ -67,7 +66,7 @@ void UNetConnection::LowLevelSend(void* Data, const uint64 Size)
 	const EConnectionState State = GetConnectionState();
 	if (State != EConnectionState::USOCK_Open && State != EConnectionState::USOCK_Pending)
 	{
-		E_Log(error, "ConnectionState error {}", (uint8)State);
+		E_LOG(error, "ConnectionState error {}", (uint8)State);
 		return;
 	}
 
@@ -80,7 +79,7 @@ void UNetConnection::LowLevelSend(void* Data, const uint64 Size)
 			BufferPool.free(Data);
 			if (ErrorCode)
 			{
-				E_Log(info, "async_write error: {}", ErrorCode.message());
+				E_LOG(warning, "async_write error: {}", ErrorCode.message());
 				Shutdown();
 				return;
 			}
@@ -90,7 +89,7 @@ void UNetConnection::LowLevelSend(void* Data, const uint64 Size)
 
 void UNetConnection::OnPendingConnect()
 {
-	E_Log(info, "{}", to_string(GetName()));
+	E_LOG(info, "{}", to_string(GetName()));
 	SetConnectionState(EConnectionState::USOCK_Pending);
 
 	// Packet 읽어라..
@@ -103,7 +102,7 @@ void UNetConnection::OnPendingConnect()
 
 void UNetConnection::OnConnect()
 {
-	E_Log(info, "{}", to_string(GetName()));
+	E_LOG(info, "{}", to_string(GetName()));
 	SetConnectionState(EConnectionState::USOCK_Open);
 	ConnectFunction(this);
 }
@@ -113,7 +112,7 @@ void UNetConnection::Shutdown()
 	if (Socket->is_open())
 	{
 		Socket->close();
-		E_Log(info, "{}", to_string(GetName()));
+		E_LOG(info, "{}", to_string(GetName()));
 		ConnectionClosedFunction(this);
 		SetConnectionState(EConnectionState::USOCK_Closed);
 
@@ -133,7 +132,7 @@ void UNetConnection::ReadPacketHeader()
 	const EConnectionState State = GetConnectionState();
 	if (State != EConnectionState::USOCK_Open && State != EConnectionState::USOCK_Pending)
 	{
-		E_Log(error, "not connected");
+		E_LOG(error, "not connected");
 		return;
 	}
 
@@ -143,7 +142,7 @@ void UNetConnection::ReadPacketHeader()
 		{
 			if (ErrorCode)
 			{
-				E_Log(trace, "{}", ErrorCode.message());
+				E_LOG(warning, "{}", ErrorCode.message());
 				Shutdown();
 				return;
 			}
@@ -158,7 +157,7 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 	const EConnectionState State = GetConnectionState();
 	if (State != EConnectionState::USOCK_Open && State != EConnectionState::USOCK_Pending)
 	{
-		E_Log(error, "not connected");
+		E_LOG(error, "not connected");
 		return;
 	}
 
@@ -169,7 +168,7 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 	const uint32 BufferSize = BufferPool.get_requested_size();
 	if (PacketSize > BufferSize)
 	{
-		E_Log(fatal, "Packet size({})가 Buffer size({}) 보다 크다", PacketSize, BufferSize);
+		E_LOG(fatal, "Packet size({})가 Buffer size({}) 보다 크다", PacketSize, BufferSize);
 		Shutdown();
 		return;
 	}
@@ -189,11 +188,12 @@ void UNetConnection::ReadPacketBody(const FPacketHeader& InPacketHeader)
 	{
 		boost::asio::async_read(*GetSocket(),
 			boost::asio::buffer(PacketHeader + 1, PayloadSize),
-			[this, PacketHeader](boost::system::error_code ErrorCode, uint64 /*InRecvSize*/)
+			[this, PacketHeader](boost::system::error_code ErrorCode, uint64 InRecvSize)
 			{
+				E_LOG(trace, "InRecvSize: {}", InRecvSize);
 				if (ErrorCode)
 				{
-					E_Log(trace, "{}", ErrorCode.message());
+					E_LOG(warning, "{}", ErrorCode.message());
 					Shutdown();
 					return;
 				}

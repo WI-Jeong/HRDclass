@@ -4,7 +4,7 @@ rem %1: $(SolutionDir)
 rem %2: [project.Name]
 rem %3: [project.SourceRootPath]
 rem %4: %EngineDir%
-cd /D "%1"
+cd /D %1
 
 @echo -- Header parser --
 @echo.
@@ -39,7 +39,7 @@ cd
 
 mkdir Intermediate\HeaderParser\%2
 rem 해당 프로젝트 해더 파일들 복사
-for /r "%3" %%f in (*.h) do copy %%f "Intermediate\HeaderParser\%2"
+for /r %3 %%f in (*.h) do copy "%%f" "Intermediate\HeaderParser\%2"
 
 @echo - [Done] copy headers
 @echo.
@@ -52,5 +52,5 @@ popd
 pushd Intermediate\HeaderParser
 rem 수집된 변경된 header파일 이름을 header-parser에 전달하고 파싱합니다.
 rem 파싱된 파일은 name.generated.h로 Intermediate\HeaderParser 폴더에 복사된 header위치에 생성됩니다.
-start /b %4\Engine\Source\Programs\HeaderParser\out\Release\header-parser.exe HeaderParserTarget.txt -c UCLASS -e UENUM -f UFUNC -p UPROPERTY
+start /b "HeaderParser" "%~4\Engine\Source\Programs\HeaderParser\out\Release\header-parser.exe" HeaderParserTarget.txt -c UCLASS -e UENUM -f UFUNC -p UPROPERTY
 popd

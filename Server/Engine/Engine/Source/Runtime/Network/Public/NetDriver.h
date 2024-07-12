@@ -38,6 +38,8 @@ public:
 	virtual bool InitListen(FNetworkNotify InNotify, FURL& ListenURL, const bool bReuseAddressAndPort, 
 		const uint8 BacklogCount, TSubclassOf<UNetConnection> InNetConnectionClass = UNetConnection::StaticClass());
 
+	void KickNetConnection(UNetConnection* NetConnection, const string_view KickReason);
+
 protected:
 	void StartAccept(shared_ptr<UNetConnection> InReuseConnection = nullptr);
 

@@ -6,7 +6,7 @@ bool FConfigFile::Load(FStringView InPath)
 {
     if (bLoaded)
     {
-        E_Log(error, "bLoaded is true {}", to_string(InPath));
+        E_LOG(error, "bLoaded is true {}", to_string(InPath));
         return false;
     }
 
@@ -18,13 +18,13 @@ bool FConfigFile::TryOverride(FStringView InPath)
 {
     if (!bLoaded)
     {
-        E_Log(error, "bLoaded is false. {}", to_string(InPath));
+        E_LOG(error, "bLoaded is false. {}", to_string(InPath));
         return false;
     }
 
     if (bOverride)
     {
-        E_Log(error, "bOverride is true. {}", to_string(InPath));
+        E_LOG(error, "bOverride is true. {}", to_string(InPath));
         return false;
     }
 

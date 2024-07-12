@@ -17,7 +17,7 @@ int32 EnginePreInit(const TCHAR* CmdLine)
  */
 int32 EngineInit()
 {
-	E_Log(trace, "");
+	E_LOG(trace, "");
 	const int32 ErrorLevel = EngineLoop.Init();
 
 	return ErrorLevel;
@@ -28,7 +28,7 @@ int32 EngineInit()
  */
 void EngineTick()
 {
-	//E_Log(trace, "");
+	//E_LOG(trace, "");
 	EngineLoop.Tick();
 }
 
@@ -37,7 +37,7 @@ void EngineTick()
  */
 void EngineExit()
 {
-	E_Log(trace, "");
+	E_LOG(trace, "");
 	EngineLoop.Exit();
 }
 
